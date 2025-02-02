@@ -1,3 +1,4 @@
 
 # 2025-02-02 16:09:37 - feat: improve error messaging
 # 2025-02-02 22:34:45 - chore: lint and format codebase
+# 2025-02-02 11:14:48 - fix: patch memory leak in event handler
