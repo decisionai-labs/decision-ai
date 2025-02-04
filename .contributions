@@ -4,3 +4,4 @@
 # 2025-02-02 11:14:48 - fix: patch memory leak in event handler
 # 2025-02-03 10:41:02 - fix: patch memory leak in event handler
 # 2025-02-03 20:11:40 - feat: add input validation for RPC calls
+# 2025-02-03 18:17:25 - chore: update CI pipeline config
