@@ -8,3 +8,4 @@
 # 2025-02-04 13:21:30 - chore: lint and format codebase
 # 2025-02-04 10:38:07 - refactor: clean up unused imports
 # 2025-02-14 10:52:13 - docs: add troubleshooting section
+# 2025-02-14 22:41:05 - feat: add input validation for RPC calls
