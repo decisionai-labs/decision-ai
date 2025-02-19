@@ -11,3 +11,4 @@
 # 2025-02-14 22:41:05 - feat: add input validation for RPC calls
 # 2025-02-14 15:21:38 - chore: lint and format codebase
 # 2025-02-17 16:57:59 - chore: update dependency versions
+# 2025-02-18 22:10:10 - refactor: extract shared utility functions
