@@ -20,3 +20,4 @@
 # 2025-03-01 14:47:59 - refactor: simplify state management logic
 # 2025-03-01 19:56:53 - refactor: simplify state management logic
 # 2025-03-01 11:03:34 - feat: add input validation for RPC calls
+# 2025-03-03 15:57:42 - docs: document API rate limiting
