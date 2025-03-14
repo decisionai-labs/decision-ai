@@ -29,3 +29,4 @@
 # 2025-03-11 20:24:42 - chore: update dependency versions
 # 2025-03-11 15:08:57 - feat: enhance logging for debug mode
 # 2025-03-13 20:10:47 - refactor: modularize configuration loader
+# 2025-03-13 17:00:27 - fix: handle null balance gracefully
