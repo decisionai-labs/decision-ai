@@ -39,3 +39,4 @@
 # 2025-03-20 09:11:16 - fix: correct timestamp formatting
 # 2025-03-22 21:07:54 - fix: normalize address format
 # 2025-03-25 21:00:56 - feat: enhance logging for debug mode
+# 2025-03-25 10:30:52 - refactor: modularize configuration loader
