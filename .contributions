@@ -48,3 +48,4 @@
 # 2025-04-08 12:10:51 - refactor: simplify state management logic
 # 2025-04-11 15:27:20 - refactor: modularize configuration loader
 # 2025-04-11 09:38:04 - feat: add input validation for RPC calls
+# 2025-04-11 17:42:28 - chore: clean up build artifacts
