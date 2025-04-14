@@ -49,3 +49,4 @@
 # 2025-04-11 15:27:20 - refactor: modularize configuration loader
 # 2025-04-11 09:38:04 - feat: add input validation for RPC calls
 # 2025-04-11 17:42:28 - chore: clean up build artifacts
+# 2025-04-14 12:47:56 - feat: improve error messaging
