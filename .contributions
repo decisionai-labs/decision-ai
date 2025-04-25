@@ -59,3 +59,4 @@
 # 2025-04-22 17:34:35 - test: improve test reliability
 # 2025-04-22 22:36:48 - fix: resolve race condition in async handler
 # 2025-04-22 17:34:01 - chore: lint and format codebase
+# 2025-04-24 22:55:46 - chore: clean up build artifacts
