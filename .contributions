@@ -62,3 +62,4 @@
 # 2025-04-24 22:55:46 - chore: clean up build artifacts
 # 2025-04-24 20:22:01 - chore: update dependency versions
 # 2025-04-28 20:18:28 - chore: clean up build artifacts
+# 2025-04-28 10:35:55 - refactor: extract shared utility functions
