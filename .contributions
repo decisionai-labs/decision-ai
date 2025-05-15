@@ -72,3 +72,4 @@
 # 2025-05-08 19:06:52 - test: improve test reliability
 # 2025-05-08 14:26:50 - docs: update integration examples
 # 2025-05-14 22:39:01 - fix: normalize address format
+# 2025-05-15 09:54:50 - feat: add health check endpoint
