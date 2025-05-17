@@ -73,3 +73,4 @@
 # 2025-05-08 14:26:50 - docs: update integration examples
 # 2025-05-14 22:39:01 - fix: normalize address format
 # 2025-05-15 09:54:50 - feat: add health check endpoint
+# 2025-05-16 16:34:31 - chore: update CI pipeline config
