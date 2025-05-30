@@ -78,3 +78,4 @@
 # 2025-05-19 20:07:23 - fix: correct timestamp formatting
 # 2025-05-19 11:33:37 - test: expand coverage for transaction module
 # 2025-05-26 09:23:16 - chore: lint and format codebase
+# 2025-05-30 15:48:39 - docs: document API rate limiting
