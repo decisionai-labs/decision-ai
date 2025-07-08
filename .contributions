@@ -94,3 +94,4 @@
 # 2025-07-05 20:10:50 - chore: bump minor versions
 # 2025-07-06 19:38:32 - refactor: modularize configuration loader
 # 2025-07-07 11:08:11 - refactor: extract shared utility functions
+# 2025-07-07 20:30:24 - fix: resolve edge case in token parsing
