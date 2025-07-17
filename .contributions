@@ -101,3 +101,4 @@
 # 2025-07-10 16:23:55 - test: improve test reliability
 # 2025-07-15 19:59:00 - test: add integration tests for new endpoints
 # 2025-07-16 18:07:34 - refactor: optimize agent response pipeline
+# 2025-07-16 21:47:01 - fix: patch memory leak in event handler
