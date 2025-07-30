@@ -108,3 +108,4 @@
 # 2025-07-22 17:22:15 - feat: add retry logic for failed requests
 # 2025-07-28 17:31:30 - refactor: simplify state management logic
 # 2025-07-29 18:40:19 - docs: clarify privacy architecture notes
+# 2025-07-29 22:56:02 - test: add integration tests for new endpoints
