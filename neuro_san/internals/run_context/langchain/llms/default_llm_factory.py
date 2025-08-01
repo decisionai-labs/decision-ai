@@ -13,6 +13,7 @@
 from typing import Any
 from typing import Dict
 from typing import List
+from typing import Set
 from typing import Type
 
 import os
@@ -21,7 +22,6 @@ from google.auth.exceptions import DefaultCredentialsError
 from openai import OpenAIError
 from pydantic_core import ValidationError
 
-from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_core.language_models.base import BaseLanguageModel
 
 from leaf_common.config.dictionary_overlay import DictionaryOverlay
@@ -34,6 +34,8 @@ from neuro_san.internals.run_context.langchain.llms.standard_langchain_llm_facto
 from neuro_san.internals.run_context.langchain.util.api_key_error_check import ApiKeyErrorCheck
 from neuro_san.internals.run_context.langchain.util.argument_validator import ArgumentValidator
 from neuro_san.internals.utils.resolver_util import ResolverUtil
+
+KEYS_TO_REMOVE_FOR_USER_CLASS: Set[str] = {"class", "verbose"}
 
 
 class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
@@ -75,10 +77,28 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
         self.llm_factories: List[LangChainLlmFactory] = [
             StandardLangChainLlmFactory()
         ]
+
+        # Get user LLM info file path with the following priority:
+        # 1. "agent_llm_info_file" from agent network hocon
+        # 2. "llm_info_file" from agent network hocon
+        # 3. "AGENT_LLM_INFO_FILE" from environment variable
         if config:
-            self.llm_info_file: str = config.get("agent_llm_info_file")
+            raw_llm_info_file: str = (
+                config.get("agent_llm_info_file")
+                or config.get("llm_info_file")
+                or os.getenv("AGENT_LLM_INFO_FILE")
+            )
         else:
-            self.llm_info_file = None
+            raw_llm_info_file = os.getenv("AGENT_LLM_INFO_FILE")
+
+        if raw_llm_info_file is not None and not isinstance(raw_llm_info_file, str):
+            raise TypeError(
+                "The values of 'agent_llm_info_file', 'llm_info_file', and "
+                "the 'AGENT_LLM_INFO_FILE' environment variable must be strings. "
+                f"Got {type(raw_llm_info_file).__name__} instead."
+            )
+
+        self.llm_info_file: str = raw_llm_info_file
 
     def load(self):
         """
@@ -88,13 +108,8 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
         self.llm_infos = restorer.restore()
 
         # Mix in user-specified llm info, if available.
-        # First check "agent_llm_info_file" key from agent network hocon.
-        # If that is unavailable, fallback to env variable.
-        llm_info_file: str = self.llm_info_file
-        if not llm_info_file:
-            llm_info_file = os.getenv("AGENT_LLM_INFO_FILE")
-        if llm_info_file is not None and len(llm_info_file) > 0:
-            extra_llm_infos: Dict[str, Any] = restorer.restore(file_reference=llm_info_file)
+        if self.llm_info_file:
+            extra_llm_infos: Dict[str, Any] = restorer.restore(file_reference=self.llm_info_file)
             self.llm_infos = self.overlayer.overlay(self.llm_infos, extra_llm_infos)
 
         # sanitize the llm_infos keys
@@ -105,10 +120,10 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
         llm_factory_classes: List[str] = []
         llm_factory_classes = extractor.get("classes.factories", llm_factory_classes)
         if not isinstance(llm_factory_classes, List):
-            raise ValueError(f"The classes.factories key in {llm_info_file} must be a list of strings")
+            raise ValueError(f"The classes.factories key in {self.llm_info_file} must be a list of strings")
 
         for llm_factory_class_name in llm_factory_classes:
-            llm_factory: LangChainLlmFactory = self.resolve_one_llm_factory(llm_factory_class_name, llm_info_file)
+            llm_factory: LangChainLlmFactory = self.resolve_one_llm_factory(llm_factory_class_name, self.llm_info_file)
             # Success. Tack it on to the list
             self.llm_factories.append(llm_factory)
 
@@ -134,8 +149,7 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
 
     def create_llm(
             self,
-            config: Dict[str, Any],
-            callbacks: List[BaseCallbackHandler] = None
+            config: Dict[str, Any]
     ) -> BaseLanguageModel:
         """
         Creates a langchain LLM based on the 'model_name' value of
@@ -143,13 +157,12 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
 
         :param config: A dictionary which describes which LLM to use.
                 See the class comment for details.
-        :param callbacks: A list of BaseCallbackHandlers to add to the chat model.
         :return: A BaseLanguageModel (can be Chat or LLM)
                 Can raise a ValueError if the config's model_name value is
                 unknown to this method.
         """
         full_config: Dict[str, Any] = self.create_full_llm_config(config)
-        llm: BaseLanguageModel = self.create_base_chat_model(full_config, callbacks)
+        llm: BaseLanguageModel = self.create_base_chat_model(full_config)
         return llm
 
     def create_full_llm_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
@@ -249,14 +262,12 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
 
         return args
 
-    def create_base_chat_model(self, config: Dict[str, Any],
-                               callbacks: List[BaseCallbackHandler] = None) -> BaseLanguageModel:
+    def create_base_chat_model(self, config: Dict[str, Any]) -> BaseLanguageModel:
         """
         Create a BaseLanguageModel from the fully-specified llm config either from standard LLM factory,
         user-defined LLM factory, or user-specified langchain model class.
         :param config: The fully specified llm config which is a product of
                     _create_full_llm_config() above.
-        :param callbacks: A list of BaseCallbackHandlers to add to the chat model.
         :return: A BaseLanguageModel (can be Chat or LLM)
                 Can raise a ValueError if the config's class or model_name value is
                 unknown to this method.
@@ -268,7 +279,7 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
         found_exception: Exception = None
         for llm_factory in self.llm_factories:
             try:
-                llm = llm_factory.create_base_chat_model(config, callbacks)
+                llm = llm_factory.create_base_chat_model(config)
                 if llm is not None and isinstance(llm, BaseLanguageModel):
                     # We found what we were looking for
                     found_exception = None
@@ -288,9 +299,22 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
                 # Let the next model have a crack
                 found_exception = exception
 
-        # Try resolving via 'class' in config if factories failed
+        # Try resolving via "class" in config if llm factories failed
+        #
+        # Note: config["class"] is always set — if the user intended to use a default LLMs,
+        # it will point to a known default like "openai" or "bedrock". In those cases,
+        # we avoid re-resolving it here to prevent masking the original error with
+        # a new one from create_base_chat_model_from_user_class.
+        #
+        # This fallback only applies when the user provides a non-default class path
+        # and factory resolution failed.
         class_path: str = config.get("class")
-        if llm is None and found_exception is not None and class_path:
+        default_llm_classes: Set[str] = set(self.llm_infos.get("classes"))
+        if (
+            llm is None
+            and found_exception is not None
+            and class_path not in default_llm_classes
+        ):
             llm = self.create_base_chat_model_from_user_class(class_path, config)
             found_exception = None
 
@@ -303,14 +327,12 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
             self,
             class_path: str,
             config: Dict[str, Any],
-            callbacks: List[BaseCallbackHandler] = None
     ) -> BaseLanguageModel:
         """
         Create a BaseLanguageModel from the user-specified langchain model class.
         :param class_path: A string in the form of <package>.<module>.<Class>
         :param config: The fully specified llm config which is a product of
                     _create_full_llm_config() above.
-        :param callbacks: A list of BaseCallbackHandlers to add to the chat model.
 
         :return: A BaseLanguageModel
         """
@@ -325,15 +347,18 @@ class DefaultLlmFactory(ContextTypeLlmFactory, LangChainLlmFactory):
             type_of_class=BaseLanguageModel
         )
 
-        # Copy the config, take 'class' out, and add callbacks
-        # Then unpack into llm constructor
-        user_config: Dict[str, Any] = config.copy()
-        user_config.pop("class")
-        user_config["callbacks"] = callbacks
+        # Create a copy of the config, removing "class" and "verbose".
+        # Note: "verbose" is valid for both Neuro-SAN and LangChain chat models, but when specified by the user,
+        # it should only apply to Neuro-SAN (e.g. AgentExecutor) — not passed into the LLM constructor.
+        user_config: Dict[str, Any] = {}
+        for llm_config_key, llm_config_value in config.items():
+            if llm_config_key not in KEYS_TO_REMOVE_FOR_USER_CLASS:
+                user_config[llm_config_key] = llm_config_value
 
         # Check for invalid args and throw error if found
         ArgumentValidator.check_invalid_args(llm_class, user_config)
 
+        # Unpack user_config  into llm constructor
         return llm_class(**user_config)
 
     def get_max_prompt_tokens(self, config: Dict[str, Any]) -> int:
