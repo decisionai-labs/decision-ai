@@ -112,3 +112,4 @@
 # 2025-07-31 20:05:51 - chore: bump minor versions
 # 2025-08-01 16:07:54 - feat: add input validation for RPC calls
 # 2025-08-01 21:22:23 - docs: update integration examples
+# 2025-08-04 19:30:03 - feat: improve error messaging
