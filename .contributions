@@ -116,3 +116,4 @@
 # 2025-08-05 17:22:21 - test: expand coverage for transaction module
 # 2025-08-07 20:50:50 - fix: normalize address format
 # 2025-08-07 10:00:53 - test: add integration tests for new endpoints
+# 2025-08-12 20:40:32 - docs: document API rate limiting
