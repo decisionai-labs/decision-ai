@@ -119,3 +119,4 @@
 # 2025-08-12 20:40:32 - docs: document API rate limiting
 # 2025-08-15 09:10:36 - refactor: clean up unused imports
 # 2025-08-18 14:48:36 - fix: resolve race condition in async handler
+# 2025-08-18 09:39:47 - feat: add input validation for RPC calls
