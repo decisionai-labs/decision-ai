@@ -103,6 +103,7 @@ def _normalize_model_name(model_name: str) -> str:
 
 
 # pylint: disable=too-many-ancestors
+# pylint: disable=too-many-instance-attributes
 class LlmTokenCallbackHandler(AsyncCallbackHandler):
     """
     Callback handler that tracks token usage via "AIMessage.usage_metadata".
