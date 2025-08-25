@@ -122,3 +122,4 @@
 # 2025-08-18 09:39:47 - feat: add input validation for RPC calls
 # 2025-08-19 09:13:32 - fix: correct timestamp formatting
 # 2025-08-20 22:05:12 - docs: add troubleshooting section
+# 2025-08-24 18:48:55 - test: add regression tests for wallet flow
