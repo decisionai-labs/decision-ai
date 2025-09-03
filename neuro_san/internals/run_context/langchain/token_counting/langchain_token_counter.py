@@ -197,12 +197,14 @@ class LangChainTokenCounter:
 
         # Worth noting that we let the "install this package" happen in StandardLangchainLlmFactory,
         # as that guy gets hit first.
+        # pylint: disable=invalid-name
         ChatOpenAI = resolver.resolve_class_in_module("ChatOpenAI",
                                                       module_name="langchain_openai.chat_models.base")
         if ChatOpenAI is None:
             # No class resolved.  That's OK.
             return None
 
+        # pylint: disable=invalid-name
         AzureChatOpenAI = resolver.resolve_class_in_module("AzureChatOpenAI",
                                                            module_name="langchain_openai.chat_models.azure")
         return (ChatOpenAI, AzureChatOpenAI)

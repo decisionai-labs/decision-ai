@@ -77,6 +77,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
             # This is what we want to work out of the box.
             # Nevertheless, have it go through the same lazy-loading resolver rigamarole as the others.
 
+            # pylint: disable=invalid-name
             ChatOpenAI = resolver.resolve_class_in_module("ChatOpenAI",
                                                           module_name="langchain_openai.chat_models.base",
                                                           install_if_missing="langchain-openai")
@@ -140,6 +141,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
                 openai_api_key = self.get_value_or_env(config, "openai_api_key", "OPENAI_API_KEY")
 
             # AzureChatOpenAI just happens to come with langchain_openai
+            # pylint: disable=invalid-name
             AzureChatOpenAI = resolver.resolve_class_in_module("AzureChatOpenAI",
                                                                module_name="langchain_openai.chat_models.azure",
                                                                install_if_missing="langchain-openai")
@@ -203,6 +205,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "anthropic":
 
             # Use lazy loading to prevent installing the world
+            # pylint: disable=invalid-name
             ChatAnthropic = resolver.resolve_class_in_module("ChatAnthropic",
                                                              module_name="langchain_anthropic.chat_models",
                                                              install_if_missing="langchain-anthropic")
@@ -241,6 +244,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "ollama":
 
             # Use lazy loading to prevent installing the world
+            # pylint: disable=invalid-name
             ChatOllama = resolver.resolve_class_in_module("ChatOllama",
                                                           module_name="langchain_ollama",
                                                           install_if_missing="langchain-ollama")
@@ -284,6 +288,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "nvidia":
 
             # Use lazy loading to prevent installing the world
+            # pylint: disable=invalid-name
             ChatNVIDIA = resolver.resolve_class_in_module("ChatNVIDIA",
                                                           module_name="langchain_nvidia_ai_endpoints",
                                                           install_if_missing="langchain-nvidia-ai-endpoints")
@@ -319,6 +324,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "gemini":
 
             # Use lazy loading to prevent installing the world
+            # pylint: disable=invalid-name
             ChatGoogleGenerativeAI = resolver.resolve_class_in_module("ChatGoogleGenerativeAI",
                                                                       module_name="langchain_google_genai.chat_models",
                                                                       install_if_missing="langchain-google-genai")
@@ -352,6 +358,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "bedrock":
 
             # Use lazy loading to prevent installing the world
+            # pylint: disable=invalid-name
             ChatBedrock = resolver.resolve_class_in_module("ChatBedrock",
                                                            module_name="langchain_aws",
                                                            install_if_missing="langchain-aws")
