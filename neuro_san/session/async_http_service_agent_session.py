@@ -96,6 +96,7 @@ class AsyncHttpServiceAgentSession(AbstractHttpServiceAgentSession, AsyncAgentSe
             are produced until the system decides there are no more messages to be sent.
         """
         separator: bytes = b"\n"
+        max_chunk_size: int = 64 * 1024
         path: str = self.get_request_path("streaming_chat")
         try:
             timeout: ClientTimeout = None
@@ -115,14 +116,14 @@ class AsyncHttpServiceAgentSession(AbstractHttpServiceAgentSession, AsyncAgentSe
                     #       but that could fail with ValueError("Chunk too big")
                     #       if a single line was too long.
                     accumulator: bytes = b""
-                    async for data in response.content.iter_any():
+                    async for data in response.content.iter_chunked(max_chunk_size):
 
                         # Concatenate data as it comes in
                         accumulator += data
 
                         # Try to find our line separator
                         index: int = accumulator.find(separator)
-                        if index >= 0:
+                        while index >= 0:
 
                             # Grab a single line
                             line: bytes = accumulator[:index]
@@ -136,6 +137,14 @@ class AsyncHttpServiceAgentSession(AbstractHttpServiceAgentSession, AsyncAgentSe
 
                             # Remove the previous line from the accumulator
                             accumulator = accumulator[index + len(separator):]
+
+                            # Allow for case of multiple lines in one chunk
+                            index = accumulator.find(separator)
+
+                    # If there is anything left in the accumulator, yield it
+                    if len(accumulator) > 0:
+                        result_dict = json.loads(accumulator.decode('utf-8'))
+                        yield result_dict
 
         except (asyncio.TimeoutError, ClientOSError) as exc:
             # Pass on a couple of asserts that are known to represent
