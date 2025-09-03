@@ -77,7 +77,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
             # This is what we want to work out of the box.
             # Nevertheless, have it go through the same lazy-loading resolver rigamarole as the others.
 
-            ChatOpenAI = resolver.resolve_class_in_moudle("ChatOpenAI",
+            ChatOpenAI = resolver.resolve_class_in_module("ChatOpenAI",
                                                           module_name="langchain_openai.chat_models.base",
                                                           install_if_missing="langchain-openai")
             llm = ChatOpenAI(
@@ -140,7 +140,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
                 openai_api_key = self.get_value_or_env(config, "openai_api_key", "OPENAI_API_KEY")
 
             # AzureChatOpenAI just happens to come with langchain_openai
-            AzureChatOpenAI = resolver.resolve_class_in_moudle("AzureChatOpenAI",
+            AzureChatOpenAI = resolver.resolve_class_in_module("AzureChatOpenAI",
                                                                module_name="langchain_openai.chat_models.azure",
                                                                install_if_missing="langchain-openai")
             llm = AzureChatOpenAI(
@@ -203,7 +203,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "anthropic":
 
             # Use lazy loading to prevent installing the world
-            ChatAnthropic = resolver.resolve_class_in_moudle("ChatAnthropic",
+            ChatAnthropic = resolver.resolve_class_in_module("ChatAnthropic",
                                                              module_name="langchain_anthropic.chat_models",
                                                              install_if_missing="langchain-anthropic")
             llm = ChatAnthropic(
@@ -241,7 +241,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "ollama":
 
             # Use lazy loading to prevent installing the world
-            ChatOllama = resolver.resolve_class_in_moudle("ChatOllama",
+            ChatOllama = resolver.resolve_class_in_module("ChatOllama",
                                                           module_name="langchain_ollama",
                                                           install_if_missing="langchain-ollama")
             # Higher temperature is more random
@@ -284,7 +284,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "nvidia":
 
             # Use lazy loading to prevent installing the world
-            ChatNVIDIA = resolver.resolve_class_in_moudle("ChatNVIDIA",
+            ChatNVIDIA = resolver.resolve_class_in_module("ChatNVIDIA",
                                                           module_name="langchain_nvidia_ai_endpoints",
                                                           install_if_missing="langchain-nvidia-ai-endpoints")
             # Higher temperature is more random
@@ -319,7 +319,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "gemini":
 
             # Use lazy loading to prevent installing the world
-            ChatGoogleGenerativeAI = resolver.resolve_class_in_moudle("ChatGoogleGenerativeAI",
+            ChatGoogleGenerativeAI = resolver.resolve_class_in_module("ChatGoogleGenerativeAI",
                                                                       module_name="langchain_google_genai.chat_models",
                                                                       install_if_missing="langchain-google-genai")
             llm = ChatGoogleGenerativeAI(
@@ -352,7 +352,7 @@ class StandardLangChainLlmFactory(LangChainLlmFactory):
         elif chat_class == "bedrock":
 
             # Use lazy loading to prevent installing the world
-            ChatBedrock = resolver.resolve_class_in_moudle("ChatBedrock",
+            ChatBedrock = resolver.resolve_class_in_module("ChatBedrock",
                                                            module_name="langchain_aws",
                                                            install_if_missing="langchain-aws")
             llm = ChatBedrock(
