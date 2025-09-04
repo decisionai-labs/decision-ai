@@ -49,10 +49,10 @@ from neuro_san.internals.utils.resolver_util import ResolverUtil
 ORIGIN_INFO: ContextVar[str] = ContextVar('origin_info', default=None)
 
 # Keep a single lazy resolution of OpenAI chat model types.
-OPENAI_CHAT_TYPES: Tuple[Type[Any], ...] = ResolverUtil.create_type_tuple({
+OPENAI_CHAT_TYPES: Tuple[Type[Any], ...] = ResolverUtil.create_type_tuple([
                                                 "langchain_openai.chat_models.base.ChatOpenAI",
                                                 "langchain_openai.chat_models.azure.AzureChatOpenAI",
-                                           })
+                                           ])
 
 
 class LangChainTokenCounter:

@@ -71,11 +71,11 @@ from neuro_san.internals.utils.resolver_util import ResolverUtil
 MINUTES: float = 60.0
 
 # Lazily load any API Errors we look for
-API_ERROR_TYPES: Tuple[Type[Any], ...] = ResolverUtil.create_type_tuple({
+API_ERROR_TYPES: Tuple[Type[Any], ...] = ResolverUtil.create_type_tuple([
                                             "openai.APIError",
                                             "anthropic.APIError",
                                             "langchain_google_genai.chat_models.ChatGoogleGenerativeAIError",
-                                         })
+                                         ])
 
 
 # pylint: disable=too-many-instance-attributes
