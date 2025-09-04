@@ -60,8 +60,8 @@ class LangChainTokenCounter:
 
     # Class variable to keep a single lazy resolution of OpenAI chat model types.
     OPENAI_CHAT_TYPES: Tuple[Type[Any], ...] = ResolverUtil.create_type_tuple({
-                                                    "langchain_openai.chat_models.base.ChatOpenAI": "",
-                                                    "langchain_openai.chat_models.azure.AzureChatOpenAI": "",
+                                                    "langchain_openai.chat_models.base.ChatOpenAI": None,
+                                                    "langchain_openai.chat_models.azure.AzureChatOpenAI": None,
                                                 })
 
     def __init__(self, llm: BaseLanguageModel,

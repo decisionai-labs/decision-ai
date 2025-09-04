@@ -66,7 +66,7 @@ class ResolverUtil:
         for class_name, install_if_missing in type_dict.items():
 
             # Allow for values that are empty strings
-            if len(install_if_missing) == 0:
+            if install_if_missing is not None and len(install_if_missing) == 0:
                 install_if_missing = None
 
             # Try to resolve the single type and append to list if we get it.
