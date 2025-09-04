@@ -12,8 +12,9 @@
 
 from typing import Any
 
+from leaf_common.config.file_of_class import FileOfClass
+
 from neuro_san.client.simple_one_shot import SimpleOneShot
-from neuro_san.internals.utils.file_of_class import FileOfClass
 from neuro_san.test.evaluators.abstract_agent_evaluator import AbstractAgentEvaluator
 from neuro_san.test.interfaces.assert_forwarder import AssertForwarder
 

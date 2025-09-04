@@ -16,10 +16,10 @@ from typing import List
 import logging
 import os
 
+from leaf_common.config.file_of_class import FileOfClass
+
 from leaf_server_common.logging.logging_setup import setup_logging
 from leaf_server_common.server.grpc_metadata_forwarder import GrpcMetadataForwarder
-
-from neuro_san.internals.utils.file_of_class import FileOfClass
 
 
 class AgentServerLogging:

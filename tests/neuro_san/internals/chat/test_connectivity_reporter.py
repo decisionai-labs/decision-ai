@@ -15,10 +15,11 @@ from typing import List
 
 from unittest import TestCase
 
+from leaf_common.config.file_of_class import FileOfClass
+
 from neuro_san.internals.chat.connectivity_reporter import ConnectivityReporter
 from neuro_san.internals.graph.registry.agent_network import AgentNetwork
 from neuro_san.internals.graph.persistence.agent_network_restorer import AgentNetworkRestorer
-from neuro_san.internals.utils.file_of_class import FileOfClass
 
 
 class TestConnectivityReporter(TestCase):

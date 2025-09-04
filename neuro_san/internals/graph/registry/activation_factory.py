@@ -17,6 +17,7 @@ import os
 from pathlib import Path
 
 from leaf_common.config.dictionary_overlay import DictionaryOverlay
+from leaf_common.config.file_of_class import FileOfClass
 from leaf_common.parsers.dictionary_extractor import DictionaryExtractor
 
 from neuro_san.internals.graph.activations.branch_activation import BranchActivation
@@ -31,7 +32,6 @@ from neuro_san.internals.graph.registry.agent_network import AgentNetwork
 from neuro_san.internals.interfaces.front_man import FrontMan
 from neuro_san.internals.run_context.interfaces.run_context import RunContext
 from neuro_san.internals.run_context.utils.external_agent_parsing import ExternalAgentParsing
-from neuro_san.internals.utils.file_of_class import FileOfClass
 
 
 class ActivationFactory(AgentToolFactory):

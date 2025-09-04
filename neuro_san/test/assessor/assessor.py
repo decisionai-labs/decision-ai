@@ -15,9 +15,10 @@ from typing import List
 
 import argparse
 
+from leaf_common.config.file_of_class import FileOfClass
+
 from neuro_san.client.simple_one_shot import SimpleOneShot
 from neuro_san.interfaces.agent_session import AgentSession
-from neuro_san.internals.utils.file_of_class import FileOfClass
 from neuro_san.test.assessor.assessor_assert_forwarder import AssessorAssertForwarder
 from neuro_san.test.driver.data_driven_agent_test_driver import DataDrivenAgentTestDriver
 

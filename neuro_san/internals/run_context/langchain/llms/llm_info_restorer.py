@@ -18,10 +18,9 @@ import json
 from pyparsing.exceptions import ParseException
 from pyparsing.exceptions import ParseSyntaxException
 
+from leaf_common.config.file_of_class import FileOfClass
 from leaf_common.persistence.easy.easy_hocon_persistence import EasyHoconPersistence
 from leaf_common.persistence.interface.restorer import Restorer
-
-from neuro_san.internals.utils.file_of_class import FileOfClass
 
 
 class LlmInfoRestorer(Restorer):

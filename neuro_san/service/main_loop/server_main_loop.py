@@ -18,6 +18,8 @@ import threading
 
 from argparse import ArgumentParser
 
+from leaf_common.config.file_of_class import FileOfClass
+
 from leaf_server_common.server.server_loop_callbacks import ServerLoopCallbacks
 from leaf_server_common.logging.logging_setup import setup_logging
 
@@ -25,7 +27,6 @@ from neuro_san.interfaces.agent_session import AgentSession
 from neuro_san.internals.graph.persistence.registry_manifest_restorer import RegistryManifestRestorer
 from neuro_san.internals.graph.registry.agent_network import AgentNetwork
 from neuro_san.internals.network_providers.agent_network_storage import AgentNetworkStorage
-from neuro_san.internals.utils.file_of_class import FileOfClass
 from neuro_san.service.grpc.grpc_agent_server import DEFAULT_SERVER_NAME
 from neuro_san.service.grpc.grpc_agent_server import DEFAULT_SERVER_NAME_FOR_LOGS
 from neuro_san.service.grpc.grpc_agent_server import DEFAULT_MAX_CONCURRENT_REQUESTS
