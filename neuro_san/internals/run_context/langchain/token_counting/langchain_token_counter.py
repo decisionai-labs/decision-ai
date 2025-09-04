@@ -31,6 +31,7 @@ from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_core.language_models.base import BaseLanguageModel
 
 from leaf_common.asyncio.asyncio_executor import AsyncioExecutor
+from leaf_common.config.resolver_util import ResolverUtil
 
 from neuro_san.internals.interfaces.invocation_context import InvocationContext
 from neuro_san.internals.journals.originating_journal import OriginatingJournal
@@ -39,7 +40,6 @@ from neuro_san.internals.messages.origination import Origination
 from neuro_san.internals.run_context.langchain.token_counting.get_llm_token_callback import get_llm_token_callback
 from neuro_san.internals.run_context.langchain.token_counting.get_llm_token_callback import llm_token_callback_var
 from neuro_san.internals.run_context.langchain.token_counting.llm_token_callback_handler import LlmTokenCallbackHandler
-from neuro_san.internals.utils.resolver_util import ResolverUtil
 
 
 # Keep a ContextVar for the origin info.  We do this because the

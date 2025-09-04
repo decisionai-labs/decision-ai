@@ -24,6 +24,8 @@ from logging import getLogger
 from logging import Logger
 from inspect import iscoroutinefunction
 
+from leaf_common.config.resolver_util import ResolverUtil
+
 from neuro_san.internals.chat.async_collating_queue import AsyncCollatingQueue
 from neuro_san.internals.chat.chat_history_message_processor import ChatHistoryMessageProcessor
 from neuro_san.internals.graph.registry.agent_network import AgentNetwork
@@ -36,7 +38,6 @@ from neuro_san.internals.messages.agent_framework_message import AgentFrameworkM
 from neuro_san.internals.messages.base_message_dictionary_converter import BaseMessageDictionaryConverter
 from neuro_san.internals.run_context.factory.run_context_factory import RunContextFactory
 from neuro_san.internals.run_context.interfaces.run_context import RunContext
-from neuro_san.internals.utils.resolver_util import ResolverUtil
 from neuro_san.message_processing.message_processor import MessageProcessor
 from neuro_san.message_processing.answer_message_processor import AnswerMessageProcessor
 from neuro_san.message_processing.structure_message_processor import StructureMessageProcessor
