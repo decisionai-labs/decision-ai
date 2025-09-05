@@ -65,7 +65,7 @@ class BranchActivation(CallingActivation, CallableActivation):
         extractor: FieldExtractor = FieldExtractor()
         empty: Dict[str, Any] = {}
 
-        agent_spec = self.get_agent_tool_spec()
+        agent_spec: Dict[str, Any] = self.get_agent_tool_spec()
 
         # Properties describe the function arguments
         properties: Dict[str, Any] = extractor.get_field(agent_spec, "function.parameters.properties", empty)
@@ -83,7 +83,7 @@ class BranchActivation(CallingActivation, CallableActivation):
         """
         :return: A string describing the objective of the component.
         """
-        agent_spec = self.get_agent_tool_spec()
+        agent_spec: Dict[str, Any] = self.get_agent_tool_spec()
 
         # The command will be combined with assignments (arguments from an upstream agent)
         # to direct the agent toward a specific task.
@@ -100,15 +100,15 @@ class BranchActivation(CallingActivation, CallableActivation):
         """
         new_messages: List[Any] = messages
 
-        callable_tool_name = self.get_callable_tool_names(self.agent_tool_spec)
-        if callable_tool_name is None:
-            # If there is no callable_tool_name, then there is no action from the
+        callable_tool_names: List[str] = self.get_callable_tool_names(self.agent_tool_spec)
+        if callable_tool_names is None:
+            # If there are no callable_tool_names, then there is no action from the
             # callable class to integrate
             return new_messages
 
         while run.requires_action():
             # The tool we just called requires more information
-            new_run = await self.make_tool_function_calls(run)
+            new_run: Run = await self.make_tool_function_calls(run)
             new_run = await self.run_context.wait_on_run(new_run, self.journal)
             new_messages = await self.run_context.get_response()
 
@@ -121,27 +121,27 @@ class BranchActivation(CallingActivation, CallableActivation):
         :return: A string representing a List of messages produced during this process.
         """
 
-        assignments = self.get_assignments()
-        instructions = self.get_instructions()
+        assignments: str = self.get_assignments()
+        instructions: str = self.get_instructions()
 
-        uuid_str = str(uuid.uuid4())
-        component_name = self.get_name()
-        unique_name = f"{uuid_str}_{component_name}"
+        uuid_str: str = str(uuid.uuid4())
+        component_name: str = self.get_name()
+        unique_name: str = f"{uuid_str}_{component_name}"
         await self.create_resources(unique_name, instructions, None)
 
-        command = self.get_command()
-
         # If there is command, combine it with assignment to be used as HumanMessage.
+        command: str = self.get_command()
         if command:
             assignments = assignments + "\n" + command
+
         run: Run = await self.run_context.submit_message(assignments)
         run = await self.run_context.wait_on_run(run, self.journal)
 
-        messages = await self.run_context.get_response()
+        messages: List[Any] = await self.run_context.get_response()
 
         messages = await self.integrate_callable_response(run, messages)
 
-        response = IntraAgentMessageUtils.generate_response(messages)
+        response: str = IntraAgentMessageUtils.generate_response(messages)
         return response
 
     def get_origin(self) -> List[Dict[str, Any]]:
@@ -168,7 +168,7 @@ class BranchActivation(CallingActivation, CallableActivation):
         """
 
         # Use the tool
-        our_agent_spec = self.get_agent_tool_spec()
+        our_agent_spec: Dict[str, Any] = self.get_agent_tool_spec()
         callable_activation: CallableActivation = self.factory.create_agent_activation(self.run_context,
                                                                                        our_agent_spec,
                                                                                        tool_name,
