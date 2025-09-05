@@ -11,14 +11,31 @@
 # END COPYRIGHT
 
 from typing import Any
+from typing import Dict
 from typing import List
+from typing import Type
 from typing import Union
 
 import json
 
+from langchain_core.messages.ai import AIMessage
 from langchain_core.messages.base import BaseMessage
+from langchain_core.messages.human import HumanMessage
+from langchain_core.messages.system import SystemMessage
 
-from neuro_san.internals.messages.chat_message_type import ChatMessageType
+from neuro_san.internals.messages.agent_framework_message import AgentFrameworkMessage
+from neuro_san.internals.messages.agent_message import AgentMessage
+from neuro_san.internals.messages.agent_tool_result_message import AgentToolResultMessage
+
+
+_MESSAGE_TYPE_TO_ROLE: Dict[Type[BaseMessage], str] = {
+    AIMessage: "assistant",
+    HumanMessage: "user",
+    SystemMessage: "system",
+    AgentMessage: "agent",
+    AgentFrameworkMessage: "agent-framework",
+    AgentToolResultMessage: "agent-tool-result",
+}
 
 
 class IntraAgentMessageUtils:
@@ -67,7 +84,7 @@ class IntraAgentMessageUtils:
             return message.role
 
         # Check the look-up table above
-        role: str = ChatMessageType.message_to_role(message)
+        role: str = IntraAgentMessageUtils.message_to_role(message)
         if role is not None:
             return role
 
@@ -96,3 +113,16 @@ class IntraAgentMessageUtils:
             return message.content[0].text.value
 
         raise ValueError(f"Don't know how to handle message type {message.__class__.__name__}")
+
+    @staticmethod
+    def message_to_role(base_message: BaseMessage) -> str:
+        """
+        This role stuff will be removed when the Logs() API is removed,
+        as the ChatMessageType and grpc definitions make it redundant.
+
+        :param base_message: A base message instance
+        :return: The role string corresponding to the base_message
+        """
+        base_message_type: Type[BaseMessage] = type(base_message)
+        role: str = _MESSAGE_TYPE_TO_ROLE.get(base_message_type)
+        return role
