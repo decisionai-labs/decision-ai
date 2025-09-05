@@ -84,7 +84,7 @@ class IntraAgentMessageUtils:
             return message.role
 
         # Check the look-up table above
-        role: str = IntraAgentMessageUtils.message_to_role(message)
+        role: str = IntraAgentMessageUtils._message_to_role(message)
         if role is not None:
             return role
 
@@ -115,7 +115,7 @@ class IntraAgentMessageUtils:
         raise ValueError(f"Don't know how to handle message type {message.__class__.__name__}")
 
     @staticmethod
-    def message_to_role(base_message: BaseMessage) -> str:
+    def _message_to_role(base_message: BaseMessage) -> str:
         """
         This role stuff will be removed when the Logs() API is removed,
         as the ChatMessageType and grpc definitions make it redundant.
