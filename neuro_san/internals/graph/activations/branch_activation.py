@@ -22,9 +22,9 @@ from leaf_common.parsers.field_extractor import FieldExtractor
 
 from neuro_san.internals.graph.activations.argument_assigner import ArgumentAssigner
 from neuro_san.internals.graph.activations.calling_activation import CallingActivation
+from neuro_san.internals.graph.activations.intra_agent_message_utils import IntraAgentMessageUtils
 from neuro_san.internals.graph.interfaces.agent_tool_factory import AgentToolFactory
 from neuro_san.internals.graph.interfaces.callable_activation import CallableActivation
-from neuro_san.internals.messages.intra_agent_message_utils import IntraAgentMessageUtils
 from neuro_san.internals.run_context.interfaces.run import Run
 from neuro_san.internals.run_context.interfaces.run_context import RunContext
 
