@@ -44,13 +44,13 @@ class IntraAgentMessageUtils:
                 if previous_role == "assistant":
                     new_message = {
                         "role": previous_role,
-                        "content": IntraAgentMessageUtils.get_content(previous_message)
+                        "content": IntraAgentMessageUtils._get_content(previous_message)
                     }
                     response_list.append(new_message)
 
             message_dict = {
                 "role": role,
-                "content": IntraAgentMessageUtils.get_content(one_message)
+                "content": IntraAgentMessageUtils._get_content(one_message)
             }
             response_list.append(message_dict)
 
@@ -74,7 +74,7 @@ class IntraAgentMessageUtils:
         raise ValueError(f"Don't know how to handle message type {message.__class__.__name__}")
 
     @staticmethod
-    def get_content(message: Any) -> str:
+    def _get_content(message: Any) -> str:
         """
         :param message: Either an OpenAI message or a langchain BaseMessage
         :return: A string describing the content of the message
