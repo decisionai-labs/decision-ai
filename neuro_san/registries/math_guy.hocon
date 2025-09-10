@@ -18,6 +18,11 @@
     "metadata": {
         "description": "Simple agent network using a CodedTool and sly_data"
         "tags": ["example"],
+        "rai_scores": {
+            # These are not real scores, they are just an example
+            "bogosity": 0.9,
+            "safety": 0.8,    
+        }
     },
     "llm_config": {
         "model_name": "gpt-4o",
@@ -87,7 +92,15 @@ Return verbatim whatever it returns.
                     "sly_data": ["equals"]
                 }
             },
-            "tools": ["calculator"]
+            "tools": ["calculator"],
+
+            "metadata": {
+                "rai_scores": {
+                    # These are not real scores, they are just an example
+                    "bogosity": 0.9,
+                    "safety": 0.8,    
+                }
+            }
         },
 
         # The calculator is a low-level CodedTool and does not call anyone else.
