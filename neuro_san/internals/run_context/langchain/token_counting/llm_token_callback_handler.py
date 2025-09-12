@@ -171,7 +171,7 @@ class LlmTokenCallbackHandler(AsyncCallbackHandler):
             prompt_tokens: int = usage_metadata.get("input_tokens", 0)
 
             # Calculate the total cost
-            total_cost: float = self._calculate_token_costs(model_name, completion_tokens, prompt_tokens)
+            total_cost: float = self.calculate_token_costs(model_name, completion_tokens, prompt_tokens)
 
             # Update shared state behind lock
             async with self._lock:
@@ -196,7 +196,7 @@ class LlmTokenCallbackHandler(AsyncCallbackHandler):
                 self.successful_requests += 1
                 self.total_cost += total_cost
 
-    def _calculate_token_costs(self, model_name: str, completion_tokens: int, prompt_tokens: int) -> float:
+    def calculate_token_costs(self, model_name: str, completion_tokens: int, prompt_tokens: int) -> float:
         """
         Calculate token costs with fallback methods for different providers.
         :param model_name: Model to calculate the cost
