@@ -14,6 +14,8 @@ from typing import Any
 from typing import Awaitable
 from typing import Dict
 from typing import List
+from typing import Tuple
+from typing import Type
 from typing import Union
 
 from asyncio import Task
@@ -27,6 +29,7 @@ from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_core.language_models.base import BaseLanguageModel
 
 from leaf_common.asyncio.asyncio_executor import AsyncioExecutor
+from leaf_common.config.resolver_util import ResolverUtil
 
 from neuro_san.internals.interfaces.context_type_llm_factory import ContextTypeLlmFactory
 from neuro_san.internals.interfaces.invocation_context import InvocationContext
@@ -41,6 +44,12 @@ from neuro_san.internals.run_context.langchain.token_counting.get_llm_token_call
 # and we want to be sure these are in sync.
 # See: https://docs.python.org/3/library/contextvars.html
 ORIGIN_INFO: ContextVar[str] = ContextVar('origin_info', default=None)
+
+# Keep a single lazy resolution of OpenAI chat model types.
+OPENAI_CHAT_TYPES: Tuple[Type[Any], ...] = ResolverUtil.create_type_tuple([
+                                                "langchain_openai.chat_models.base.ChatOpenAI",
+                                                "langchain_openai.chat_models.azure.AzureChatOpenAI",
+                                           ])
 
 
 class LangChainTokenCounter:
@@ -221,6 +230,7 @@ class LangChainTokenCounter:
         return agent_token_dict
 
     def _sum_all_tokens(self, token_dict: Dict[str, Any], time_value: float) -> Dict[str, Any]:
+
         """
         Sum all token metrics across providers and models, **excluding time**.
         :param token_dict: Models token dict to aggregate into network stats
