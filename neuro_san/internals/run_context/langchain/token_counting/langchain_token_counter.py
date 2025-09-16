@@ -174,7 +174,7 @@ class LangChainTokenCounter:
         network_token_dict: Dict[str, Any] = self.sum_all_tokens(models_token_dict, time_taken_in_seconds)
         # Provide sligtly different "caveats" for the network token accounting.
         network_token_dict["caveats"] = [
-            "Subnetwork (external agent) token usage is not included.",
+            "External agent token usage is not included.",
             "Token counts are approximate and estimated using tiktoken.",
             "time_taken_in_seconds includes overhead from Langchain and Neuro-SAN"
         ]
@@ -188,9 +188,9 @@ class LangChainTokenCounter:
             # We actually have a token dictionary to report, so go there.
             agent_message = AgentMessage(structure=agent_token_dict)
             await self.journal.write_message(agent_message)
-            # For frontman (origin with no ".") write network token dict
+            # For frontman (origin with no ".") write both network token dict and model token dict
             if "." not in ORIGIN_INFO.get():
-                network_token_message = AgentMessage(structure=network_token_dict)
+                network_token_message = AgentMessage(structure=request_reporting["token_accounting"])
                 await self.journal.write_message(network_token_message)
 
     def _generate_agent_token_dict(
