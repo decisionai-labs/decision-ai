@@ -604,6 +604,10 @@ class LangChainRunContext(RunContext):
             # The output we want is the first element of the list.
             tool_message = self.parse_tool_chat_list_string(tool_chat_list_string, tool_output.get("origin"))
 
+        elif isinstance(tool_chat_list_string, BaseMessage):
+            tool_message = AgentToolResultMessage(content=tool_chat_list_string.content,
+                                                  tool_result_origin=tool_output.get("origin"))
+
         elif isinstance(tool_chat_list_string, list) and isinstance(tool_chat_list_string[-1], BaseMessage):
             # Always take the last element of the list as the answer to the tool output
             last_message: BaseMessage = tool_chat_list_string[-1]
