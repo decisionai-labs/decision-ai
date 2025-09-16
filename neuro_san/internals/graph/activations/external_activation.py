@@ -153,7 +153,10 @@ class ExternalActivation(AbstractCallableActivation):
             full_name: str = Origination.get_full_name_from_origin(self.run_context.get_origin())
             logger: Logger = getLogger(full_name)
             logger.info(messages_str)
-            return messages_str
+
+            ai_message = AIMessage(content=messages_str)
+            message_list.append(ai_message)
+            return message_list
 
         # The asynchronous generator will wait until the next response is available
         # from the stream.  When the other side is done, the iterator will exit the loop.
