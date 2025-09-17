@@ -132,3 +132,4 @@
 # 2025-09-08 21:10:31 - refactor: extract shared utility functions
 # 2025-09-11 13:44:09 - fix: correct timestamp formatting
 # 2025-09-14 13:07:43 - test: add regression tests for wallet flow
+# 2025-09-16 21:40:01 - fix: patch memory leak in event handler
