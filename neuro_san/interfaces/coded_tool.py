@@ -32,13 +32,14 @@ class CodedTool:
 
         Know that any CodedTool invoke() is run within the confines of its own thread
         so as not to block any other agents or requests in the context of the main
-        Python asynchronous EventLoop. Any synchronous blocking that happens - like making a call to a
-        web service over a socket, or something that inherently sleep()s - should not
-        effect other agent or CodedTool operations.
+        Python asynchronous EventLoop. Any synchronous blocking that happens - like
+        making a call to a web service over a socket, or something that inherently
+        sleep()s - should not effect other agent or CodedTool operations.
 
         There is a idea is to allow easy development of CodedTools and is is not so bad in a
         low-traffic or test environment, but when scaling up, you really really want to embrace
-        and override the async_invoke() method below instead of this one.
+        and override the async_invoke() method below instead of this one if at all possible,
+        as it is inherently more efficient.
 
         :param args: An argument dictionary whose keys are the parameters
                 to the coded tool and whose values are the values passed for them
