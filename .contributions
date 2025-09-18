@@ -134,3 +134,4 @@
 # 2025-09-14 13:07:43 - test: add regression tests for wallet flow
 # 2025-09-16 21:40:01 - fix: patch memory leak in event handler
 # 2025-09-17 16:21:44 - refactor: modularize configuration loader
+# 2025-09-17 18:41:24 - test: add integration tests for new endpoints
