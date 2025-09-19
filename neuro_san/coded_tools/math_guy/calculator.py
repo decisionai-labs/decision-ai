@@ -13,9 +13,11 @@
 from typing import Any
 from typing import Dict
 
-from neuro_san.interfaces.coded_tool import CodedTool
 from neuro_san.coded_tools.math_guy.async_closeable import AsyncCloseable
 from neuro_san.coded_tools.math_guy.sync_closeable import SyncCloseable
+from neuro_san.interfaces.agent_network_progress_reporter import AgentNetworkProgressReporter
+from neuro_san.interfaces.coded_tool import CodedTool
+from neuro_san.internals.messages.agent_progress_message import AgentProgressMessage
 
 
 class Calculator(CodedTool):
@@ -71,6 +73,14 @@ class Calculator(CodedTool):
         if x is None or y is None:
             return "Need to set keys x and y in the sly_data as float operands"
 
+        progress_reporter: AgentNetworkProgressReporter = args.get("progress_reporter")
+        progress: Dict[str, Any] = {
+            # Nothing yet.
+            "progress": 0.0
+        }
+        progress_message = AgentProgressMessage(structure=progress)
+        await progress_reporter.async_report_progress(progress_message)
+
         x = float(x)
         y = float(y)
 
@@ -94,5 +104,10 @@ class Calculator(CodedTool):
         # to the function of this coded tool.
         sly_data["sync_closeable"] = SyncCloseable()
         sly_data["async_closeable"] = AsyncCloseable()
+
+        # All done.
+        progress["progress"] = 1.0
+        progress_message = AgentProgressMessage(structure=progress)
+        await progress_reporter.async_report_progress(progress_message)
 
         return "Check sly_data['equals'] for the result"
