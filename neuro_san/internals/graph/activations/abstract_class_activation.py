@@ -228,9 +228,14 @@ Some hints:
         """
         retval: Any = None
 
+        tool_args: Dict[str, Any] = arguments.copy()
+        # Need to remove class references from the args that will not transfer over the wire
+        if "progress_reporter" in tool_args:
+            del tool_args["progress_reporter"]
+
         arguments_dict: Dict[str, Any] = {
             "tool_start": True,
-            "tool_args": arguments
+            "tool_args": tool_args
         }
         message = AgentMessage(content="Received arguments:", structure=arguments_dict)
         await self.journal.write_message(message)

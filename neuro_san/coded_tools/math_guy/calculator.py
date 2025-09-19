@@ -103,8 +103,10 @@ class Calculator(CodedTool):
         sly_data["sync_closeable"] = SyncCloseable()
         sly_data["async_closeable"] = AsyncCloseable()
 
-        # All done.
-        progress["progress"] = 1.0
+        progress: Dict[str, Any] = {
+            # All done
+            "progress": 1.0
+        }
         await progress_reporter.async_report_progress(progress)
 
         return "Check sly_data['equals'] for the result"
