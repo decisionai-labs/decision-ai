@@ -10,7 +10,7 @@
 #
 # END COPYRIGHT
 
-from neuo_san.internals.messages.agent_progress_message import AgentProgressMessage
+from neuro_san.internals.messages.agent_progress_message import AgentProgressMessage
 
 
 class AgentNetworkProgressReporter:
