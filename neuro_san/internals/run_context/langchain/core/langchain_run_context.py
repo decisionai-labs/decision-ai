@@ -278,8 +278,9 @@ class LangChainRunContext(RunContext):
 
     async def _create_base_tool(self, name: str) -> Union[BaseTool, List[BaseTool]]:
         """
+        Create base tools for the agent to call.
         :param name: The name of the tool to create
-        :return: The BaseTool associated with the name
+        :return: The BaseTools associated with the name
         """
 
         inspector: AgentNetworkInspector = self.tool_caller.get_inspector()
@@ -292,11 +293,26 @@ class LangChainRunContext(RunContext):
 
         return await self._create_internal_tool(name, agent_spec)
 
-    async def _create_external_tool(self, name: str) -> Union[BaseTool, List[BaseTool]]:
-        """External agent/tool creation"""
+    async def _create_external_tool(self, name: Union[str, Dict[str, Any]]) -> Union[BaseTool, List[BaseTool]]:
+        """
+        Create external agent/tool.
+        :param name: The name of the external agent/tool
+        :return: External agent as base tools
+        """
+
+        if not isinstance(name, (dict, str)):
+            raise TypeError(f"Tools must be string or dict, got {type(name)}")
 
         # Handle MCP-based tool as external tool
-        if isinstance(name, dict):
+        # Support both str and dict format;
+        # str format: "https://mcp.deepwiki.com/mcp" or "http://localhost:8000/mcp/"
+        # dict format:
+        # {
+        #       "server_url": "https://mcp.deepwiki.com/mcp",
+        #       "allowed_tools": ["read_wiki_structure", "ask_question"],
+        #       "headers": <env var with tokens>
+        # }
+        if isinstance(name, dict) or name.startswith("https://mcp") or name.endswith(("/mcp", "/mcp/")):
             return await self._create_mcp_tool(name)
 
         # See if the agent name given could reference an external agent.
@@ -324,39 +340,52 @@ class LangChainRunContext(RunContext):
             self.logger.info(message)
 
     async def _create_internal_tool(self, name: str, agent_spec: Dict[str, Any]) -> BaseTool:
-        """Internal agent/tool creation"""
-
-        # In the case of an internal agent, the name passed in for lookup should be the
-        # same as what is in the spec.
-        if name != agent_spec.get("name"):
-            raise ValueError(f"Tool name mismatch. name={name} agent_spec.name={agent_spec.get('name')}")
+        """
+        Create internal agent/tool.
+        :param name: The name of the agent or coded tool
+        :return: Agent as base tools
+        """
 
         toolbox: str = agent_spec.get("toolbox")
-        mcp: Dict[str, Any] = agent_spec.get("mcp")
 
         # Handle toolbox-based tools
         if toolbox:
             return await self._create_toolbox_tool(toolbox, agent_spec, name)
 
-        # Handle MCP-based tools
-        if mcp:
-            return await self._create_mcp_tool(mcp, name)
-
-        # Handle function-based tools
+        # Handle coded tools
         function_json = agent_spec.get("function")
         if function_json is None:
             return None
 
         return self._create_function_tool(function_json, name)
 
-    async def _create_mcp_tool(self, mcp_dict: dict, agent_name: str = None) -> List[BaseTool]:
-        """MCP tool creation with information from mcp dictionary"""
+    async def _create_mcp_tool(self, mcp_info: Union[str, Dict[str, Any]]) -> List[BaseTool]:
+        """
+        Create MCP tools from the provided MCP configuration.
 
-        server_url: str = mcp_dict.get("server_url")
-        allowed_tools: List[str] = mcp_dict.get("allowed_tools")
-        headers: Dict[str, Any] = mcp_dict.get("headers")
+        The configuration can be one of:
+        - **String**: A URL to an MCP server.
+        Valid values start with "https://mcp" or end with "/mcp" or "/mcp/".
+        - **Dictionary**:
+            - "mcp_server" (str): MCP server URL.
+            - "allowed_tools" (List[str], optional): List of tool names to allow from the server.
+            - "headers" (str, optional): Name of an environment variable holding the authorization token.
 
-        return await LangChainMCPAdapter.get_mcp_tools(server_url, headers, allowed_tools, agent_name)
+
+        :param mcp_info: MCP server URL (string) or a configuration dictionary
+        :return: A list of MCP tools as base tools
+        """
+
+        if isinstance(mcp_info, str):
+            server_url = mcp_info
+            allowed_tools: List[str] = None
+            headers: str = None
+        else:
+            server_url: str = mcp_info.get("server_url")
+            allowed_tools = mcp_info.get("allowed_tools")
+            headers = mcp_info.get("headers")
+
+        return await LangChainMCPAdapter.get_mcp_tools(server_url, headers, allowed_tools)
 
     async def _create_toolbox_tool(self, toolbox: str, agent_spec: Dict[str, Any], name: str) -> BaseTool:
         """Create tool from toolbox"""

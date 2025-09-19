@@ -10,11 +10,14 @@
 #
 # END COPYRIGHT
 
+import os
 from typing import Any
 from typing import Dict
 from typing import List
 from typing import Optional
 
+from dotenv import load_dotenv
+import json_repair
 from langchain_core.tools import BaseTool
 from langchain_mcp_adapters.client import MultiServerMCPClient
 
@@ -28,26 +31,32 @@ class LangChainMCPAdapter:
     @staticmethod
     async def get_mcp_tools(
         server_url: str,
-        headers: Dict[str, Any] = None,
+        headers_var: str = None,
         allowed_tools: Optional[List[str]] = None,
-        agent_name: str = None
     ) -> List[BaseTool]:
         """
         Fetches tools from the given MCP server and returns them as a list of LangChain-compatible tools.
 
         :param server_url: URL of the MCP server, e.g. https://mcp.deepwiki.com/mcp or http://localhost:8000/mcp/
+        :param headers_var: Environment variable containing authorization token and/or other custom headers
+            in the following format: '{"Authorization": "Bearer <access-token>", "X-Custom-Header": "custom-value"}'
         :param allowed_tools: Optional list of tool names to filter from the server's available tools.
                               If None, all tools from the server will be returned.
 
         :return: A list of LangChain BaseTool instances retrieved from the MCP server.
         """
-
+        headers_dict: Dict[str, Any] = None
+        if headers_var:
+            # Loads variables from .env into os.environ
+            load_dotenv()
+            headers_str: str = os.getenv(headers_var)
+            headers_dict = json_repair.loads(headers_str)
         client = MultiServerMCPClient(
             {
                 "mcp_tool": {
                     "url": server_url,
                     "transport": "streamable_http",
-                    "headers": headers
+                    "headers": headers_dict
                 }
             }
         )
@@ -60,9 +69,6 @@ class LangChainMCPAdapter:
             mcp_tools = [tool for tool in mcp_tools if tool.name in allowed_tools]
 
         for tool in mcp_tools:
-            if agent_name:
-                # Prefix the name of the agent to each tool
-                tool.name = f"{agent_name}_{tool.name}"
             # Add "langchain_tool" tags so journal callback can idenitify it
             tool.tags = ["langchain_tool"]
 

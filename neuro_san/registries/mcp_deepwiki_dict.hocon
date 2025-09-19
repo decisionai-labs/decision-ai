@@ -31,22 +31,22 @@
             "function": {
             "description": "Assist user with answer from deepwiki."
             }
-            "tools": ["deepwiki_tool"]
-        },
-        {
-            "name": "deepwiki_tool",
-            "mcp": {
-                # Only support streamable http protocol
-                # For other modes of transport, use coded tool implementation
-                "server_url": "https://mcp.deepwiki.com/mcp",
+            "tools": [
+                {
+                    # Only support streamable http protocal
+                    # For other modes of transport, use coded tool implementation
+                    "server_url": "https://mcp.deepwiki.com/mcp",
 
-                # Optional: restricts which tools are available.
-                # If omitted, all tools are enabled.
-                "allowed_tools": ["read_wiki_structure", "ask_question"]
+                    # Optional: restricts which tools are available.
+                    # If omitted, all tools are enabled.
+                    "allowed_tools": ["read_wiki_structure", "ask_question"]
 
-                # Optional: specify a key for the environment variable that stores credentials.
-                # This allows secure handling of authentication without hardcoding sensitive data.
-            }
+                    # Optional: the environment variable that stores credentials and/or custom headers in the following format:
+                    # '{"Authorization": "Bearer <access-token>", "X-Custom-Header": "custom-value"}'.
+                    # This allows secure handling of authentication without hardcoding sensitive data.
+                    # "headers": ENV_VAR
+                }
+            ]
         }
     ]
 }

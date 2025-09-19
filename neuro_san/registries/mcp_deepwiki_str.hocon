@@ -31,20 +31,11 @@
             "function": {
             "description": "Assist user with answer from deepwiki."
             }
-            "tools": [
-                {
-                    # Only support streamable http protocal
-                    # For other modes of transport, use coded tool implementation
-                    "server_url": "https://mcp.deepwiki.com/mcp",
-
-                    # Optional: restricts which tools are available.
-                    # If omitted, all tools are enabled.
-                    "allowed_tools": ["read_wiki_structure", "ask_question"]
-
-                    # Optional: specify a key for the environment variable that stores credentials.
-                    # This allows secure handling of authentication without hardcoding sensitive data.
-                }
-            ]
+            # Only support streamable http protocal
+            # For other modes of transport, use coded tool implementation
+            # Moreover, if the URL does not start with "https://mcp" or end with "/mcp" or "/mcp/",
+            # use dictionary format: {"server_url": "https://example.com"} instead.
+            "tools": ["https://mcp.deepwiki.com/mcp"]
         }
     ]
 }
