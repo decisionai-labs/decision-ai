@@ -69,9 +69,13 @@ class CodedTool:
         scope of your CodedTool and can be done asynchronously, especially within
         the context of your CodedTool running within a server.
 
-        If you find even your asynchronous CodedTools need to synchronously block,
-        Strongly consider looking into using the asyncio.to_thread() function
+        If you find your CodedTools can't help but synchronously block,
+        strongly consider looking into using the asyncio.to_thread() function
         to not block the EventLoop for other requests.
+        See: https://docs.python.org/3/library/asyncio-task.html#asyncio.to_thread
+        Example:
+            async def async_invoke(self, args: Dict[str, Any], sly_data: Dict[str, Any]) -> Any:
+                return await asyncio.to_thread(self.invoke, args, sly_data)
 
         :param args: An argument dictionary whose keys are the parameters
                 to the coded tool and whose values are the values passed for them
