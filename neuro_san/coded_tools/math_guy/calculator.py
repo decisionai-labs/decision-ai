@@ -103,6 +103,8 @@ class Calculator(CodedTool):
         sly_data["sync_closeable"] = SyncCloseable()
         sly_data["async_closeable"] = AsyncCloseable()
 
+        # Needs to be another instance of a dictionary from the one above
+        # otherwise both progress reports will be seen as the same.
         progress: Dict[str, Any] = {
             # All done
             "progress": 1.0
