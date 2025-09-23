@@ -92,6 +92,7 @@ Some things to try:
         :param name: The name of the agent tool to get out of the registry
         :return: The dictionary representing the spec registered agent
         """
+        # "name" could be in dictionary format with keys like MCP servers.
         if name is None or not isinstance(name, str):
             return None
 

@@ -14,6 +14,11 @@
 # https://github.com/cognizant-ai-lab/neuro-san/blob/main/docs/agent_hocon_reference.md
 
 {
+    # Optional metadata describing this agent network
+    "metadata": {
+        "description": "Simple agent network consisting of a single agent and MCP tools",
+        "tags": ["example", "mcp"],
+    },
     "llm_config": {
         "model_name": "gpt-4o",
     },
@@ -35,16 +40,14 @@
                 {
                     # Only support streamable http protocal
                     # For other modes of transport, use coded tool implementation
-                    "server_url": "https://mcp.deepwiki.com/mcp",
+                    "url": "https://mcp.deepwiki.com/mcp",
 
                     # Optional: restricts which tools are available.
                     # If omitted, all tools are enabled.
-                    "allowed_tools": ["read_wiki_structure", "ask_question"]
+                    "tools": ["read_wiki_structure", "ask_question"]
 
-                    # Optional: the environment variable that stores credentials and/or custom headers in the following format:
-                    # '{"Authorization": "Bearer <access-token>", "X-Custom-Header": "custom-value"}'.
-                    # This allows secure handling of authentication without hardcoding sensitive data.
-                    # "headers": ENV_VAR
+                    # Future: provide a way to pass authentication details and/or
+                    # custom request metadata (e.g., headers, tokens).
                 }
             ]
         }
