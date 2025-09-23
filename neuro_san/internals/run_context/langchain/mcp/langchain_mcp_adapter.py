@@ -64,7 +64,8 @@ class LangChainMcpAdapter:
             mcp_tools = [tool for tool in mcp_tools if tool.name in allowed_tools]
 
         for tool in mcp_tools:
-            # Add "langchain_tool" tags so journal callback can idenitify it
+            # Add "langchain_tool" tags so journal callback can idenitify it.
+            # Thus MCP tools are treated as Langchain tools and can be reported in the thinking file.
             tool.tags = ["langchain_tool"]
 
         return mcp_tools
