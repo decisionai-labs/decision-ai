@@ -96,18 +96,30 @@ class ExternalActivation(AbstractCallableActivation):
             raw_reporting = extractor.get(key, raw_reporting)
 
         # Should we be reporting external messages?
-        self.report: bool = False
-        if isinstance(raw_reporting, bool):
-            self.report = bool(raw_reporting)
-        elif isinstance(raw_reporting, str):
-            self.report = self.agent_url == raw_reporting
-        elif isinstance(raw_reporting, List):
-            self.report = self.agent_url in raw_reporting
-        elif isinstance(raw_reporting, Dict):
-            self.report = bool(raw_reporting.get(self.agent_url))
-
+        self.report: bool = self.bool_from_multi_value(raw_reporting, self.agent_url)
         if self.report:
             self.processor.add_processor(ExternalMessageProcessor(self.journal))
+
+    @staticmethod
+    def bool_from_multi_value(source: Union[bool, str, List[str], Dict[str, Any]], value: str) -> bool:
+        """
+        :param source: The source against which we will check the value.
+                    Can be boolean, string, list, or dictionary.
+        :param value: The string value to check for
+        :return: True if the value is considered to be "true" in the source.
+                 False otherwise
+        """
+        bool_value: bool = False
+        if isinstance(source, bool):
+            bool_value = bool(source)
+        elif isinstance(source, str):
+            bool_value = value == source
+        elif isinstance(source, List):
+            bool_value = value in source
+        elif isinstance(source, Dict):
+            bool_value = bool(source.get(value))
+
+        return bool_value
 
     def get_name(self) -> str:
         """
