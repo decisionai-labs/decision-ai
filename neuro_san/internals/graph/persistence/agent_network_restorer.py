@@ -49,6 +49,10 @@ class AgentNetworkRestorer(Restorer):
         :param registry_dir: The directory under which file_references
                     for registry files are allowed to be found.
                     If None, there are no limits, but paths must be absolute
+        :param agent_mapper: optional AgentNameMapper;
+            if None, default will be used:
+                if registry_dir is None, AgentStandaloneMapper instance will be used;
+                otherwise, we use AgentFileTreeMapper.
         """
         self.registry_dir: str = registry_dir
         self.agent_mapper = agent_mapper

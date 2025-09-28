@@ -47,6 +47,8 @@ class RegistryManifestRestorer(Restorer):
             * A single local name for the manifest file listing the agents to host.
             * A list of local names for multiple manifest files to host
             * None (the default) which gets a single manifest file from a known source.
+        :param agent_mapper: optional AgentNameMapper;
+            if None, AgentFileTreeMapper instance will be used.
         """
         self.agent_mapper = agent_mapper
         if not self.agent_mapper:
