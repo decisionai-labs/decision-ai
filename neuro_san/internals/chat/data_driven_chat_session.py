@@ -35,6 +35,7 @@ from neuro_san.internals.graph.registry.agent_tool_registry import AgentToolRegi
 from neuro_san.internals.graph.activations.sly_data_redactor import SlyDataRedactor
 from neuro_san.internals.interfaces.front_man import FrontMan
 from neuro_san.internals.interfaces.invocation_context import InvocationContext
+from neuro_san.internals.interfaces.reservationist import Reservationist
 from neuro_san.internals.journals.journal import Journal
 from neuro_san.internals.messages.agent_framework_message import AgentFrameworkMessage
 from neuro_san.internals.messages.base_message_dictionary_converter import BaseMessageDictionaryConverter
@@ -223,6 +224,12 @@ class DataDrivenChatSession:
         # taken here ends up being harmless in the synchronous request case (like for gRPC) because
         # we would only be blocking our own event loop.
         await queue.put_final_item(synchronous=True)
+
+        # Now that we are done, tell the Reservationist that we used for this request
+        # that there will be no more Reservations to corral.
+        reservationist: Reservationist = invocation_context.get_reservationist()
+        if reservationist is not None:
+            await reservationist.close()
 
         # Close any objects on sly data that can be closed.
         await self.close_sly_data()
