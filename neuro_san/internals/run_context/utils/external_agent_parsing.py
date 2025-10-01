@@ -40,6 +40,14 @@ class ExternalAgentParsing:
         if agent_url is None or len(agent_url) == 0:
             return None
 
+        # We expect an external agent url to start with "/"
+        # if it is not so, return None for invalid format.
+        if not agent_url.startswith("/"):
+            return None
+
+        # Get an agent URL proper:
+        agent_url = agent_url[1:]
+
         parse_result: ParseResult = urlparse(agent_url)
         if parse_result is None:
             return None
@@ -49,10 +57,6 @@ class ExternalAgentParsing:
             # an agent that lives on the same server.
             return None
 
-        if not parse_result.path.startswith("/"):
-            # This is not an external agent specification
-            return None
-
         host: str = None
         port: str = None
         if len(parse_result.netloc) > 0:
@@ -60,11 +64,24 @@ class ExternalAgentParsing:
             split: List[str] = parse_result.netloc.split(":")
             host = split[0]
             if len(split) > 1:
-                port = split[0]
+                port = split[1]
 
-        # Special case for detecting localhost
-        if host is None or len(host) == 0:
+        no_host: bool = host is None or len(host) == 0
+        no_port: bool = port is None or len(port) == 0
+        if no_host:
             host = "localhost"
+
+        # Try for special case:
+        # we have an external agent specification for local agent, like "/SomeAgentName"
+        if no_host and no_port and not parse_result.path.startswith("/"):
+            agent_name = parse_result.path
+            return_dict = {
+                "host": host,
+                "port": port,
+                "agent_name": agent_name,
+            }
+            print(f"Special case for local agent: {return_dict}")
+            return return_dict
 
         # Get the agent name from the URL by looking at the path
         # Remove any leading slashes from the path for the agent name.
@@ -82,6 +99,7 @@ class ExternalAgentParsing:
             "port": port,
             "agent_name": agent_name,
         }
+        print(f"Special case for remote agent: {return_dict}")
         return return_dict
 
     @staticmethod
@@ -110,7 +128,7 @@ class ExternalAgentParsing:
         #       "tools": ["read_wiki_structure", "ask_question"],
         # }
 
-        # If it is a dict, it is assume it is MCP for now.
+        # If it is a dict, it is assumed it is MCP for now.
         # This may change in the future when Neuro-SAN supports other protocals like A2A.
         if isinstance(tool_ref, dict):
             return True
@@ -134,7 +152,8 @@ class ExternalAgentParsing:
 
             # FWIW: langchain internal tool references must satisfy the regex: "^[a-zA-Z0-9_-]+$"
             # It's possible that more complex external references might have the agent_name
-            # needing futher mangling.  Cross that bridge when we have a real example.
-            safe_name = "__" + agent_location.get("agent_name")
+            # needing further mangling.  Cross that bridge when we have a real example.
+            safe_name = "__" + agent_location.get("agent_name").replace("/", "__")
+            print(f"Converted external agent url '{agent_url}' to safe name '{safe_name}'")
 
         return safe_name

@@ -22,6 +22,7 @@ from neuro_san.internals.run_context.utils.external_agent_parsing import Externa
 from neuro_san.internals.network_providers.agent_network_storage import AgentNetworkStorage
 from neuro_san.session.async_direct_agent_session import AsyncDirectAgentSession
 from neuro_san.session.async_http_service_agent_session import AsyncHttpServiceAgentSession
+from neuro_san.internals.graph.persistence.agent_filetree_mapper import AgentFileTreeMapper
 
 
 class ExternalAgentSessionFactory(AsyncAgentSessionFactory):
@@ -53,6 +54,9 @@ class ExternalAgentSessionFactory(AsyncAgentSessionFactory):
         """
 
         agent_location: Dict[str, str] = ExternalAgentParsing.parse_external_agent(agent_url)
+
+        print(f"Parsed external agent url '{agent_url}' to location {agent_location}")
+
         session: AsyncAgentSession = self.create_session_from_location_dict(agent_location, invocation_context)
         return session
 
@@ -67,6 +71,8 @@ class ExternalAgentSessionFactory(AsyncAgentSessionFactory):
         """
         if agent_location is None:
             return None
+
+        print(f"Creating AsyncAgentSession for external agent at location {agent_location}")
 
         # Create the session.
         host = agent_location.get("host")
@@ -84,11 +90,17 @@ class ExternalAgentSessionFactory(AsyncAgentSessionFactory):
             # Optimization: We want to create a different kind of session to minimize socket usage
             # and potentially relieve the direct user of the burden of having to start a server
 
+            # "agent_name" here is a "client view" name of the agent,
+            # we need to translate it to the "service view" name
+            service_agent_name: str = AgentFileTreeMapper.filepath_to_agent_network_name(agent_name)
+
             agent_network_provider: AgentNetworkProvider = \
-                self.network_storage.get_agent_network_provider(agent_name)
+                self.network_storage.get_agent_network_provider(service_agent_name)
             agent_network: AgentNetwork = agent_network_provider.get_agent_network()
             safe_invocation_context: InvocationContext = invocation_context.safe_shallow_copy()
             session = AsyncDirectAgentSession(agent_network, safe_invocation_context, metadata=metadata)
+
+            print(f"Created AsyncDirectAgentSession for external agent '{service_agent_name}' {session}")
 
         if session is None:
             # When creating a session for external agents, specifically use None for the
