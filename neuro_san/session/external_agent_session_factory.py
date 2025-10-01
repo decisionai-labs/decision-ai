@@ -22,7 +22,6 @@ from neuro_san.internals.run_context.utils.external_agent_parsing import Externa
 from neuro_san.internals.network_providers.agent_network_storage import AgentNetworkStorage
 from neuro_san.session.async_direct_agent_session import AsyncDirectAgentSession
 from neuro_san.session.async_http_service_agent_session import AsyncHttpServiceAgentSession
-from neuro_san.internals.graph.persistence.agent_filetree_mapper import AgentFileTreeMapper
 
 
 class ExternalAgentSessionFactory(AsyncAgentSessionFactory):

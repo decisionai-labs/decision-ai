@@ -136,6 +136,5 @@ class ExternalAgentParsing:
             # It's possible that more complex external references might have the agent_name
             # needing further mangling.  Cross that bridge when we have a real example.
             safe_name = "__" + agent_location.get("agent_name").replace("/", "__")
-            print(f"Converted external agent url '{agent_url}' to safe name '{safe_name}'")
 
         return safe_name
