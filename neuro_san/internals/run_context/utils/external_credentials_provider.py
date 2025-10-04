@@ -67,8 +67,6 @@ class ExternalCredentialsProvider:
         if cls.credentials_table is None:
             cls.load_credentials()
 
-        print(f"Credentials table loaded: {cls.credentials_table}")
-
         if client is None:
             return None
 
