@@ -20,8 +20,6 @@ from pyparsing.exceptions import ParseSyntaxException
 from leaf_common.persistence.easy.easy_hocon_persistence import EasyHoconPersistence
 from leaf_common.persistence.interface.restorer import Restorer
 
-from neuro_san import TOP_LEVEL_DIR
-
 
 class McpClientsInfoRestorer(Restorer):
     """
@@ -41,12 +39,8 @@ class McpClientsInfoRestorer(Restorer):
         if not file_path:
             file_path = os.environ.get("MCP_CLIENTS_INFO_FILE")
             if not file_path:
-                # No env var, so fallback to what is coded in this repo.
-                path_from_top: str = "internals/run_context/langchain/toolbox/mcp_clients_info.hocon"
-                file_path = TOP_LEVEL_DIR.get_file_in_basis(path_from_top)
-                if not file_path:
-                    # No clients info file specified anywhere.
-                    return None
+                # No clients info file specified.
+                return None
 
         clients_info: Dict[str, Any] = None
         if file_path.endswith(".hocon"):
