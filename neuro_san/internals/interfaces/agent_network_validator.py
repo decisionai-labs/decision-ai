@@ -23,7 +23,27 @@ class AgentNetworkValidator:
         """
         Validate the agent network
 
-        :param agent_network: The agent network to validate
+        :param agent_network: The agent network or name -> spec dictionary to validate
         :return: A list of error messages
         """
         raise NotImplementedError
+
+    @staticmethod
+    def get_name_to_spec(agent_network: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        :param agent_network: The top-level agent network or tools dictionary
+        :return: The agent name -> single agent spec dictionary of the agent network
+        """
+        if agent_network is None:
+            return None
+
+        if "tools" not in agent_network:
+            # Assume we already have the name -> spec dictionary
+            return agent_network
+
+        name_to_spec: Dict[str, Any] = {}
+        agents: List[Dict[str, Any]] = agent_network.get("tools")
+        for one_agent in agents:
+            name_to_spec[one_agent.get("name")] = one_agent
+
+        return name_to_spec
