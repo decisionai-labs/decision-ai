@@ -101,16 +101,28 @@ class StructureNetworkValidator(AgentNetworkValidator):
         :param name_to_spec: The agent network to validate
         :return: Set of top agent names
         """
-        as_down_chains: Set[str] = set()
+        all_down_chains: Set[str] = set()
         has_down_chains: Set[str] = set()
 
         for agent_name, agent_config in name_to_spec.items():
             down_chains: List[str] = agent_config.get("tools", [])
             if down_chains:
-                has_down_chains.add(agent_name)
-                as_down_chains.update(down_chains)
 
-        return has_down_chains - as_down_chains
+                has_down_chains.add(agent_name)
+
+                safe_down_chains: List[str] = self.remove_dictionary_tools(down_chains)
+                all_down_chains.update(safe_down_chains)
+
+        # Potential top agents are agents that have down-chains but are not down-chains of others
+        top_agents: Set[str] = has_down_chains - all_down_chains
+
+        # Special case: If there's only one agent in the network, it's always a top agent
+        if len(top_agents) == 0 and len(name_to_spec) == 1:
+            # It's OK to have a single top agent with no down-chains
+            one_top: str = list(name_to_spec.keys())[0]
+            top_agents.add(one_top)
+
+        return top_agents
 
     def find_cyclical_agents(self, name_to_spec: Dict[str, Any]) -> Set[str]:
         """
@@ -170,9 +182,10 @@ class StructureNetworkValidator(AgentNetworkValidator):
         # Step 5: Get all child agents (down_chains) of current agent
         agent_spec: Dict[str, Any] = name_to_spec.get(agent, {})
         down_chains: List[str] = agent_spec.get("tools", [])
+        safe_down_chains: List[str] = self.remove_dictionary_tools(down_chains)
 
         # Step 6: Recursively visit each child agent
-        for child_agent in down_chains:
+        for child_agent in safe_down_chains:
             # Only visit child if it exists in our network (safety check)
             if child_agent in name_to_spec:
                 self.dfs_cycle_detection(name_to_spec, child_agent, path, state, cyclical_agents)
@@ -231,9 +244,10 @@ class StructureNetworkValidator(AgentNetworkValidator):
 
         # Step 4: Get all child agents (down_chains) of current agent
         down_chains: List[str] = name_to_spec.get(agent, {}).get("tools", [])
+        safe_down_chains: List[str] = self.remove_dictionary_tools(down_chains)
 
         # Step 5: Recursively visit each child agent to continue the traversal
-        for child_agent in down_chains:
+        for child_agent in safe_down_chains:
             # Skip URL/path tools - they're not agents
             if not self.is_url_or_path(child_agent):
                 # Visit each child - the recursion will handle visited check and network existence
@@ -253,9 +267,10 @@ class StructureNetworkValidator(AgentNetworkValidator):
         for agent_name, agent_data in name_to_spec.items():
 
             tools: List[str] = agent_data.get("tools", [])
+            safe_tools: List[str] = self.remove_dictionary_tools(tools)
 
             # Check each tool in the agent's tools list
-            for tool in tools:
+            for tool in safe_tools:
                 # Skip URL/path tools - they're not agents and don't need nodes
                 if self.is_url_or_path(tool):
                     continue
@@ -297,3 +312,17 @@ class StructureNetworkValidator(AgentNetworkValidator):
         return (tool.startswith("/") or
                 tool.startswith("http://") or
                 tool.startswith("https://"))
+
+    @staticmethod
+    def remove_dictionary_tools(down_chains: List[str]) -> List[str]:
+        """
+        Sometimes tool lists have dictionary entries to support servers-based tools
+        that need more than just a string.  For instance MCP servers.
+        :param  down_chains: List of tools
+        :return: List of tools without dictionary entries
+        """
+        safe_list: List[str] = []
+        for tool in down_chains:
+            if isinstance(tool, str):
+                safe_list.append(tool)
+        return safe_list

@@ -66,20 +66,10 @@ class UrlNetworkValidator(AgentNetworkValidator):
             if agent.get("tools"):
                 tools: List[str] = agent.get("tools")
                 if tools:
-                    for tool in tools:
+                    safe_tools: List[str] = self.remove_dictionary_tools(tools)
+                    for tool in safe_tools:
                         if self.is_url_or_path(tool) and tool not in urls:
                             error_msg = f"Agent '{agent_name}' has invalid URL or path in tools: '{tool}' urls: {urls}"
                             errors.append(error_msg)
 
         return errors
-
-    def is_url_or_path(self, tool: str) -> bool:
-        """
-        Check if a tool string is a URL or file path (not an agent name).
-
-        :param tool: The tool string to check
-        :return: True if tool is a URL or path, False otherwise
-        """
-        return (tool.startswith("/") or
-                tool.startswith("http://") or
-                tool.startswith("https://"))

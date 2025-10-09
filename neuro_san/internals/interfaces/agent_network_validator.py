@@ -47,3 +47,29 @@ class AgentNetworkValidator:
             name_to_spec[one_agent.get("name")] = one_agent
 
         return name_to_spec
+
+    @staticmethod
+    def is_url_or_path(tool: str) -> bool:
+        """
+        Check if a tool string is a URL or file path (not an agent name).
+
+        :param tool: The tool string to check
+        :return: True if tool is a URL or path, False otherwise
+        """
+        return (tool.startswith("/") or
+                tool.startswith("http://") or
+                tool.startswith("https://"))
+
+    @staticmethod
+    def remove_dictionary_tools(down_chains: List[str]) -> List[str]:
+        """
+        Sometimes tool lists have dictionary entries to support servers-based tools
+        that need more than just a string.  For instance MCP servers.
+        :param  down_chains: List of tools
+        :return: List of tools without dictionary entries
+        """
+        safe_list: List[str] = []
+        for tool in down_chains:
+            if isinstance(tool, str):
+                safe_list.append(tool)
+        return safe_list
