@@ -45,7 +45,7 @@ class ToolboxNetworkValidator(AgentNetworkValidator):
 
         self.logger.info("Validating toolbox agents...")
 
-        if agent_network is None:
+        if not agent_network:
             errors.append("Agent network is empty.")
             return errors
 
