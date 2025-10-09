@@ -26,6 +26,15 @@ class TestStructureNetworkValidator(TestCase):
     Unit tests for StructureNetworkValidator class.
     """
 
+    @staticmethod
+    def restore(file_reference: str):
+        # Open a known good network file
+        restorer = AgentNetworkRestorer()
+        hocon_file: str = REGISTRIES_DIR.get_file_in_basis(file_reference)
+        agent_network: AgentNetwork = restorer.restore(file_reference=hocon_file)
+        config: Dict[str, Any] = agent_network.get_config()
+        return config
+
     def test_assumptions(self):
         """
         Can we construct?
@@ -52,10 +61,7 @@ class TestStructureNetworkValidator(TestCase):
         validator = StructureNetworkValidator()
 
         # Open a known good network file
-        restorer = AgentNetworkRestorer()
-        hocon_file: str = REGISTRIES_DIR.get_file_in_basis("hello_world.hocon")
-        agent_network: AgentNetwork = restorer.restore(file_reference=hocon_file)
-        config: Dict[str, Any] = agent_network.get_config()
+        config: Dict[str, Any] = self.restore("hello_world.hocon")
 
         errors: List[str] = validator.validate(config)
 
@@ -71,12 +77,9 @@ class TestStructureNetworkValidator(TestCase):
         validator = StructureNetworkValidator()
 
         # Open a known good network file
-        restorer = AgentNetworkRestorer()
-        hocon_file: str = REGISTRIES_DIR.get_file_in_basis("hello_world.hocon")
-        agent_network: AgentNetwork = restorer.restore(file_reference=hocon_file)
-        config: Dict[str, Any] = agent_network.get_config()
+        config: Dict[str, Any] = self.restore("hello_world.hocon")
 
-        # Invalidate per the test
+        # Invalidate per the test - remove the link between the announcer and synonymizer
         config["tools"][0]["tools"] = []
 
         errors: List[str] = validator.validate(config)
@@ -90,13 +93,42 @@ class TestStructureNetworkValidator(TestCase):
         validator = StructureNetworkValidator()
 
         # Open a known good network file
-        restorer = AgentNetworkRestorer()
-        hocon_file: str = REGISTRIES_DIR.get_file_in_basis("esp_decision_assistant.hocon")
-        agent_network: AgentNetwork = restorer.restore(file_reference=hocon_file)
-        config: Dict[str, Any] = agent_network.get_config()
+        config: Dict[str, Any] = self.restore("esp_decision_assistant.hocon")
 
-        # Invalidate per the test
+        # Invalidate per the test - add a link from the predictor to the prescriptor
         config["tools"][2]["tools"] = ["prescriptor"]
+
+        errors: List[str] = validator.validate(config)
+
+        self.assertEqual(1, len(errors), errors[-1])
+
+    def test_unreachable(self):
+        """
+        Tests a network where there is an unreachable agent.
+        """
+        validator = StructureNetworkValidator()
+
+        # Open a known good network file
+        config: Dict[str, Any] = self.restore("esp_decision_assistant.hocon")
+
+        # Invalidate per the test - remove the link between the prescriptor and the predictor
+        config["tools"][1]["tools"] = []
+
+        errors: List[str] = validator.validate(config)
+
+        self.assertEqual(1, len(errors), errors[-1])
+
+    def test_missing_nodes(self):
+        """
+        Tests a network where there is an unreachable agent.
+        """
+        validator = StructureNetworkValidator()
+
+        # Open a known good network file
+        config: Dict[str, Any] = self.restore("esp_decision_assistant.hocon")
+
+        # Invalidate per the test - add a node at the predictor
+        config["tools"][2]["tools"] = ["missing_node"]
 
         errors: List[str] = validator.validate(config)
 
