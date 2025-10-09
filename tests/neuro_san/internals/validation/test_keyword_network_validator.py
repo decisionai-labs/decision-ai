@@ -73,7 +73,7 @@ class TestJsonStructureParser(TestCase):
         config: Dict[str, Any] = agent_network.get_config()
 
         # Invalidate per the test
-        config["tools"][0]["instructions"] = ""  
+        config["tools"][0]["instructions"] = ""
 
         errors: List[str] = validator.validate(config)
         self.assertEqual(1, len(errors))
