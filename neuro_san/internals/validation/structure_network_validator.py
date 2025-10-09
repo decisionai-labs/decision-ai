@@ -31,11 +31,12 @@ class StructureNetworkValidator(AgentNetworkValidator):
     CURRENTLY_BEING_PROCESSED: int = 1
     FULLY_PROCESSED: int = 2
 
-    def __init__(self):
+    def __init__(self, cyclical_agents_ok: bool = False):
         """
         Constructor
         """
         self.logger: Logger = getLogger(self.__class__.__name__)
+        self.cyclical_agents_ok: bool = cyclical_agents_ok
 
     def validate(self, agent_network: Dict[str, Any]) -> List[str]:
         """
@@ -66,7 +67,7 @@ class StructureNetworkValidator(AgentNetworkValidator):
 
         # Find cyclical agents
         cyclical_agents: Set[str] = self.find_cyclical_agents(name_to_spec)
-        if cyclical_agents:
+        if cyclical_agents and not self.cyclical_agents_ok:
             errors.append(f"Cyclical dependencies found in agents: {sorted(cyclical_agents)}")
 
         # Find unreachable agents (only meaningful if we have exactly one top agent)

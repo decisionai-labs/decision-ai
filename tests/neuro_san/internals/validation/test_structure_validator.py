@@ -81,3 +81,23 @@ class TestStructureNetworkValidator(TestCase):
 
         errors: List[str] = validator.validate(config)
         self.assertEqual(1, len(errors))
+
+    def test_cycles(self):
+        """
+        Tests a network where there is a cycle.
+        These can actually be ok, but we want to test that we can detect them.
+        """
+        validator = StructureNetworkValidator()
+
+        # Open a known good network file
+        restorer = AgentNetworkRestorer()
+        hocon_file: str = REGISTRIES_DIR.get_file_in_basis("esp_decision_assistant.hocon")
+        agent_network: AgentNetwork = restorer.restore(file_reference=hocon_file)
+        config: Dict[str, Any] = agent_network.get_config()
+
+        # Invalidate per the test
+        config["tools"][2]["tools"] = ["prescriptor"]
+
+        errors: List[str] = validator.validate(config)
+
+        self.assertEqual(1, len(errors), errors[-1])
