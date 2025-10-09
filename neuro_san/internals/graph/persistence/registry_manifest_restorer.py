@@ -73,7 +73,7 @@ class RegistryManifestRestorer(Restorer):
 
         self.logger = logging.getLogger(self.__class__.__name__)
 
-    # pylint: disable=too-many-locals
+    # pylint: disable=too-many-locals, too-many-branches
     def restore_from_files(self, file_references: Sequence[str]) -> Dict[str, AgentNetwork]:
         """
         :param file_references: The sequence of file references to use when restoring.
@@ -126,20 +126,7 @@ your current working directory (pwd).
                 raise FileNotFoundError(message)
 
             # Find the list of agent network names
-            external_network_names: List[str] = []
-            for key, value in one_manifest.items():
-                if not bool(value):
-                    # Fast out
-                    continue
-
-                # Key here is an agent name in a form that we chose,
-                # and we'll need to use an agent mapper to get to this agent definition file.
-                # Keys sometimes come with quotes.
-                use_key: str = key.replace(r'"', "")
-                use_key = use_key.strip()
-                agent_filepath: str = self.agent_mapper.agent_name_to_filepath(use_key)
-                network_name: str = self.agent_mapper.filepath_to_agent_network_name(agent_filepath)
-                external_network_names.append(f"/{network_name}")
+            external_network_names: List[str] = self.find_external_network_names(one_manifest)
 
             # DEF - need mcp servers as well at some point
             validator = ManifestNetworkValidator(external_network_names)
@@ -200,3 +187,28 @@ your current working directory (pwd).
         Return current list of manifest files.
         """
         return self.manifest_files
+
+    def find_external_network_names(self, manifest_entries: Dict[str, Any]) -> List[str]:
+        """
+        Find the list of agent network names
+
+        :param manifest_entries: The manifest entries
+        :return: A list of agent network names valid for use as external network references.
+        """
+
+        external_network_names: List[str] = []
+        for key, value in manifest_entries.items():
+            if not bool(value):
+                # Fast out
+                continue
+
+            # Key here is an agent name in a form that we chose,
+            # and we'll need to use an agent mapper to get to this agent definition file.
+            # Keys sometimes come with quotes.
+            use_key: str = key.replace(r'"', "")
+            use_key = use_key.strip()
+            agent_filepath: str = self.agent_mapper.agent_name_to_filepath(use_key)
+            network_name: str = self.agent_mapper.filepath_to_agent_network_name(agent_filepath)
+            external_network_names.append(f"/{network_name}")
+
+        return external_network_names

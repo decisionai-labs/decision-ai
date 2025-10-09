@@ -59,7 +59,7 @@ class TestUrlNetworkValidator(TestCase):
 
         errors: List[str] = validator.validate(config)
 
-        failure_message: str = None 
+        failure_message: str = None
         if len(errors) > 0:
             failure_message = errors[0]
         self.assertEqual(0, len(errors), failure_message)
