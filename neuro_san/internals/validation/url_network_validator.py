@@ -67,9 +67,22 @@ class UrlNetworkValidator(AgentNetworkValidator):
                 tools: List[str] = agent.get("tools")
                 if tools:
                     safe_tools: List[str] = self.remove_dictionary_tools(tools)
-                    for tool in safe_tools:
-                        if self.is_url_or_path(tool) and tool not in urls:
-                            error_msg = f"Agent '{agent_name}' has invalid URL or path in tools: '{tool}' urls: {urls}"
-                            errors.append(error_msg)
+                    self.check_safe_urls(agent_name, safe_tools, urls, errors)
 
         return errors
+
+    def check_safe_urls(self, agent_name: str, safe_tools: List[str], urls: List[str], errors: List[str]):
+        """
+        Check that urls are valid
+
+        :param agent_name: Name of agent
+        :param safe_tools: List of tools
+        :param urls: List of URLs
+        :param errors: List of errors. Potentially modified on exit.
+        """
+        for tool in safe_tools:
+            if self.is_url_or_path(tool) and \
+                    tool not in urls and \
+                    not tool.endswith("mcp"):
+                error_msg = f"Agent '{agent_name}' has invalid URL or path in tools: '{tool}' urls: {urls}"
+                errors.append(error_msg)
