@@ -86,10 +86,10 @@ class LangChainMcpAdapter:
         #   It's possible we might want to cache these results somehow to minimize tool calls.
         mcp_tools: List[BaseTool] = await client.get_tools()
 
-        # If allowed_tools is provided, filter the list to include only those tools.
+        # If allowed_tools is provided in the hocon, filter the list to include only those tools.
         client_allowed_tools: List[str] = allowed_tools
-        if client_allowed_tools is None:
-            # Check if MCP client info has a "tools" field to use as allowed tools.
+        # If not provided or is an empty list, check if MCP clients info has a "tools" field to use as allowed tools.
+        if not client_allowed_tools:
             client_allowed_tools = LangChainMcpAdapter._mcp_clients_info.get(server_url, {}).get("tools")
         if client_allowed_tools:
             mcp_tools = [tool for tool in mcp_tools if tool.name in client_allowed_tools]
