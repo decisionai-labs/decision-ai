@@ -36,7 +36,7 @@ class ToolboxNetworkValidator(AgentNetworkValidator):
 
     def validate(self, agent_network: Dict[str, Any]) -> List[str]:
         """
-        Validation the agent network.
+        Validate the agent network.
 
         :param agent_network: The agent network or name -> spec dictionary to validate
         :return: List of errors indicating agents and missing keywords
