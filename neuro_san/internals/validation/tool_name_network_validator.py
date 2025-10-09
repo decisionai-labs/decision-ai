@@ -56,7 +56,9 @@ class ToolNameNetworkValidator(AgentNetworkValidator):
 
         # Be sure all agent names are valid per the regex above.
         for agent_name, agent in name_to_spec.items():
-            if not re.match(self.TOOL_NAME_PATTERN, agent_name):
+            spec_name: str = agent.get("name")
+            if not re.match(self.TOOL_NAME_PATTERN, agent_name) or \
+                    not re.match(self.TOOL_NAME_PATTERN, spec_name):
                 error_msg = f"{agent_name} must match the regex '{self.TOOL_NAME_PATTERN}'"
                 errors.append(error_msg)
 
