@@ -14,7 +14,8 @@ from typing import Any
 from typing import Dict
 from typing import List
 
-import logging
+from logging import getLogger
+from logging import Logger
 
 from neuro_san.internals.interfaces.agent_network_validator import AgentNetworkValidator
 
@@ -28,12 +29,13 @@ class KeywordNetworkValidator(AgentNetworkValidator):
         """
         Constructor
         """
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger: Logger = getLogger(self.__class__.__name__)
 
     def validate(self, agent_network: Dict[str, Any]) -> List[str]:
         """
         Validation the agent network.
 
+        :param agent_network: The agent network to validate
         :return: List of errors indicating agents and missing keywords
         """
         errors: List[str] = []
@@ -46,6 +48,8 @@ class KeywordNetworkValidator(AgentNetworkValidator):
                 error_msg = f"{agent_name} 'instructions' cannot be empty."
                 errors.append(error_msg)
 
-        self.logger.warning(str(errors))
+        # Only warn if there is a problem
+        if len(errors) > 0:
+            self.logger.warning(str(errors))
 
         return errors

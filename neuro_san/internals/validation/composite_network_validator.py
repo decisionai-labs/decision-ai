@@ -39,4 +39,5 @@ class CompositeNetworkValidator(AgentNetworkValidator):
         errors: List[str] = []
         for validator in self.validators:
             errors.extend(validator.validate(agent_network))
+
         return errors
