@@ -31,6 +31,8 @@ class CompositeNetworkValidator(AgentNetworkValidator):
 
     def validate(self, agent_network: Dict[str, Any]) -> List[str]:
         """
+        Validate the agent network.
+
         :param agent_network: The agent network to validate
         :return: A list of error messages
         """

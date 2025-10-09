@@ -25,25 +25,6 @@ class AgentNetworkValidator:
         self.logger = logging.getLogger(self.__class__.__name__)
         self.network = network
 
-    def validate_network_keywords(self) -> list[str]:
-        """
-        Validation of the agent network keywords. Currently, only required "instructions" for non-function agents.
-
-        :return: List of errors indicating agents and missing keywords
-        """
-        errors: list[str] = []
-
-        self.logger.info("Validating agent network keywords...")
-
-        for agent_name, agent in self.network.items():
-            if agent.get("instructions") == "":
-                error_msg = f"{agent_name} 'instructions' cannot be empty."
-                errors.append(error_msg)
-
-        self.logger.warning(str(errors))
-
-        return errors
-
     def validate_network_structure(self) -> list[str]:
         """
         Comprehensive validation of the agent network structure.
