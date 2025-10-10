@@ -43,6 +43,8 @@ class ToolboxNetworkValidator(AbstractNetworkValidator):
         """
         errors: List[str] = []
 
+        self.logger.info("Validating toolbox agents...")
+
         for agent_name, agent in name_to_spec.items():
             if agent.get("instructions") is None:  # This is a toolbox agent
                 if self.tools is None or not isinstance(self.tools, Dict):
