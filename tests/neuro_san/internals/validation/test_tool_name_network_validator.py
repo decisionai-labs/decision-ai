@@ -46,3 +46,16 @@ class TestToolNameNetworkValidator(TestCase, AbstractNetworkValidatorTest):
 
         errors: List[str] = validator.validate(config)
         self.assertEqual(1, len(errors))
+
+    def test_deep_name(self):
+        """
+        Tests a network where at least one of the nodes has a reference to
+        an exeternal network in a directory hierachy.
+        """
+        validator: AgentNetworkValidator = ToolNameNetworkValidator()
+
+        # Open a known good network file
+        config: Dict[str, Any] = self.restore("deep/math_guy_passthrough.hocon")
+
+        errors: List[str] = validator.validate(config)
+        self.assertEqual(0, len(errors))
