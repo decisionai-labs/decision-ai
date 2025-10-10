@@ -208,9 +208,14 @@ your current working directory (pwd).
             self.logger.error(message)
             agent_network = None
         except (ParseException, ParseSyntaxException, JSONDecodeError) as exception:
+
+            # Be sure we spit out the right exception message with relevant parsing
+            # information as the error.  If not, we don't get enough good information
+            # to act on when there is a problem.
             use_exception: Exception = exception
             if exception.__cause__ is not None:
                 use_exception = exception.__cause__
+
             message: str = f"Parse error in registry item {manifest_key}. Skipping. - {str(use_exception)}"
             self.logger.error(message)
             agent_network = None
