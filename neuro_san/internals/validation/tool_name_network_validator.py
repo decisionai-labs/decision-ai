@@ -19,7 +19,7 @@ from logging import Logger
 
 import re
 
-from neuro_san.internals.interfaces.agent_network_validator import AbstractNetworkValidator
+from neuro_san.internals.validation.abstract_network_validator import AbstractNetworkValidator
 
 
 class ToolNameNetworkValidator(AbstractNetworkValidator):
