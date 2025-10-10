@@ -16,21 +16,21 @@ from typing import List
 from unittest import TestCase
 
 from neuro_san.internals.interfaces.agent_network_validator import AgentNetworkValidator
-from neuro_san.internals.validation.structure_network_validator import StructureNetworkValidator
+from neuro_san.internals.validation.unreachable_nodes_network_validator import UnreachableNodesNetworkValidator
 
 from tests.neuro_san.internals.validation.abstract_network_validator_test import AbstractNetworkValidatorTest
 
 
-class TestStructureNetworkValidator(TestCase, AbstractNetworkValidatorTest):
+class TestUnreachableNodesNetworkValidator(TestCase, AbstractNetworkValidatorTest):
     """
-    Unit tests for StructureNetworkValidator class.
+    Unit tests for UnreachableNodesNetworkValidator class.
     """
 
     def create_validator(self) -> AgentNetworkValidator:
         """
         Creates an instance of the validator
         """
-        return StructureNetworkValidator()
+        return UnreachableNodesNetworkValidator()
 
     def test_multiple_front_men(self):
         """
