@@ -18,12 +18,12 @@ from typing import Set
 from logging import getLogger
 from logging import Logger
 
-from neuro_san.internals.interfaces.agent_network_validator import AgentNetworkValidator
+from neuro_san.internals.interfaces.abstract_network_validator import AbstractNetworkValidator
 
 
-class StructureNetworkValidator(AgentNetworkValidator):
+class StructureNetworkValidator(AbstractNetworkValidator):
     """
-    AgentNetworkValidator that looks for topological issues in an agent network.
+    AbstractNetworkValidator that looks for topological issues in an agent network.
     """
 
     # State tracking for graph visitation
@@ -38,24 +38,16 @@ class StructureNetworkValidator(AgentNetworkValidator):
         self.logger: Logger = getLogger(self.__class__.__name__)
         self.cyclical_agents_ok: bool = cyclical_agents_ok
 
-    def validate(self, agent_network: Dict[str, Any]) -> List[str]:
+    def validate_name_to_spec_dict(self, name_to_spec: Dict[str, Any]) -> List[str]:
         """
-        Comprehensive validation of the agent network structure.
+        Validate the agent network, specifically in the form of a name -> agent spec dictionary.
 
-        :param agent_network: The agent network or name -> spec dictionary to validate
-        :return: List of any issues found.
+        :param name_to_spec: The name -> agent spec dictionary to validate
+        :return: A list of error messages
         """
         errors: List[str] = []
 
         self.logger.info("Validating agent network structure...")
-
-        if not agent_network:
-            errors.append("Agent network is empty.")
-            return errors
-
-        # We can validate either from a top-level agent network,
-        # or from the list of tools from the agent spec.
-        name_to_spec: Dict[str, Any] = self.get_name_to_spec(agent_network)
 
         # Find top agents
         top_agents: Set[str] = self.find_all_top_agents(name_to_spec)
