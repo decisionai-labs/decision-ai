@@ -479,7 +479,6 @@ Each entry may be one of the following:
 
 - A string reference to an [external agent](#external-agents)
 
-
 - A string or dictionary reference to an [MCP server](#mcp-servers)
 
 Typically the names listed here are other agents within the same agent network definition,
@@ -521,7 +520,7 @@ This can be configured in two forms:
 
 - dictionary reference
 
-Example: 
+Example:
 
 ```json
 "tools": [
