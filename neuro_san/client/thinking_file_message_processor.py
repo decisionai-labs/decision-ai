@@ -133,6 +133,9 @@ class ThinkingFileMessageProcessor(MessageProcessor):
                 return
             filename = Path(self.thinking_dir, origin_filename)
 
+        # Ensure the directories exist:
+        filename.parent.mkdir(parents=True, exist_ok=True)
+
         how_to_open_file: str = "a"
         if not filename.exists():
             how_to_open_file = "w"
