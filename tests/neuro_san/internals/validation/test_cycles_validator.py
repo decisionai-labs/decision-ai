@@ -13,13 +13,15 @@ from typing import Any
 from typing import Dict
 from typing import List
 
+from unittest import TestCase
+
 from neuro_san.internals.interfaces.agent_network_validator import AgentNetworkValidator
 from neuro_san.internals.validation.cycles_network_validator import CyclesNetworkValidator
 
 from tests.neuro_san.internals.validation.abstract_network_validator_test import AbstractNetworkValidatorTest
 
 
-class TestCyclesNetworkValidator(AbstractNetworkValidatorTest):
+class TestCyclesNetworkValidator(TestCase, AbstractNetworkValidatorTest):
     """
     Unit tests for CyclesNetworkValidator class.
     """

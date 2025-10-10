@@ -13,29 +13,26 @@ from typing import Any
 from typing import Dict
 from typing import List
 
-from unittest import TestCase
-
 from neuro_san import REGISTRIES_DIR
 from neuro_san.internals.graph.persistence.agent_network_restorer import AgentNetworkRestorer
 from neuro_san.internals.graph.registry.agent_network import AgentNetwork
 from neuro_san.internals.interfaces.agent_network_validator import AgentNetworkValidator
-from neuro_san.internals.validation.tool_name_network_validator import ToolNameNetworkValidator
+from neuro_san.test.interfaces.assert_forwarder import AssertForwarder
 
 
-class AbstractNetworkValidatorTest(TestCase):
+class AbstractNetworkValidatorTest(AssertForwarder):
     """
-    Unit tests for CyclesNetworkValidator class.
+    Abstract base class for testing AgentNetworkValidators
+
+    We assume that subclasses will implement the create_validator method
+    and also derive from unittest.TestCase.
     """
 
     def create_validator(self) -> AgentNetworkValidator:
         """
         Creates an instance of the validator
         """
-        # Can't actually be fully abstract, but when test infra picks up
-        # this class it will be run, so give it something.
-        # return NotImplementedError
-
-        return ToolNameNetworkValidator()
+        return NotImplementedError
 
     @staticmethod
     def restore(file_reference: str) -> Dict[str, Any]:
