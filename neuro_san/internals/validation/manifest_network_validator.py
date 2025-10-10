@@ -14,6 +14,7 @@ from typing import List
 from neuro_san.internals.interfaces.agent_network_validator import AgentNetworkValidator
 from neuro_san.internals.validation.composite_network_validator import CompositeNetworkValidator
 from neuro_san.internals.validation.keyword_network_validator import KeywordNetworkValidator
+from neuro_san.internals.validation.missing_nodes_network_validator import MissingNodesNetworkValidator
 from neuro_san.internals.validation.structure_network_validator import StructureNetworkValidator
 from neuro_san.internals.validation.tool_name_network_validator import ToolNameNetworkValidator
 from neuro_san.internals.validation.url_network_validator import UrlNetworkValidator
@@ -34,6 +35,7 @@ class ManifestNetworkValidator(CompositeNetworkValidator):
         """
         validators: List[AgentNetworkValidator] = [
             KeywordNetworkValidator(),
+            MissingNodesNetworkValidator(),
             StructureNetworkValidator(),
             # No ToolBoxNetworkValidator yet.
             ToolNameNetworkValidator(),
