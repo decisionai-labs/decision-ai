@@ -22,6 +22,7 @@ class StructureNetworkValidator(CompositeNetworkValidator):
     """
     Implementation of CompositeNetworkValidator interface that uses multiple specific validators
     to do some standard validation for topological issues.
+    This gets used by agent network designer.
     """
 
     def __init__(self):
