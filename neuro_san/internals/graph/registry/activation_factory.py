@@ -100,6 +100,8 @@ Check to be sure your value for PYTHONPATH includes where you expect where your 
             while agent_tool_path.startswith("."):
                 agent_tool_path = agent_tool_path[1:]
 
+        print(f"===============Using agent tool path {agent_tool_path}, agent: {self.agent_network.get_network_name()}")
+
         # Be sure the name of the agent (stem of the hocon file) is the
         # last piece to narrow down the path resolution further.
         if not agent_tool_path.endswith(self.agent_network.get_network_name()):
@@ -108,6 +110,8 @@ Check to be sure your value for PYTHONPATH includes where you expect where your 
         # Now, agent network name itself can contain "/" symbols (regardless of underlying OS)
         # in case of hierarchical agents structure. Replace those too.
         agent_tool_path = agent_tool_path.replace("/", ".")
+
+        print(f"===============Final agent tool path {agent_tool_path}")
         return agent_tool_path
 
     def get_agent_tool_path(self) -> str:
