@@ -19,11 +19,11 @@ class DictionaryValidator:
     An interface for validating dictionaries of various meanings.
     """
 
-    def validate(self, nominee: Dict[str, Any]) -> List[str]:
+    def validate(self, candidate: Dict[str, Any]) -> List[str]:
         """
         Validate the given dictionary
 
-        :param nominee: The dictionary to validate
+        :param candidate: The dictionary to validate
         :return: A list of error messages
         """
         raise NotImplementedError

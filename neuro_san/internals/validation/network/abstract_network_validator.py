@@ -22,22 +22,22 @@ class AbstractNetworkValidator(DictionaryValidator):
     common policy thrown in.
     """
 
-    def validate(self, nominee: Dict[str, Any]) -> List[str]:
+    def validate(self, candidate: Dict[str, Any]) -> List[str]:
         """
         Validate the agent network
 
-        :param nominee: The agent network or name -> spec dictionary to validate
+        :param candidate: The agent network or name -> spec dictionary to validate
         :return: A list of error messages
         """
         errors: List[str] = []
 
-        if not nominee:
+        if not candidate:
             errors.append("Agent network is empty.")
             return errors
 
         # We can validate either from a top-level agent network,
         # or from the list of tools from the agent spec.
-        name_to_spec: Dict[str, Any] = self.get_name_to_spec(nominee)
+        name_to_spec: Dict[str, Any] = self.get_name_to_spec(candidate)
 
         name_to_spec_errors: List[str] = self.validate_name_to_spec_dict(name_to_spec)
         errors.extend(name_to_spec_errors)

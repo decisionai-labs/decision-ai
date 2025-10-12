@@ -29,16 +29,16 @@ class CompositeDictionaryValidator(DictionaryValidator):
         """
         self.validators: List[DictionaryValidator] = validators
 
-    def validate(self, nominee: Dict[str, Any]) -> List[str]:
+    def validate(self, candidate: Dict[str, Any]) -> List[str]:
         """
         Validate the agent network.
 
-        :param nominee: The dictionary to validate
+        :param candidate: The dictionary to validate
         :return: A list of error messages
         """
         errors: List[str] = []
 
-        if not nominee:
+        if not candidate:
             errors.append("Nothing to validate.")
             return errors
 
@@ -47,6 +47,6 @@ class CompositeDictionaryValidator(DictionaryValidator):
             return errors
 
         for validator in self.validators:
-            errors.extend(validator.validate(nominee))
+            errors.extend(validator.validate(candidate))
 
         return errors
