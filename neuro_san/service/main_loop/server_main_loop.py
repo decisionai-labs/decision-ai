@@ -18,7 +18,6 @@ import threading
 
 from argparse import ArgumentParser
 
-from leaf_server_common.server.server_loop_callbacks import ServerLoopCallbacks
 from leaf_server_common.logging.logging_setup import setup_logging
 
 from neuro_san import DEPLOY_DIR
@@ -27,17 +26,16 @@ from neuro_san.interfaces.agent_session import AgentSession
 from neuro_san.internals.graph.persistence.registry_manifest_restorer import RegistryManifestRestorer
 from neuro_san.internals.graph.registry.agent_network import AgentNetwork
 from neuro_san.internals.network_providers.agent_network_storage import AgentNetworkStorage
-from neuro_san.service.grpc.grpc_agent_server import DEFAULT_SERVER_NAME
-from neuro_san.service.grpc.grpc_agent_server import DEFAULT_SERVER_NAME_FOR_LOGS
-from neuro_san.service.grpc.grpc_agent_server import DEFAULT_MAX_CONCURRENT_REQUESTS
-from neuro_san.service.grpc.grpc_agent_server import DEFAULT_REQUEST_LIMIT
+from neuro_san.service.http.server.http_server import DEFAULT_SERVER_NAME
+from neuro_san.service.http.server.http_server import DEFAULT_SERVER_NAME_FOR_LOGS
+from neuro_san.service.http.server.http_server import DEFAULT_MAX_CONCURRENT_REQUESTS
+from neuro_san.service.http.server.http_server import DEFAULT_REQUEST_LIMIT
 from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_CONNECTIONS_BACKLOG
 from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_IDLE_CONNECTIONS_TIMEOUT_SECONDS
 from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_SERVER_INSTANCES
 from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_SERVER_MONITOR_INTERVAL_SECONDS
 from neuro_san.service.http.config.http_server_config import HttpServerConfig
-from neuro_san.service.grpc.grpc_agent_server import GrpcAgentServer
-from neuro_san.service.grpc.grpc_agent_service import GrpcAgentService
+from neuro_san.service.interfaces.agent_server import AgentServer
 from neuro_san.service.http.server.http_server import HttpServer
 from neuro_san.service.watcher.main_loop.storage_watcher import StorageWatcher
 from neuro_san.service.utils.server_status import ServerStatus
@@ -45,7 +43,7 @@ from neuro_san.service.utils.server_context import ServerContext
 
 
 # pylint: disable=too-many-instance-attributes
-class ServerMainLoop(ServerLoopCallbacks):
+class ServerMainLoop:
     """
     This class handles the service main loop.
     """
@@ -63,10 +61,9 @@ class ServerMainLoop(ServerLoopCallbacks):
         self.server_name_for_logs: str = DEFAULT_SERVER_NAME_FOR_LOGS
         self.max_concurrent_requests: int = DEFAULT_MAX_CONCURRENT_REQUESTS
         self.request_limit: int = DEFAULT_REQUEST_LIMIT
-        self.forwarded_request_metadata: str = GrpcAgentServer.DEFAULT_FORWARDED_REQUEST_METADATA
+        self.forwarded_request_metadata: str = AgentServer.DEFAULT_FORWARDED_REQUEST_METADATA
         self.usage_logger_metadata: str = ""
         self.service_openapi_spec_file: str = self._get_default_openapi_spec_path()
-        self.grpc_server: GrpcAgentServer = None
         self.http_server: HttpServer = None
         self.server_context = ServerContext()
         self.http_server_config = HttpServerConfig()
@@ -79,9 +76,11 @@ class ServerMainLoop(ServerLoopCallbacks):
         # Set up the CLI parser
         arg_parser = ArgumentParser()
 
+        # This argument is actually ignored, but still parsed for backward compatibility
         arg_parser.add_argument("--port", type=int,
                                 default=int(os.environ.get("AGENT_PORT", 0)),
                                 help="Port number for the grpc service")
+
         arg_parser.add_argument("--http_port", type=int,
                                 default=int(os.environ.get("AGENT_HTTP_PORT", AgentSession.DEFAULT_HTTP_PORT)),
                                 help="Port number for http service endpoint")
@@ -226,51 +225,35 @@ class ServerMainLoop(ServerLoopCallbacks):
         server_status: ServerStatus = self.server_context.get_server_status()
 
         if server_status.updater.is_requested():
-            if not server_status.grpc_service.is_requested():
-                current_dir: str = os.path.dirname(os.path.abspath(__file__))
-                setup_logging(server_status.updater.get_service_name(),
-                              current_dir,
-                              'AGENT_SERVICE_LOG_JSON',
-                              'AGENT_SERVICE_LOG_LEVEL')
+            current_dir: str = os.path.dirname(os.path.abspath(__file__))
+            setup_logging(server_status.updater.get_service_name(),
+                          current_dir,
+                          'AGENT_SERVICE_LOG_JSON',
+                          'AGENT_SERVICE_LOG_LEVEL')
             watcher = StorageWatcher(self.watcher_config, self.server_context)
             watcher.start()
 
-        if server_status.http_service.is_requested():
-            # Create HTTP server;
-            self.http_server = HttpServer(
-                self.server_context,
-                self.http_server_config,
-                self.service_openapi_spec_file,
-                self.request_limit,
-                forwarded_request_metadata=metadata_str)
+        if not server_status.http_service.is_requested():
+            print("HTTP server is not requested - exiting.")
+            return
 
-        # Now - our servers (gRPC and http) are created and listen to updates of network_storage
+        # Create HTTP server;
+        self.http_server = HttpServer(
+            self.server_context,
+            self.http_server_config,
+            self.service_openapi_spec_file,
+            self.request_limit,
+            forwarded_request_metadata=metadata_str)
+
+        # Now - our http server is created and listens to updates of network_storage
         # Perform the initial setup
         network_storage_dict: Dict[str, AgentNetworkStorage] = self.server_context.get_network_storage_dict()
         for storage_type in ["public", "protected"]:
             storage: AgentNetworkStorage = network_storage_dict.get(storage_type)
             storage.setup_agent_networks(self.agent_networks.get(storage_type))
 
-        # Start all services:
-        http_server_thread = None
-        if server_status.http_service.is_requested():
-            http_server_thread = threading.Thread(target=self.http_server, args=(self.grpc_server,), daemon=True)
-            http_server_thread.start()
-            http_server_thread.join()
-
-    def loop_callback(self) -> bool:
-        """
-        Periodically called by the main server loop of ServerLifetime.
-        """
-        # Report back on service activity so the ServerLifetime that calls
-        # this method can properly yield/sleep depending on how many requests
-        # are in motion.
-        agent_services: List[GrpcAgentService] = self.grpc_server.get_services()
-        for agent_service in agent_services:
-            if agent_service.get_request_count() > 0:
-                return True
-
-        return False
+        # Start http server:
+        self.http_server()
 
 
 if __name__ == '__main__':

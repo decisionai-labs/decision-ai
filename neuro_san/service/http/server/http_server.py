@@ -46,6 +46,16 @@ from neuro_san.service.http.config.http_server_config import HttpServerConfig
 from neuro_san.service.utils.service_resources import ServiceResources
 
 
+DEFAULT_SERVER_NAME: str = 'neuro-san.Agent'
+DEFAULT_SERVER_NAME_FOR_LOGS: str = 'Agent Server'
+DEFAULT_MAX_CONCURRENT_REQUESTS: int = 10
+
+# Better that we kill ourselves than kubernetes doing it for us
+# in the middle of a request if there are resource leaks.
+# This is per the lifetime of the server (before it kills itself).
+DEFAULT_REQUEST_LIMIT: int = 1000 * 1000
+
+
 class HttpServer(AgentAuthorizer, AgentStateListener):
     """
     Class provides simple http endpoint for neuro-san API.
@@ -99,7 +109,7 @@ class HttpServer(AgentAuthorizer, AgentStateListener):
         for network_storage in network_storage_dict.values():
             network_storage.add_listener(self)
 
-    def __call__(self, other_server: AgentServer):
+    def __call__(self):
         """
         Method to be called by a thread running tornado HTTP server
         to actually start serving requests.
@@ -138,8 +148,6 @@ class HttpServer(AgentAuthorizer, AgentStateListener):
 
         tornado.ioloop.IOLoop.current().start()
         self.logger.info({}, "Http server stopped.")
-        if other_server is not None:
-            other_server.stop()
 
     def log_resources_usage(self):
         """
