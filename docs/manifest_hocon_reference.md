@@ -54,7 +54,7 @@ A true value implies that the network should be listed in the Concierge service 
 part of a generic discovery process for clients.
 
 Agents that have a false value for the "public" key are still callable by the outside world
-and as external agents for other networks, but are not listed in the Concierge service at all. 
+and as external agents for other networks, but are not listed in the Concierge service at all.
 This is useful for when your agent network is called as an external agent by another network,
 but is considered an implementation detail for that network and is not intended for generic
 discovery.
