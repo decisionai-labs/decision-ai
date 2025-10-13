@@ -48,7 +48,9 @@ class DirectAgentSessionFactory:
         Constructor
         """
         public_storage: AgentNetworkStorage = DirectAgentStorageUtil.create_network_storage()
+        protected_storage: AgentNetworkStorage = DirectAgentStorageUtil.create_network_storage()
         self.network_storage_dict: Dict[str, AgentNetworkStorage] = {
+            "protected": protected_storage,
             "public": public_storage,
             "temp": ExpiringAgentNetworkStorage()
         }
