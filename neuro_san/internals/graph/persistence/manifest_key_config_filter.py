@@ -18,7 +18,7 @@ from logging import Logger
 from leaf_common.config.config_filter import ConfigFilter
 
 
-class ManifestDictConfigFilter(ConfigFilter):
+class ManifestKeyConfigFilter(ConfigFilter):
     """
     Implementation of the ConfigFilter interface that reads the contents
     of a single manifest file for agent networks/registries, converting
