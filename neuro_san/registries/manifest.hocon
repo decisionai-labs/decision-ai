@@ -19,7 +19,7 @@
 
     # Simple manifest entry where the key is the name of the hocon file with the
     # agent specification in it, and the value is a boolean as to whether or not
-    # the agent should be publicly available.
+    # the agent should be served up as a public listing via the Concierge service.
     "hello_world.hocon": true,
 
     "intranet_agents.hocon": true,
@@ -60,6 +60,7 @@
 
     # The next one is an example of agents calling langchain base tools from toolbox.
     # This requires TAVILY_API_KEY to run. To get the key go to https://www.tavily.com/
+    # Because this requires the key, this is not served up by default.
     "tavily_search.hocon": false,
 
     # This one is an example of agents calling shared coded tools.
