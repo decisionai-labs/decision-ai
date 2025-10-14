@@ -37,6 +37,7 @@ class ServerContext:
 
         # Dictionary is string key (describing scope) to AgentNetworkStorage grouping.
         self.network_storage_dict: Dict[str, AgentNetworkStorage] = {
+            "protected": AgentNetworkStorage(),
             "public": AgentNetworkStorage(),
             "temp": ExpiringAgentNetworkStorage()
         }

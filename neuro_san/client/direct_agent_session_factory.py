@@ -23,6 +23,7 @@ from neuro_san.internals.interfaces.context_type_llm_factory import ContextTypeL
 from neuro_san.internals.run_context.factory.master_toolbox_factory import MasterToolboxFactory
 from neuro_san.internals.run_context.factory.master_llm_factory import MasterLlmFactory
 from neuro_san.internals.graph.persistence.agent_network_restorer import AgentNetworkRestorer
+from neuro_san.internals.graph.persistence.registry_manifest_restorer import RegistryManifestRestorer
 from neuro_san.internals.interfaces.agent_network_provider import AgentNetworkProvider
 from neuro_san.internals.network_providers.agent_network_storage import AgentNetworkStorage
 from neuro_san.internals.network_providers.expiring_agent_network_storage import ExpiringAgentNetworkStorage
@@ -47,11 +48,18 @@ class DirectAgentSessionFactory:
         """
         Constructor
         """
-        public_storage: AgentNetworkStorage = DirectAgentStorageUtil.create_network_storage()
+        # Read the manifest once and pass that into the Util call below.
+        manifest_restorer = RegistryManifestRestorer()
+        manifest_networks: Dict[str, Dict[str, AgentNetwork]] = manifest_restorer.restore()
+
         self.network_storage_dict: Dict[str, AgentNetworkStorage] = {
-            "public": public_storage,
             "temp": ExpiringAgentNetworkStorage()
         }
+
+        for storage_type in ["public", "protected"]:
+            storage: AgentNetworkStorage = DirectAgentStorageUtil.create_network_storage(manifest_networks,
+                                                                                         storage_type=storage_type)
+            self.network_storage_dict[storage_type] = storage
 
     def create_session(self, agent_name: str, use_direct: bool = False,
                        metadata: Dict[str, str] = None, umbrella_timeout: Timeout = None) -> AgentSession:
@@ -112,9 +120,14 @@ class DirectAgentSessionFactory:
             agent_network = restorer.restore(file_reference=agent_name)
         else:
             # Use the standard stuff available via the manifest file.
-            public_storage: AgentNetworkStorage = self.network_storage_dict.get("public")
-            agent_network_provider: AgentNetworkProvider = public_storage.get_agent_network_provider(agent_name)
-            agent_network = agent_network_provider.get_agent_network()
+            for storage_type in ["public", "protected"]:
+                storage: AgentNetworkStorage = self.network_storage_dict.get(storage_type)
+                agent_network_provider: AgentNetworkProvider = storage.get_agent_network_provider(agent_name)
+                if agent_network_provider is None:
+                    continue
+                agent_network = agent_network_provider.get_agent_network()
+                if agent_network is not None:
+                    break
 
         # Common place for nice error messages when networks are not found
         MissingAgentCheck.check_agent_network(agent_network, agent_name)
