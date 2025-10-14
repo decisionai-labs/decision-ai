@@ -17,12 +17,12 @@
     # Currently we list each hocon file we want to serve as a key with a boolean value.
     # Eventually we might have a dictionary value with server specifications for each.
 
-    # These two allow us to test agent hocons in a directory hierarchy.
-    "deep/math_guy.hocon": true,
-    "deep/math_guy_passthrough.hocon": true,
+    # Simple manifest entry where the key is the name of the hocon file with the
+    # agent specification in it, and the value is a boolean as to whether or not
+    # the agent should be served up as a public listing via the Concierge service.
+    "hello_world.hocon": true,
 
     "esp_decision_assistant.hocon": true,
-    "hello_world.hocon": true,
     "intranet_agents.hocon": true,
     "math_guy.hocon": true,
     "math_guy_passthrough.hocon": true,
@@ -35,6 +35,21 @@
     "music_nerd_pro_multi_agents.hocon": true,
     "music_nerd_pro_llm_bedrock_claude.hocon": true,
 
+    # These two allow us to test agent hocons in a directory hierarchy.
+    "deep/math_guy_passthrough.hocon": {
+        # A long-hand version of what the simple boolean true value expands to.
+        "serve": true,      # Whether or not this agent network should be served up
+        "public": true      # Network should be publicly listed via the Concierge service.
+    },
+    "deep/math_guy.hocon": {
+        "serve": true,      # Whether or not this agent network should be served up
+        "public": false     # Network should *not* be publicly listed via the Concierge service.
+                            # Note this network can still be called externally on a need-to-know basis.
+                            # This false value is useful when the agent is called by other
+                            # agent networks as an implementation detail and you don't really
+                            # want it to be an externally advertised entrypoint.
+    },
+
     # This one is an example of agents calling tools that has no parameters.
     "date_time.hocon": true,
 
@@ -44,7 +59,9 @@
     "website_search_usage_example.hocon": true,
 
     # The next one is an example of agents calling langchain base tools from toolbox.
-    # This requires TAVILY_API_KEY to run. To get the key go to https://www.tavily.com/
+    # This requires an environment variable TAVILY_API_KEY set to run.
+    # To get the key go to https://www.tavily.com/
+    # Because this requires the key, this is not served up by default.
     "tavily_search.hocon": false,
 
     # This one is an example of agents calling shared coded tools.

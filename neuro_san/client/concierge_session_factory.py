@@ -55,6 +55,7 @@ class ConciergeSessionFactory:
         #   Reason: This is the place where the session_type enforced-string argument is
         #           actually checked for positive use.
         if session_type == "direct":
+            # This only looks at public networks, which is what we want.
             network_storage: AgentNetworkStorage = DirectAgentStorageUtil.create_network_storage()
             session = DirectConciergeSession(network_storage, metadata=metadata)
         elif session_type in ("service", "grpc"):
