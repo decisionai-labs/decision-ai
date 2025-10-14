@@ -183,7 +183,7 @@ class RegistryManifestRestorer(Restorer):
 
         return agent_network
 
-    def restore(self, file_reference: str = None) -> Dict[str, AgentNetwork]:
+    def restore(self, file_reference: str = None) -> Dict[str, Dict[str, AgentNetwork]]:
         """
         :param file_reference: The file reference to use when restoring.
                 Default is None, implying the file reference is up to the
@@ -193,7 +193,7 @@ class RegistryManifestRestorer(Restorer):
         if file_reference is not None:
             return self.restore_from_files([file_reference])
 
-        agent_networks: Dict[str, AgentNetwork] = self.restore_from_files(self.manifest_files)
+        agent_networks: Dict[str, Dict[str, AgentNetwork]] = self.restore_from_files(self.manifest_files)
         return agent_networks
 
     def get_manifest_files(self) -> List[str]:
