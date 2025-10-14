@@ -176,6 +176,13 @@ class AsyncDirectAgentSession(AsyncAgentSession):
         # above until there are no more from the input.
         queue_generator = self.invocation_context.get_queue()
         try:
+            # Logic of what is done here:
+            # 1. We tell underlying chat_session to delete its resources since we are done with this request;
+            # 2. We do this in "finally" block so this releasing of resources happens in any case,
+            #    including getting our async generator
+            #    (which is implicitly constructed by these code lines and returned by this method)
+            #    interrupted by caller-side "aclose" method.
+            # 3. And we suppress all exceptions while deleting resources to keep things quieter.
             async for message in queue_generator:
                 response_dict: Dict[str, Any] = copy(template_response_dict)
                 if message_filter.allow(message):

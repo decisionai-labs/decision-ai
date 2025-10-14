@@ -189,6 +189,13 @@ class DirectAgentSession(AgentSession):
                                          keep_alive_timeout_seconds=10.0,
                                          umbrella_timeout=self.umbrella_timeout)
         try:
+            # Logic of what is done here:
+            # 1. We tell underlying chat_session to delete its resources since we are done with this request;
+            # 2. We do this in "finally" block so this releasing of resources happens in any case,
+            #    including getting our sync generator
+            #    (which is implicitly constructed by these code lines and returned by this method)
+            #    interrupted by caller-side "close" method.
+            # 3. And we suppress all exceptions while deleting resources to keep things quieter.
             for message in generator.synchronously_iterate(self.invocation_context.get_queue()):
                 response_dict: Dict[str, Any] = copy(template_response_dict)
                 if message_filter.allow(message):
@@ -201,6 +208,9 @@ class DirectAgentSession(AgentSession):
                     yield response_dict
         finally:
             with contextlib.suppress(Exception):
+                # We are in a sync run-time environment,
+                # so we need to run the async delete_resources() method
+                # with the asyncio.run() helper.
                 asyncio.run(chat_session.delete_resources())
 
     def reset(self):
