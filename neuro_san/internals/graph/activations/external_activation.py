@@ -20,6 +20,9 @@ import json
 from logging import getLogger
 from logging import Logger
 
+from langchain_core.messages.ai import AIMessage
+from langchain_core.messages.base import BaseMessage
+
 from leaf_common.parsers.dictionary_extractor import DictionaryExtractor
 
 from neuro_san.interfaces.async_agent_session import AsyncAgentSession
@@ -93,18 +96,30 @@ class ExternalActivation(AbstractCallableActivation):
             raw_reporting = extractor.get(key, raw_reporting)
 
         # Should we be reporting external messages?
-        report: bool = False
-        if isinstance(raw_reporting, bool):
-            report = bool(raw_reporting)
-        elif isinstance(raw_reporting, str):
-            report = self.agent_url == raw_reporting
-        elif isinstance(raw_reporting, List):
-            report = self.agent_url in raw_reporting
-        elif isinstance(raw_reporting, Dict):
-            report = bool(raw_reporting.get(self.agent_url))
-
-        if report:
+        self.report: bool = self.bool_from_multi_value(raw_reporting, self.agent_url)
+        if self.report:
             self.processor.add_processor(ExternalMessageProcessor(self.journal))
+
+    @staticmethod
+    def bool_from_multi_value(source: Union[bool, str, List[str], Dict[str, Any]], value: str) -> bool:
+        """
+        :param source: The source against which we will check the value.
+                    Can be boolean, string, list, or dictionary.
+        :param value: The string value to check for
+        :return: True if the value is considered to be "true" in the source.
+                 False otherwise
+        """
+        bool_value: bool = False
+        if isinstance(source, bool):
+            bool_value = bool(source)
+        elif isinstance(source, str):
+            bool_value = value == source
+        elif isinstance(source, List):
+            bool_value = value in source
+        elif isinstance(source, Dict):
+            bool_value = bool(source.get(value))
+
+        return bool_value
 
     def get_name(self) -> str:
         """
@@ -113,14 +128,12 @@ class ExternalActivation(AbstractCallableActivation):
         return self.agent_url
 
     # pylint: disable=too-many-locals
-    async def build(self) -> str:
+    async def build(self) -> BaseMessage:
         """
         Main entry point to the class.
 
-        :return: A string representing a List of messages produced during this process.
+        :return: A BaseMessage produced during this process.
         """
-        message_list: List[Dict[str, Any]] = []
-
         arguments_dict: Dict[str, Any] = {
             "tool_start": True,
             "tool_args": self.arguments
@@ -150,7 +163,8 @@ class ExternalActivation(AbstractCallableActivation):
             full_name: str = Origination.get_full_name_from_origin(self.run_context.get_origin())
             logger: Logger = getLogger(full_name)
             logger.info(messages_str)
-            return messages_str
+            ai_message = AIMessage(content=messages_str)
+            return ai_message
 
         # The asynchronous generator will wait until the next response is available
         # from the stream.  When the other side is done, the iterator will exit the loop.
@@ -186,14 +200,11 @@ class ExternalActivation(AbstractCallableActivation):
         # Eventually we will care about a fuller chat history.
 
         # Prepare the output
-        message: Dict[str, Any] = {
-            "role": "assistant",
-            "content": answer
-        }
-        message_list.append(message)
+        if answer is None:
+            answer = ""
+        ai_message = AIMessage(content=answer)
 
-        messages_str = json.dumps(message_list)
-        return messages_str
+        return ai_message
 
     def gather_input(self, agent_input: str, sly_data: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -215,10 +226,14 @@ class ExternalActivation(AbstractCallableActivation):
             # Recall that non-empty dictionaries evaluate to True
             chat_request["chat_context"] = self.chat_context
 
-        # At some point in the future we might want to block all
-        # or parts of the sly_data from going to external agents.
+        # We assume that the sly_data coming in has already been redacted
         if sly_data is not None and len(sly_data.keys()) > 0:
             chat_request["sly_data"] = sly_data
+
+        if self.report:
+            chat_request["chat_filter"] = {
+                "chat_filter_type": "MAXIMAL"
+            }
 
         return chat_request
 

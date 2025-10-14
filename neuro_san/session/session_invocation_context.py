@@ -9,15 +9,20 @@
 # neuro-san SDK Software in commercial settings.
 #
 # END COPYRIGHT
+from __future__ import annotations
+
 from typing import Any
+from typing import Callable
 from typing import Dict
 
-from asyncio import Future
+from copy import copy
+import functools
 
 from leaf_common.asyncio.asyncio_executor import AsyncioExecutor
 from leaf_common.asyncio.asyncio_executor_pool import AsyncioExecutorPool
 from leaf_server_common.logging.logging_setup import setup_extra_logging_fields
 
+from neuro_san.interfaces.reservationist import Reservationist
 from neuro_san.internals.chat.async_collating_queue import AsyncCollatingQueue
 from neuro_san.internals.interfaces.async_agent_session_factory import AsyncAgentSessionFactory
 from neuro_san.internals.interfaces.context_type_toolbox_factory import ContextTypeToolboxFactory
@@ -42,7 +47,8 @@ class SessionInvocationContext(InvocationContext):
                  async_executors_pool: AsyncioExecutorPool,
                  llm_factory: ContextTypeLlmFactory,
                  toolbox_factory: ContextTypeToolboxFactory = None,
-                 metadata: Dict[str, str] = None):
+                 metadata: Dict[str, str] = None,
+                 reservationist: Reservationist = None):
         """
         Constructor
 
@@ -55,6 +61,7 @@ class SessionInvocationContext(InvocationContext):
         :param metadata: A grpc metadata of key/value pairs to be inserted into
                          the header. Default is None. Preferred format is a
                          dictionary of string keys to string values.
+        :param reservationist: The Reservationist instance to use.
         """
 
         self.async_session_factory: AsyncAgentSessionFactory = async_session_factory
@@ -68,6 +75,7 @@ class SessionInvocationContext(InvocationContext):
         self.request_reporting: Dict[str, Any] = {}
         self.llm_factory: ContextTypeLlmFactory = llm_factory
         self.toolbox_factory: ContextTypeToolboxFactory = toolbox_factory
+        self.reservationist: Reservationist = reservationist
 
     def start(self):
         """
@@ -76,13 +84,13 @@ class SessionInvocationContext(InvocationContext):
         Currently, we only start internal AsyncioExecutor.
         It could be already running, but starting it twice is allowed.
         """
+        # Wrap it up into a single function with no parameters
+        # for easier handling downstream.
+        logging_setup: Callable = functools.partial(setup_extra_logging_fields, metadata_dict=self.metadata)
         self.asyncio_executor.start()
-
-        # Set up logging fields within the thread, so we have consistent logging from async calls.
-        # Ignore the future that is returned - we trust it will get done.
-        _: Future = self.asyncio_executor.submit(
-            "logging_setup", setup_extra_logging_fields,
-            metadata_dict=self.metadata)
+        # Run logging setup as event-loop initialization step -
+        # make sure it is finished before we start to use this AsyncioExecutor instance.
+        self.asyncio_executor.initialize(logging_setup)
 
     def get_async_session_factory(self) -> AsyncAgentSessionFactory:
         """
@@ -151,6 +159,12 @@ class SessionInvocationContext(InvocationContext):
         """
         return self.toolbox_factory
 
+    def get_reservationist(self) -> Reservationist:
+        """
+        :return: The Reservationist instance for the session
+        """
+        return self.reservationist
+
     def reset(self):
         """
         Resets the instance for a subsequent use for another exchange with the agent network.
@@ -160,3 +174,17 @@ class SessionInvocationContext(InvocationContext):
         # to DirectAgentSession do not properly carry forward any memory of the conversation
         # in subsequent interactions with the same network.
         self.origination.reset()
+
+    def safe_shallow_copy(self) -> SessionInvocationContext:
+        """
+        Makes a safe shallow copy of the invocation context.
+        Generally used with direct sessions.
+        """
+
+        invocation_context: SessionInvocationContext = copy(self)
+
+        # We need a different queue in order for direct sessions to call external agents
+        # with direct sessions.
+        invocation_context.queue: AsyncCollatingQueue = AsyncCollatingQueue()
+
+        return invocation_context

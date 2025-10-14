@@ -19,6 +19,7 @@ from pathlib import Path
 from leaf_common.config.dictionary_overlay import DictionaryOverlay
 from leaf_common.parsers.dictionary_extractor import DictionaryExtractor
 
+from neuro_san import TOP_LEVEL_DIR
 from neuro_san.internals.graph.activations.branch_activation import BranchActivation
 from neuro_san.internals.graph.activations.class_activation import ClassActivation
 from neuro_san.internals.graph.activations.external_activation import ExternalActivation
@@ -31,7 +32,6 @@ from neuro_san.internals.graph.registry.agent_network import AgentNetwork
 from neuro_san.internals.interfaces.front_man import FrontMan
 from neuro_san.internals.run_context.interfaces.run_context import RunContext
 from neuro_san.internals.run_context.utils.external_agent_parsing import ExternalAgentParsing
-from neuro_san.internals.utils.file_of_class import FileOfClass
 
 
 class ActivationFactory(AgentToolFactory):
@@ -61,8 +61,7 @@ class ActivationFactory(AgentToolFactory):
 
         # Try reach-around directory if still nothing to start with
         if agent_tool_path is None:
-            file_of_class = FileOfClass(__file__, "../../../coded_tools")
-            agent_tool_path = file_of_class.get_basis()
+            agent_tool_path = TOP_LEVEL_DIR.get_file_in_basis("coded_tools")
 
         # If we are dealing with file paths, convert that to something resolvable
         if agent_tool_path.find(os.sep) >= 0:
@@ -101,10 +100,14 @@ Check to be sure your value for PYTHONPATH includes where you expect where your 
             while agent_tool_path.startswith("."):
                 agent_tool_path = agent_tool_path[1:]
 
+        # Now, agent network name itself can contain "/" symbols (regardless of underlying OS)
+        # in case of hierarchical agents structure. Replace those with "." as well.
+        agent_network_path = self.agent_network.get_network_name().replace("/", ".")
+
         # Be sure the name of the agent (stem of the hocon file) is the
         # last piece to narrow down the path resolution further.
-        if not agent_tool_path.endswith(self.agent_network.get_network_name()):
-            agent_tool_path = f"{agent_tool_path}.{self.agent_network.get_network_name()}"
+        if not agent_tool_path.endswith(agent_network_path):
+            agent_tool_path = f"{agent_tool_path}.{agent_network_path}"
 
         return agent_tool_path
 
@@ -131,6 +134,7 @@ Check to be sure your value for PYTHONPATH includes where you expect where your 
         :param sly_data: A mapping whose keys might be referenceable by agents, but whose
                  values should not appear in agent chat text. Can be an empty dictionary.
         :param arguments: A dictionary of arguments for the newly constructed agent
+        :param factory: A factory that will be used to create the agent tool
         :return: The CallableActivation agent referred to by the name.
         """
         if factory is None:

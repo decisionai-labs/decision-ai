@@ -151,6 +151,14 @@ class JournalingCallbackHandler(AsyncCallbackHandler):
             combined_args["origin"] = self.origin
             combined_args["origin_str"] = full_name
 
+            # Remove any reservationist from the args as that will not transfer over the wire
+            if "reservationist" in combined_args:
+                del combined_args["reservationist"]
+
+            # Remove any progress_reporter from the args as that will not transfer over the wire
+            if "progress_reporter" in combined_args:
+                del combined_args["progress_reporter"]
+
             # Create a journal entry for this invocation and log the combined inputs
             self.langchain_tool_journal = OriginatingJournal(self.base_journal, self.origin)
             combined_args_dict: Dict[str, Any] = {
@@ -174,8 +182,10 @@ class JournalingCallbackHandler(AsyncCallbackHandler):
 
         if "langchain_tool" in tags:
             # Log the tool output to the calling agent's journal
+            # Note that output is changed to str here since it can be anything including a list but
+            # we expect it to be a str or a list of dictionary with "text" as key.
             await self.calling_agent_journal.write_message(
-                AgentToolResultMessage(content=output, tool_result_origin=self.origin)
+                AgentToolResultMessage(content=str(output), tool_result_origin=self.origin)
             )
 
             # Also log the tool output to the LangChain tool-specific journal

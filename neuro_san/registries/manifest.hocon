@@ -17,6 +17,10 @@
     # Currently we list each hocon file we want to serve as a key with a boolean value.
     # Eventually we might have a dictionary value with server specifications for each.
 
+    # These two allow us to test agent hocons in a directory hierarchy.
+    "deep/math_guy.hocon": true,
+    "deep/math_guy_passthrough.hocon": true,
+
     "esp_decision_assistant.hocon": true,
     "hello_world.hocon": true,
     "intranet_agents.hocon": true,
@@ -48,9 +52,17 @@
     # These tools are also predefined in the toolbox.
     "website_rag.hocon": true,
 
+    # Reservations example
+    "copy_cat.hocon": true,
+
+    # These 2 agents are examples of calling MCP tools using string and dictionary format, respectively.
+    "mcp_deepwiki_dict.hocon": true,
+    "mcp_deepwiki_str.hocon": true,
+
     # Agents having to do with test infrastructure
     "gist.hocon": true,
     "assess_failure.hocon": true,
+    "chat_mock_llm_echo.hocon": true,
 
     # STOP AND READ: YOU PROBABLY DON'T WANT TO ADD YOUR .hocon FILE HERE.
     #

@@ -9,8 +9,10 @@
 # neuro-san SDK Software in commercial settings.
 #
 # END COPYRIGHT
+from typing import Any
 from typing import Dict
 from typing import List
+from typing import Union
 
 from urllib.parse import ParseResult
 from urllib.parse import urlparse
@@ -58,7 +60,7 @@ class ExternalAgentParsing:
             split: List[str] = parse_result.netloc.split(":")
             host = split[0]
             if len(split) > 1:
-                port = split[0]
+                port = split[1]
 
         # Special case for detecting localhost
         if host is None or len(host) == 0:
@@ -94,6 +96,31 @@ class ExternalAgentParsing:
         return is_external
 
     @staticmethod
+    def is_mcp_tool(tool_ref: Union[str, Dict[str, Any]]) -> bool:
+        """
+        Check if the tool reference is for an MCP server.
+        :param tool_ref: String URL or dict config for MCP tool
+        :return: True if this is an MCP tool reference
+        """
+        # Support both str and dict format;
+        # str format: "https://mcp.deepwiki.com/mcp" or "http://localhost:8000/mcp/"
+        # dict format:
+        # {
+        #       "url": "https://mcp.deepwiki.com/mcp",
+        #       "tools": ["read_wiki_structure", "ask_question"],
+        # }
+
+        # If it is a dict, it is assumed it is MCP for now.
+        # This may change in the future when Neuro-SAN supports other protocals like A2A.
+        if isinstance(tool_ref, dict):
+            return True
+
+        if isinstance(tool_ref, str):
+            return (tool_ref.startswith("https://mcp") or tool_ref.endswith(("/mcp", "/mcp/")))
+
+        return False
+
+    @staticmethod
     def get_safe_agent_name(agent_url: str) -> str:
         """
         :param agent_url: The URL describing where to find the desired agent.
@@ -107,7 +134,8 @@ class ExternalAgentParsing:
 
             # FWIW: langchain internal tool references must satisfy the regex: "^[a-zA-Z0-9_-]+$"
             # It's possible that more complex external references might have the agent_name
-            # needing futher mangling.  Cross that bridge when we have a real example.
-            safe_name = "__" + agent_location.get("agent_name")
+            # needing further mangling.  Cross that bridge when we have a real example.
+            # As a part of valid URL, agent_name can only have "/" in it.
+            safe_name = "__" + agent_location.get("agent_name").replace("/", "__")
 
         return safe_name
