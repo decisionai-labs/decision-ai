@@ -88,6 +88,7 @@ class RegistryManifestRestorer(Restorer):
         # Loop through all the manifest files in the list to make a composite
         for manifest_file in file_references:
             agents_from_one_manifest: Dict[str, Dict[str, AgentNetwork]] = self.restore_one_manifest(manifest_file)
+            # Do a deep update() with the overlayer.
             all_agent_networks = overlayer.overlay(all_agent_networks, agents_from_one_manifest)
 
         return all_agent_networks
