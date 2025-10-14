@@ -14,7 +14,6 @@ from typing import Dict
 from typing import List
 
 import os
-import threading
 
 from argparse import ArgumentParser
 
