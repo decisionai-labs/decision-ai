@@ -142,3 +142,4 @@
 # 2025-10-01 10:34:55 - refactor: modularize configuration loader
 # 2025-10-02 15:51:46 - test: expand coverage for transaction module
 # 2025-10-15 13:38:13 - docs: clarify privacy architecture notes
+# 2025-10-15 16:57:03 - docs: add troubleshooting section
