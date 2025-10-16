@@ -16,7 +16,6 @@ from leaf_common.time.timeout import Timeout
 
 from neuro_san.client.direct_agent_session_factory import DirectAgentSessionFactory
 from neuro_san.interfaces.agent_session import AgentSession
-from neuro_san.session.grpc_service_agent_session import GrpcServiceAgentSession
 from neuro_san.session.http_service_agent_session import HttpServiceAgentSession
 
 
@@ -61,15 +60,12 @@ class AgentSessionFactory:
             factory = DirectAgentSessionFactory()
             session = factory.create_session(agent_name, use_direct=use_direct,
                                              metadata=metadata, umbrella_timeout=umbrella_timeout)
-        elif session_type in ("service", "grpc"):
-            session = GrpcServiceAgentSession(host=hostname, port=port, agent_name=agent_name,
-                                              metadata=metadata, umbrella_timeout=umbrella_timeout)
         elif session_type in ("http", "https"):
 
-            # If there is no port really specified, use the other default port
+            # If there is no port really specified, use the default port
             use_port = port
-            if port is None or port == AgentSession.DEFAULT_PORT:
-                use_port = AgentSession.DEFAULT_HTTP_PORT
+            if port is None:
+                use_port = AgentSession.DEFAULT_PORT
 
             security_cfg: Dict[str, Any] = None
             if session_type == "https":

@@ -19,27 +19,22 @@ echo "✅ Server process started with PID $(cat agent.pid)"
 
 for i in {1..30}; do
   PORT_8080_READY=false
-  PORT_30011_READY=false
 
   if nc -z localhost 8080; then
     PORT_8080_READY=true
   fi
 
-  if nc -z localhost 30011; then
-    PORT_30011_READY=true
-  fi
-
-  if [ "$PORT_8080_READY" = true ] && [ "$PORT_30011_READY" = true ]; then
-    echo "✅ Both ports are ready after awaiting $i seconds"
+  if [ "$PORT_8080_READY" = true ]; then
+    echo "✅ Port is ready after awaiting $i seconds"
     break
   fi
 
-  echo "⏳ Waiting for ports 8080 and 30011... ($i/30)"
+  echo "⏳ Waiting for port 8080... ($i/30)"
   sleep 1
 done
 
-if ! nc -z localhost 8080 || ! nc -z localhost 30011; then
-  echo "❌ Timeout: One or both ports failed to open after $i seconds"
+if ! nc -z localhost 8080; then
+  echo "❌ Timeout: Port failed to open after $i seconds"
   exit 1
 fi
 
@@ -50,4 +45,4 @@ done
 
 echo "✅ Server is healthy and ready"
 
-netstat -tuln | grep -E '8080|30011'
+netstat -tuln | grep -E '8080'

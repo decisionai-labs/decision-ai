@@ -74,15 +74,6 @@ RUN \
     && chown -R ${USERNAME}: /var/log \
     && mkdir -p ${APP_SOURCE}
 
-# This is the port the service will accept grpc requests on.
-# This should be consistent with the main port for the service as described
-# in any kubernetes <service>.yaml file
-# This port number is also mentioned as AGENT_PORT below
-# and ServiceAgentSession.DEFAULT_PORT
-# In order to be self-discovered by supporting build/run scripts this must
-# be the first port exposed in the Dockerfile.
-EXPOSE 30011
-
 # This is the port the service will accept http requests on.
 # This should be consistent with the main port for the service as described
 # in any kubernetes <service>.yaml file
@@ -164,14 +155,8 @@ ENV AGENT_SERVER_NAME_FOR_LOGS="Agent Server"
 # Note that any metadata key needs to be all lowercase.
 ENV AGENT_FORWARDED_REQUEST_METADATA="request_id user_id"
 
-# Port number for the grpc service endpoint
-# If you are changing this, you should also change the first EXPOSE port above
-# and when running your container locally be sure to have a -p <port>:<port> entry
-# for it on your docker run command line.
-ENV AGENT_PORT=30011
-
 # Port number for http service endpoint
-# If you are changing this, you should also change the second EXPOSE port above
+# If you are changing this, you should also change the EXPOSE port above
 # and when running your container locally be sure to have a -p <port>:<port> entry
 # for it on your docker run command line.
 ENV AGENT_HTTP_PORT=8080
