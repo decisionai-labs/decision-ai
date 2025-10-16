@@ -22,12 +22,10 @@ from typing import Dict
 import jsonschema
 
 from neuro_san.service.http.base_handlers.base_request_handler import BaseRequestHandler
-from neuro_san.service.generic.async_agent_service import AsyncAgentService
-from neuro_san.service.generic.async_agent_service_provider import AsyncAgentServiceProvider
 from neuro_san.internals.network_providers.agent_network_storage import AgentNetworkStorage
 from neuro_san.service.http.interfaces.agent_authorizer import AgentAuthorizer
 from neuro_san.service.http.logging.http_logger import HttpLogger
-from neuro_san.service.mcp.mcp_errors_util import MCPErrorsUtil
+from neuro_san.service.mcp.util.mcp_errors_util import MCPErrorsUtil
 from neuro_san.service.mcp.mcp_errors import MCPError
 from neuro_san.service.mcp.mcp_tools_processor import MCPToolsProcessor
 from neuro_san.service.mcp.mcp_resources_processor import MCPResourcesProcessor

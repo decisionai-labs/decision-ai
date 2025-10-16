@@ -21,6 +21,13 @@ class MCPErrorsUtil:
 
     @classmethod
     def get_protocol_error(cls, request_id, error: MCPError, extra_msg: str = None) -> Dict[str, Any]:
+        """
+        Generate a standard MCP protocol error response.
+        :param request_id: MCP request id;
+        :param error: MCPError enum value;
+        :param extra_msg: Optional extra message to append to the standard error message;
+        :return: json dictionary with error in MCP format suitable for sending to the client.
+        """
         msg: str = error.str_label
         if extra_msg is not None:
             msg = f"{msg}: {extra_msg}"
@@ -35,6 +42,12 @@ class MCPErrorsUtil:
 
     @classmethod
     def get_tool_error(cls, request_id, error_msg: str) -> Dict[str, Any]:
+        """
+        Generate a standard MCP tool error response.
+        :param request_id: MCP request id;
+        :param error_msg: Error message to send to the client;
+        :return: json dictionary with tool error in MCP format suitable for sending to the client.
+        """
         return {
             "jsonrpc": "2.0",
             "id": request_id,

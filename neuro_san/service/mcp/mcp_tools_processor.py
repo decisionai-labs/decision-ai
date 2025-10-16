@@ -22,7 +22,7 @@ from neuro_san.service.http.interfaces.agent_authorizer import AgentAuthorizer
 from neuro_san.service.generic.async_agent_service import AsyncAgentService
 from neuro_san.service.generic.async_agent_service_provider import AsyncAgentServiceProvider
 from neuro_san.session.direct_concierge_session import DirectConciergeSession
-from neuro_san.service.mcp.mcp_errors_util import MCPErrorsUtil
+from neuro_san.service.mcp.util.mcp_errors_util import MCPErrorsUtil
 from neuro_san.service.http.logging.http_logger import HttpLogger
 
 

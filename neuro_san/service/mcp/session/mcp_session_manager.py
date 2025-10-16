@@ -1,0 +1,45 @@
+
+# Copyright (C) 2023-2025 Cognizant Digital Business, Evolutionary AI.
+# All Rights Reserved.
+# Issued under the Academic Public License.
+#
+# You can be released from the terms, and requirements of the Academic Public
+# License by purchasing a commercial license.
+# Purchase of a commercial license is mandatory for any use of the
+# neuro-san SDK Software in commercial settings.
+#
+# END COPYRIGHT
+"""
+See class comment for details
+"""
+import threading
+
+from typing import Any
+from typing import Dict
+from typing import List
+
+from neuro_san.service.mcp.session import MCPClientSession
+
+class MCPSessionManager:
+    """
+    Class creating and managing client sessions with the MCP service.
+    """"
+
+    def __init__(self):
+        # Lock to protect access to the sessions dictionary
+        self.lock: threading.Lock = threading.Lock()
+
+        self.sessions: Dict[str, MCPClientSession] = {}
+
+    def create_session(self) -> MCPClientSession:
+        """
+        Create a new client session with the given client id.
+
+        :return: The created MCPClientSession
+        """
+        with self.lock:
+            if client_id in self.sessions:
+                raise ValueError(f"Session with client id {client_id} already exists")
+            session = MCPClientSession()
+            self.sessions[client_id] = session
+            return session
