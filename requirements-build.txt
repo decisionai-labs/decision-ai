@@ -37,4 +37,4 @@ setuptools-scm==8.1.0
 readme_renderer
 readme_renderer[md]
 # Note: Workaround for install problem with cmarkgfm==2025.11.20
-cmarkgfm<2025.11.20
+cmarkgfm<=2024.11.20
