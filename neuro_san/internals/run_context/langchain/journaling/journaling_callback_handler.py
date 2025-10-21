@@ -143,10 +143,15 @@ class JournalingCallbackHandler(AsyncCallbackHandler):
 
         # Remove any policy objects from the arguments passed in.
         tool_start_dict: Dict[str, Any] = ToolArgumentReporting.prepare_tool_start_dict(inputs)
+        caller_structure: Dict[str, Any] = {
+            "invoking_start": True,
+            "invoked_agent_name": agent_name,
+            "params": tool_start_dict.get("tool_args")
+        }
 
         # Report that we are about to invoke a tool.
-        content: str = f"Invoking: `{agent_name}` with `{tool_start_dict.get('tool_args')}`"
-        message: BaseMessage = AgentMessage(content=content)
+        message: BaseMessage = AgentMessage(content=f"Invoking: `{agent_name}` with:",
+                                            structure=caller_structure)
         await self.calling_agent_journal.write_message(message)
 
         if "langchain_tool" in tags:
