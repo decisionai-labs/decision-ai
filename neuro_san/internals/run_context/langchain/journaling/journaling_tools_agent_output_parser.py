@@ -15,14 +15,10 @@ from typing import Dict
 from typing import List
 from typing import TypeVar
 
-from pydantic import ConfigDict
-
 from langchain_classic.agents.output_parsers.tools import ToolsAgentOutputParser
 from langchain_core.messages.ai import AIMessage
 from langchain_core.messages.base import BaseMessage
 from langchain_core.runnables.config import RunnableConfig
-
-from neuro_san.internals.journals.journal import Journal
 
 # Bizarre convention from the superclass to adhere to overridden method.
 T = TypeVar("T")
@@ -35,23 +31,6 @@ class JournalingToolsAgentOutputParser(ToolsAgentOutputParser):
     We use this to intercept the "Invoking <agent> with <params>" kinds of messages
     to stream them back to the client as AgentMessages.
     """
-
-    # Declarations of member variables here satisfy Pydantic style,
-    # which is a type validator that langchain is based on which
-    # is able to use JSON schema definitions to validate fields.
-    journal: Journal
-
-    # This guy needs to be a pydantic class and in order to have
-    # a non-pydantic Journal as a member, we need to do this.
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-    def __init__(self, journal: Journal):
-        """
-        Constructor
-
-        :param journal: The journal to write messages to
-        """
-        super().__init__(journal=journal)
 
     # pylint: disable=redefined-builtin
     async def ainvoke(self, input: str | BaseMessage,

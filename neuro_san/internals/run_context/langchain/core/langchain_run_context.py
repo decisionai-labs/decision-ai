@@ -273,7 +273,7 @@ class LangChainRunContext(RunContext):
         # By skipping this step, our agent functions as a pure LLM-driven system with a defined role,
         # without tool invocation logic influencing its decision-making.
 
-        agent = RunnablePassthrough() | prompt_template | meat | JournalingToolsAgentOutputParser(self.journal)
+        agent = RunnablePassthrough() | prompt_template | meat | JournalingToolsAgentOutputParser()
 
         return agent
 
