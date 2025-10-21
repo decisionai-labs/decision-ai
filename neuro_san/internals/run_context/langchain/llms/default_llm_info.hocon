@@ -899,6 +899,17 @@
                 "anthropic_api_key": null,
                 # streaming is always set to True so that ...
                 # stream_usage is always set to True so that token counting can work correctly
+
+                # The following parameters are for reasoning models only.
+                # Supported models
+                # Extended thinking is supported in the following models:
+                # Claude Sonnet 4.5 (claude-sonnet-4-5-20250929)
+                # Claude Sonnet 4 (claude-sonnet-4-20250514)
+                # Claude Sonnet 3.7 (claude-3-7-sonnet-20250219)
+                # Claude Haiku 4.5 (claude-haiku-4-5-20251001)
+                # Claude Opus 4.1 (claude-opus-4-1-20250805)
+                # Claude Opus 4 (claude-opus-4-20250514)
+                "thinking": null, # Parameters for Claude reasoning, e.g., {"type": "enabled", "budget_tokens": 10_000}
             }
         },
         "ollama": {
@@ -977,7 +988,12 @@
                 # streaming is always on. Without it token counting will not work.
                 "system_prompt_with_tools": "",
                 "tags": null,
-                "temperature": null
+                "temperature": null,
+
+                # Keyword arguments to pass to the model.
+                # Can be used to pass reasoning parameters for Anthropic reasoning models.
+                # For example: {"thinking": {"type": "enabled", "budget_tokens": 10000}}
+                "model_kwargs": null,
             }
         }
     }
