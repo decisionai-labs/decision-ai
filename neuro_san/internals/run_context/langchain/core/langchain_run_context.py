@@ -28,7 +28,6 @@ from logging import getLogger
 from pydantic_core import ValidationError
 
 from langchain.agents.factory import create_agent
-from langchain_classic.agents import AgentExecutor
 from langchain_classic.callbacks.tracers.logging import LoggingCallbackHandler
 from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_core.language_models.base import BaseLanguageModel
@@ -555,14 +554,11 @@ class LangChainRunContext(RunContext):
         if isinstance(verbose, str):
             verbose = bool(verbose.lower() in ("true", "extra", "logging"))
 
-        max_execution_seconds: float = agent_spec.get("max_execution_seconds",
-                                                      2.0 * MINUTES)
+        # max_execution_seconds: float = agent_spec.get("max_execution_seconds", 2.0 * MINUTES)
+
+        # Per advice from https://python.langchain.com/docs/how_to/migrate_agent/#max_iterations
         max_iterations: int = agent_spec.get("max_iterations", 20)
-        agent_executor = AgentExecutor(agent=self.agent,
-                                       tools=self.tools,
-                                       max_execution_time=max_execution_seconds,
-                                       max_iterations=max_iterations,
-                                       verbose=verbose)
+        recursion_limit: int = max_iterations * 2 + 1
 
         run: Run = LangChainRun(self.run_id_base, self.chat_history)
 
@@ -595,7 +591,8 @@ class LangChainRunContext(RunContext):
             "configurable": {
                 "session_id": run.get_id()
             },
-            "callbacks": callbacks
+            "callbacks": callbacks,
+            "recursion_limit": recursion_limit
         }
 
         # Chat history is updated in write_message
@@ -604,15 +601,14 @@ class LangChainRunContext(RunContext):
         # Attempt to count tokens/costs while invoking the agent.
         llm: BaseLanguageModel = self.llm_resources.get_model()
         token_counter = LangChainTokenCounter(llm, self.invocation_context, self.journal)
-        await token_counter.count_tokens(self.ainvoke(agent_executor, inputs, invoke_config))
+        await token_counter.count_tokens(self.ainvoke(inputs, invoke_config))
 
         return run
 
-    async def ainvoke(self, agent_executor: AgentExecutor, inputs: Dict[str, Any], invoke_config: Dict[str, Any]):
+    async def ainvoke(self, inputs: Dict[str, Any], invoke_config: Dict[str, Any]):
         """
         Set the agent in motion
 
-        :param agent_executor: The AgentExecutor to invoke
         :param inputs: The inputs to the agent_executor
         :param invoke_config: The invoke_config to send to the agent_executor
         """
@@ -622,7 +618,7 @@ class LangChainRunContext(RunContext):
         backtrace: str = None
         while return_dict is None and retries > 0:
             try:
-                return_dict: Dict[str, Any] = await agent_executor.ainvoke(inputs, invoke_config)
+                return_dict: Dict[str, Any] = await self.agent.ainvoke(input=inputs, config=invoke_config)
             except API_ERROR_TYPES as api_error:
                 backtrace = traceback.format_exc()
                 message: str = None
