@@ -100,12 +100,16 @@ class AbstractClassActivation(AbstractCallableActivation):
 
         # Set some standard args so CodedTool can know about origin, but only if they are
         # not already set by other infrastructure.
-        if self.arguments.get("progress_reporter") is None:
-            self.arguments["progress_reporter"] = ProgressJournal(self.journal)
         if self.arguments.get("origin") is None:
             self.arguments["origin"] = deepcopy(self.run_context.get_origin())
         if self.arguments.get("origin_str") is None:
             self.arguments["origin_str"] = self.full_name
+
+        # Set some standard args that are policy objects for CodedTool consumption.
+        # If you are adding keys to this section, be sure you also add to the list
+        # in ToolArgumentReporting so args messages can be properly serialized.
+        if self.arguments.get("progress_reporter") is None:
+            self.arguments["progress_reporter"] = ProgressJournal(self.journal)
         if self.arguments.get("reservationist") is None and self.reservationist:
             # This is the Reservationist we pass into the CodedTool.
             # You might think this belongs in sly_data, but sly_data is actually a global

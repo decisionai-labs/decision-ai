@@ -21,6 +21,8 @@ class ToolArgumentReporting:
     Utility class to assist in preparing arguments dictionaries when reporing starting a tool.
     """
 
+    # List of keys for policy objects that cannot be serialized in a message.
+    # These are set in AbstractClassActivation.
     POLICY_OBJECT_KEYS: List[str] = ["reservationist", "progress_reporter"]
 
     @staticmethod
