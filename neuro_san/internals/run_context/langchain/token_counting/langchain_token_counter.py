@@ -124,7 +124,8 @@ class LangChainTokenCounter:
             try:
                 retval = await wait_for(task, max_execution_seconds)
             except AsyncTimeout:
-                await task.cancel()
+                # Per docs for wait_for(), the task is already cancelled.
+                retval = None
 
         # Figure out how much time our agent took.
         end_time: float = time()
