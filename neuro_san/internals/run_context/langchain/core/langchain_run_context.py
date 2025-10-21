@@ -678,28 +678,45 @@ class LangChainRunContext(RunContext):
         :return: A string value to return as the result of the run.
         """
 
+        # Initialize our output.
+        # The value here might morph a bit between types, but when we return
+        # something we expect it to be a string.
         output: Union[str, List[Dict[str, Any]]] = None
+
         if chain_result is None and exception is not None:
+            # We got an exception instead of a proper result. Say so.
             output = f"Agent stopped due to exception {exception}"
         else:
+            # Set some stuff up for later
             backtrace = None
             ai_message: AIMessage = None
+
+            # Handle the AgentFinish case.
+            # The return_values from there contain our output whether in string or dict form.
+            # ??? From what path does this come?
             if isinstance(chain_result, AgentFinish):
                 chain_result = chain_result.return_values
 
             if isinstance(chain_result, Dict):
+                # Normal return value from a chain is a dict.
+                # The dict in question usually has chat history in a messages field.
+                # We want the last AIMessage from that chat history.
                 messages: List[BaseMessage] = chain_result.get("messages", [])
                 for message in reversed(messages):
                     if isinstance(message, AIMessage):
                         ai_message = message
                         break
+
                 if ai_message is None:
+                    # We didn't find an AIMessage, so look for straight-up output key
                     output = chain_result.get("output")
 
             elif isinstance(chain_result, AIMessage):
+                # Sometimes we get an AIMessage from a tool call.
                 ai_message = chain_result
 
             if ai_message is not None:
+                # We generally want the content of any single AIMessage we found from above
                 output = ai_message.content
 
         # In general, output is a string. but output from Anthropic can either be
@@ -709,6 +726,7 @@ class LangChainRunContext(RunContext):
         if isinstance(output, list):
             output = output[0].get("text", "")
 
+        # See if we had some kind of error and format accordingly, if asked for.
         output = self.error_detector.handle_error(output, backtrace)
         return output
 
