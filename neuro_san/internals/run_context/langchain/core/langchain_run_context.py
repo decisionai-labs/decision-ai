@@ -112,7 +112,7 @@ class LangChainRunContext(RunContext):
         self.chat_history: List[BaseMessage] = []
         self.journal: OriginatingJournal = None
         self.llm_resources: LangChainLlmResources = None
-        self.agent: Runnable = None
+        self.agent_chain: Runnable = None
 
         # This might get modified in create_resources() (for now)
         self.llm_config: Dict[str, Any] = llm_config
@@ -202,7 +202,7 @@ class LangChainRunContext(RunContext):
 
         prompt_template: ChatPromptTemplate = await self._create_prompt_template(instructions)
 
-        self.agent = self.create_agent_with_fallbacks(prompt_template)
+        self.agent_chain = self.create_agent_with_fallbacks(prompt_template)
         self.resources_created = True
 
     def create_agent_with_fallbacks(self, prompt_template: ChatPromptTemplate) -> Runnable:
@@ -619,7 +619,7 @@ class LangChainRunContext(RunContext):
         backtrace: str = None
         while return_dict is None and retries > 0:
             try:
-                return_dict: Dict[str, Any] = await self.agent.ainvoke(input=inputs, config=invoke_config)
+                return_dict: Dict[str, Any] = await self.agent_chain.ainvoke(input=inputs, config=invoke_config)
             except API_ERROR_TYPES as api_error:
                 backtrace = traceback.format_exc()
                 message: str = None
@@ -816,7 +816,7 @@ class LangChainRunContext(RunContext):
 
         self.tools = []
         self.chat_history = []
-        self.agent = None
+        self.agent_chain = None
         self.recent_human_message = None
         self.llm_resources = None
         self.journal = None
