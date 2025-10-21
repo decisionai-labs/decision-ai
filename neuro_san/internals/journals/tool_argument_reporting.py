@@ -22,30 +22,32 @@ class ToolArgumentReporting:
     """
 
     @staticmethod
-    def prepare_tool_start_dict(inputs: Dict[str, Any],
+    def prepare_tool_start_dict(tool_args: Dict[str, Any],
                                 origin: List[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """
+        Common code to prepare a tool start dictionary.
 
-        # Combine the original tool inputs with origin metadata
-        tool_args: Dict[str, Any] = inputs.copy()
+        :param tool_args: The arguments that will be passed to the tool
+        """
 
+        modified_tool_args: Dict[str, Any] = tool_args.copy()
+
+        # Combine the original tool tool_args with origin metadata, if available.
         if origin is not None:
-            tool_args["origin"] = origin
+            modified_tool_args["origin"] = origin
 
             full_name: str = Origination.get_full_name_from_origin(origin)
-            tool_args["origin_str"] = full_name
+            modified_tool_args["origin_str"] = full_name
 
-        # Remove any reservationist from the args as that will not transfer over the wire
-        if "reservationist" in tool_args:
-            del tool_args["reservationist"]
-
-        # Remove any progress_reporter from the args as that will not transfer over the wire
-        if "progress_reporter" in tool_args:
-            del tool_args["progress_reporter"]
+        # Remove policy object keys from the args that cannot be serialized in a message.
+        for key in ["reservationist", "progress_reporter"]:
+            if key in modified_tool_args:
+                del modified_tool_args[key]
 
         # Create a dictionary for a future journal entry for this invocation
-        tool_args_dict: Dict[str, Any] = {
+        tool_start_dict: Dict[str, Any] = {
             "tool_start": True,
-            "tool_args": tool_args
+            "tool_args": modified_tool_args
         }
 
-        return tool_args_dict
+        return tool_start_dict
