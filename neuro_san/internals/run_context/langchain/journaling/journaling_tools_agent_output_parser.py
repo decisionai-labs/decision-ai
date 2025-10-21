@@ -10,8 +10,6 @@
 #
 # END COPYRIGHT
 
-import re
-from re import Match
 from typing import Any
 from typing import Dict
 from typing import List
@@ -19,6 +17,10 @@ from typing import Optional
 from typing import Tuple
 from typing import TypeVar
 from typing import Union
+
+import re
+from re import Match
+
 
 from pydantic import ConfigDict
 
@@ -61,9 +63,13 @@ class JournalingToolsAgentOutputParser(ToolsAgentOutputParser):
         """
         super().__init__(journal=journal)
 
+    # pylint: disable=redefined-builtin
     async def ainvoke(self, input: str | BaseMessage,
                       config: RunnableConfig | None = None,
                       **kwargs: Any | None) -> T:
+        """
+        Comments and method signature from superclass method.
+        """
         use_input = input
         if isinstance(input, Dict):
             messages: List[BaseMessage] = input.get("messages", [])
