@@ -32,6 +32,8 @@ class ToolArgumentReporting:
         Common code to prepare a tool start dictionary.
 
         :param tool_args: The arguments that will be passed to the tool
+        :param origin: A List of origin dictionaries indicating the origin of the run.
+        :return: A dictionary for a future journal entry
         """
 
         modified_tool_args: Dict[str, Any] = tool_args.copy()
