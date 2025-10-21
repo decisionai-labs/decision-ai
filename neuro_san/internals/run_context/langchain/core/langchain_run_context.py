@@ -62,8 +62,6 @@ from neuro_san.internals.run_context.langchain.core.langchain_openai_function_to
     import LangChainOpenAIFunctionTool
 from neuro_san.internals.run_context.langchain.core.langchain_run import LangChainRun
 from neuro_san.internals.run_context.langchain.journaling.journaling_callback_handler import JournalingCallbackHandler
-from neuro_san.internals.run_context.langchain.journaling.journaling_tools_agent_output_parser \
-    import JournalingToolsAgentOutputParser
 from neuro_san.internals.run_context.langchain.mcp.langchain_mcp_adapter import LangChainMcpAdapter
 from neuro_san.internals.run_context.langchain.token_counting.langchain_token_counter import LangChainTokenCounter
 from neuro_san.internals.run_context.langchain.util.api_key_error_check import ApiKeyErrorCheck
@@ -273,7 +271,7 @@ class LangChainRunContext(RunContext):
         # By skipping this step, our agent functions as a pure LLM-driven system with a defined role,
         # without tool invocation logic influencing its decision-making.
 
-        agent = RunnablePassthrough() | prompt_template | meat | JournalingToolsAgentOutputParser()
+        agent = RunnablePassthrough() | prompt_template | meat
 
         return agent
 
@@ -613,13 +611,13 @@ class LangChainRunContext(RunContext):
         :param inputs: The inputs to the agent_executor
         :param invoke_config: The invoke_config to send to the agent_executor
         """
-        return_dict: Dict[str, Any] = None
+        chain_result: Dict[str, Any] = None
         retries: int = 3
         exception: Exception = None
         backtrace: str = None
-        while return_dict is None and retries > 0:
+        while chain_result is None and retries > 0:
             try:
-                return_dict: Dict[str, Any] = await self.agent_chain.ainvoke(input=inputs, config=invoke_config)
+                chain_result: Dict[str, Any] = await self.agent_chain.ainvoke(input=inputs, config=invoke_config)
             except API_ERROR_TYPES as api_error:
                 backtrace = traceback.format_exc()
                 message: str = None
@@ -648,7 +646,7 @@ class LangChainRunContext(RunContext):
                     # From: https://github.com/langchain-ai/langchain/issues/1358#issuecomment-1486132587
                     # Per thread consensus, this is hacky and there are better ways to go,
                     # but removes immediate impediments.
-                    return_dict = {
+                    chain_result = {
                         "output": response.removeprefix(find_string).removesuffix("`")
                     }
                 else:
@@ -657,16 +655,52 @@ class LangChainRunContext(RunContext):
                     exception = value_error
                     backtrace = traceback.format_exc()
 
+        output: str = self.parse_chain_result(chain_result, exception, backtrace)
+        return_message: BaseMessage = AIMessage(output)
+
+        # Chat history is updated in write_message
+        await self.journal.write_message(return_message)
+
+    def parse_chain_result(self, chain_result: Union[Dict[str, Any], AgentFinish, AIMessage],
+                           exception: Exception, backtrace: str) -> str:
+        """
+        Parse the result from the langchain chain.
+
+        :param chain_result: The result from invoking the agent chain.
+                        Can be:
+                        * An AgentFinish instance whose return_values can be any one of the following
+                        * A dictionary whose keys might be:
+                            "output" - the actual output to use
+                            "messages" - effectively a chat history
+                        * An AIMessage whose content is the output to use
+        :param exception: Any exception that happened along the way
+        :param backtrace: Any backtrace to the exception that happened along the way
+        :return: A string value to return as the result of the run.
+        """
+
         output: Union[str, List[Dict[str, Any]]] = None
-        if return_dict is None and exception is not None:
+        if chain_result is None and exception is not None:
             output = f"Agent stopped due to exception {exception}"
         else:
-            if isinstance(return_dict, AgentFinish):
-                return_dict = return_dict.return_values
-            # Other keys generally available at this point from return_dict are
-            # "chat_history" and "input".
-            output = return_dict.get("output", "")
             backtrace = None
+            ai_message: AIMessage = None
+            if isinstance(chain_result, AgentFinish):
+                chain_result = chain_result.return_values
+
+            if isinstance(chain_result, Dict):
+                messages: List[BaseMessage] = chain_result.get("messages", [])
+                for message in reversed(messages):
+                    if isinstance(message, AIMessage):
+                        ai_message = message
+                        break
+                if ai_message is None:
+                    output = chain_result.get("output")
+
+            elif isinstance(chain_result, AIMessage):
+                ai_message = chain_result
+
+            if ai_message is not None:
+                output = ai_message.content
 
         # In general, output is a string. but output from Anthropic can either be
         # a single string or a list of content blocks.
@@ -676,11 +710,7 @@ class LangChainRunContext(RunContext):
             output = output[0].get("text", "")
 
         output = self.error_detector.handle_error(output, backtrace)
-
-        return_message: BaseMessage = AIMessage(output)
-
-        # Chat history is updated in write_message
-        await self.journal.write_message(return_message)
+        return output
 
     async def get_response(self) -> List[BaseMessage]:
         """
