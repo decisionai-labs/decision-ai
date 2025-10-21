@@ -28,7 +28,9 @@ from logging import getLogger
 from pydantic_core import ValidationError
 
 from langchain.agents.factory import create_agent
+# from langchain_classic.agents.output_parsers.tools import ToolsAgentOutputParser
 from langchain_classic.callbacks.tracers.logging import LoggingCallbackHandler
+from langchain_core.agents import AgentFinish
 from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_core.language_models.base import BaseLanguageModel
 from langchain_core.messages.ai import AIMessage
@@ -660,6 +662,8 @@ class LangChainRunContext(RunContext):
         if return_dict is None and exception is not None:
             output = f"Agent stopped due to exception {exception}"
         else:
+            if isinstance(return_dict, AgentFinish):
+                return_dict = return_dict.return_values
             # Other keys generally available at this point from return_dict are
             # "chat_history" and "input".
             output = return_dict.get("output", "")

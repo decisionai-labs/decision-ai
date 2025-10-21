@@ -23,7 +23,10 @@ from typing import Union
 from pydantic import ConfigDict
 
 from langchain_classic.agents.output_parsers.tools import ToolsAgentOutputParser
+from langchain_core.messages.base import BaseMessage
+from langchain_core.messages.ai import AIMessage
 from langchain_core.outputs import Generation
+from langchain_core.runnables.config import RunnableConfig
 
 from neuro_san.internals.journals.journal import Journal
 from neuro_san.internals.messages.agent_message import AgentMessage
@@ -57,6 +60,22 @@ class JournalingToolsAgentOutputParser(ToolsAgentOutputParser):
         :param journal: The journal to write messages to
         """
         super().__init__(journal=journal)
+
+    async def ainvoke(self, input: str | BaseMessage,
+                      config: RunnableConfig | None = None,
+                      **kwargs: Any | None) -> T:
+        use_input = input
+        if isinstance(input, Dict):
+            messages: List[BaseMessage] = input.get("messages", [])
+            use_input = None
+            for message in messages:
+                if isinstance(message, AIMessage):
+                    use_input = message
+
+            if use_input is None:
+                return None
+
+        return await super().ainvoke(use_input, config, **kwargs)
 
     async def aparse_result(self, result: list[Generation], *, partial: bool = False) -> T:
         """
