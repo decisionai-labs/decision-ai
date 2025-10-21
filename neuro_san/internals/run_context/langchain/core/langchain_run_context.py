@@ -611,7 +611,7 @@ class LangChainRunContext(RunContext):
         :param inputs: The inputs to the agent_executor
         :param invoke_config: The invoke_config to send to the agent_executor
         """
-        chain_result: Dict[str, Any] = None
+        chain_result: Union[Dict[str, Any], AgentFinish, AIMessage] = None
         retries: int = 3
         exception: Exception = None
         backtrace: str = None
