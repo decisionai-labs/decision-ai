@@ -153,6 +153,9 @@ class ExternalActivation(AbstractCallableActivation):
         chat_request: Dict[str, Any] = self.gather_input(f"```json\n{json.dumps(self.arguments)}```",
                                                          self.sly_data)
 
+        full_name: str = Origination.get_full_name_from_origin(self.run_context.get_origin())
+        logger: Logger = getLogger(full_name)
+
         chat_responses: AsyncGenerator[Dict[str, Any], None] = None
         error_str: str = None
         retries_remaining: int = 2
@@ -168,6 +171,8 @@ class ExternalActivation(AbstractCallableActivation):
                 if retries_remaining == 0:
                     error_str: str = f"Agent/tool {self.agent_url} was unreachable due to ClientPayloadError. " + \
                                      "Cannot rely on results from it as a tool."
+                else:
+                    logger.warning("Agent/tool %s was unreachable due to ClientPayloadError. Retrying.", self.agent_url)
 
             except ValueError:
                 # Could not reach the server for the external agent, so tell about it
@@ -175,8 +180,6 @@ class ExternalActivation(AbstractCallableActivation):
                                  "Cannot rely on results from it as a tool."
 
             if error_str is not None:
-                full_name: str = Origination.get_full_name_from_origin(self.run_context.get_origin())
-                logger: Logger = getLogger(full_name)
                 logger.info(error_str)
                 ai_message = AIMessage(content=error_str)
                 return ai_message
