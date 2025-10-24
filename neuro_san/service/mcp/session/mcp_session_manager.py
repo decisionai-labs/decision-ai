@@ -24,6 +24,7 @@ from neuro_san.service.mcp.session.mcp_client_session import MCPClientSession
 MCP_SESSION_ID: str = "Mcp-Session-Id"
 MCP_PROTOCOL_VERSION: str = "MCP-Protocol-Version"
 
+
 class MCPSessionManager:
     """
     Class creating and managing client sessions with the MCP service.

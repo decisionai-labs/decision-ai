@@ -13,6 +13,7 @@
 See class comment for details
 """
 
+
 class MCPClientSession:
     """
     Class representing a client session with the MCP service.

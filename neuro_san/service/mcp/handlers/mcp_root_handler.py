@@ -14,20 +14,14 @@ See class comment for details
 """
 
 import json
-import os
 from typing import Any
-from typing import List
 from typing import Dict
 from typing import Tuple
 
-import jsonschema
 from http import HTTPStatus
 
 from neuro_san.internals.interfaces.dictionary_validator import DictionaryValidator
 from neuro_san.service.http.handlers.base_request_handler import BaseRequestHandler
-from neuro_san.internals.network_providers.agent_network_storage import AgentNetworkStorage
-from neuro_san.service.http.interfaces.agent_authorizer import AgentAuthorizer
-from neuro_san.service.http.logging.http_logger import HttpLogger
 from neuro_san.service.mcp.context.mcp_server_context import MCPServerContext
 from neuro_san.service.mcp.session.mcp_session_manager import MCPSessionManager, MCP_SESSION_ID, MCP_PROTOCOL_VERSION
 from neuro_san.service.mcp.util.mcp_errors_util import MCPErrorsUtil
@@ -40,14 +34,15 @@ from neuro_san.service.mcp.processors.mcp_ping_processor import MCPPingProcessor
 
 
 class MCPRootHandler(BaseRequestHandler):
+    """
+    Class implementing top-level MCP request handler.
+    Note that since /mcp is our single MCP endpoint,
+    all MCP requests are handled by this class.
+    """
     # pylint: disable=attribute-defined-outside-init
     # pylint: disable=too-many-arguments
     # pylint: disable=too-many-positional-arguments
-    def initialize(self,
-                   agent_policy: AgentAuthorizer,
-                   forwarded_request_metadata: List[str],
-                   mcp_context: MCPServerContext,
-                   network_storage_dict: Dict[str, AgentNetworkStorage]):
+    def initialize(self, **kwargs):
         """
         This method is called by Tornado framework to allow
         injecting service-specific data into local handler context.
@@ -58,28 +53,27 @@ class MCPRootHandler(BaseRequestHandler):
                     AgentNetworkStorage instance which keeps all the AgentNetwork instances
                     of a particular grouping.
         """
-
-        self.agent_policy = agent_policy
-        self.forwarded_request_metadata: List[str] = forwarded_request_metadata
-        self.mcp_context: MCPServerContext = mcp_context
-        self.logger = HttpLogger(forwarded_request_metadata)
-        self.network_storage_dict: Dict[str, AgentNetworkStorage] = network_storage_dict
-        self.show_absent: bool = os.environ.get("SHOW_ABSENT_METADATA") is not None
+        # type: MCPServerContext
+        self.mcp_context: MCPServerContext = kwargs.pop("mcp_context", None)
+        # Initialize members of the base class BaseRequestHandler:
+        super().initialize(**kwargs)
 
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
         headers: str = "Content-Type, Transfer-Encoding"
-        metadata_headers: str = ", ".join(forwarded_request_metadata)
+        metadata_headers: str = ", ".join(self.forwarded_request_metadata)
         if len(metadata_headers) > 0:
             headers += f", {metadata_headers}"
         # Set all allowed headers:
         self.set_header("Access-Control-Allow-Headers", headers)
 
-
     async def post(self):
         """
         Implementation of top-level POST request handler for MCP call.
         """
+        # pylint: disable=too-many-locals
+        # pylint: disable=too-many-branches
+        # pylint: disable=too-many-statements
 
         metadata: Dict[str, Any] = self.get_metadata()
         request_id = "unknown"
@@ -154,12 +148,14 @@ class MCPRootHandler(BaseRequestHandler):
 
         try:
             if method == "tools/list":
-                tools_processor: MCPToolsProcessor = MCPToolsProcessor(self.logger, self.network_storage_dict, self.agent_policy)
+                tools_processor: MCPToolsProcessor =\
+                    MCPToolsProcessor(self.logger, self.network_storage_dict, self.agent_policy)
                 result_dict: Dict[str, Any] = await tools_processor.list_tools(request_id, metadata)
                 self.set_status(HTTPStatus.OK)
                 self.write(result_dict)
             elif method == "tools/call":
-                tools_processor: MCPToolsProcessor = MCPToolsProcessor(self.logger, self.network_storage_dict, self.agent_policy)
+                tools_processor: MCPToolsProcessor =\
+                    MCPToolsProcessor(self.logger, self.network_storage_dict, self.agent_policy)
                 call_params: Dict[str, Any] = data.get("params", {})
                 tool_name: str = call_params.get("name")
                 prompt: str = call_params.get("arguments", {}).get("input", "")
@@ -173,7 +169,7 @@ class MCPRootHandler(BaseRequestHandler):
                 self.write(result_dict)
             elif method == "prompts/list":
                 prompts_processor: MCPPromptsProcessor = MCPPromptsProcessor(self.logger)
-                result_dict: Dict[str, Any] = await prompts_processor.list_resources(request_id, metadata)
+                result_dict: Dict[str, Any] = await prompts_processor.list_prompts(request_id, metadata)
                 self.set_status(HTTPStatus.OK)
                 self.write(result_dict)
             else:
@@ -224,7 +220,7 @@ class MCPRootHandler(BaseRequestHandler):
                 self.set_status(HTTPStatus.OK)
                 self.write(result_dict)
                 return session_id, True
-            elif method == "notifications/initialized":
+            if method == "notifications/initialized":
                 # Handle client acknowledgement of initialization response,
                 # this activates the session on the server side for further operations.
                 handshake_processor: MCPInitializeProcessor = MCPInitializeProcessor(self.mcp_context, self.logger)
@@ -234,10 +230,10 @@ class MCPRootHandler(BaseRequestHandler):
                 self.set_status(response_code)
                 # We do not have any response body for this request
                 return None, True
-            elif method == "ping":
+            if method == "ping":
                 # Handle client-side ping,
                 # we don't care about sessions here.
-                ping_processor: MCPPingProcessor= MCPPingProcessor(self.logger)
+                ping_processor: MCPPingProcessor = MCPPingProcessor(self.logger)
                 _ = await ping_processor.ping(session_id, metadata)
                 response_code: int = HTTPStatus.OK
                 self.set_status(response_code)
@@ -273,7 +269,7 @@ class MCPRootHandler(BaseRequestHandler):
             session_manager: MCPSessionManager = self.mcp_context.get_session_manager()
             deleted: bool = session_manager.delete_session(session_id)
             if deleted:
-                self.logger.info(metadata,f"Session %s deleted by client", session_id)
+                self.logger.info(metadata, "Session %s deleted by client", session_id)
             else:
                 extra_error: str = "Session id not found"
                 error_msg: Dict[str, Any] =\
@@ -289,8 +285,9 @@ class MCPRootHandler(BaseRequestHandler):
         self.do_finish()
 
     async def get(self):
+        """
+        Implementation of top-level GET request handler for MCP call.
+        """
         # Consider GET request for MCP endpoint to be a service health check
         self.set_status(HTTPStatus.OK)
         self.do_finish()
-
-

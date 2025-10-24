@@ -17,6 +17,7 @@ from typing import Dict
 
 from neuro_san.service.http.logging.http_logger import HttpLogger
 
+
 class MCPResourcesProcessor:
     """
     Class implementing "resources"-related MCP requests.

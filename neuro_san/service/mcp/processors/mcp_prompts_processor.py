@@ -17,6 +17,7 @@ from typing import Dict
 
 from neuro_san.service.http.logging.http_logger import HttpLogger
 
+
 class MCPPromptsProcessor:
     """
     Class implementing "prompts"-related MCP requests.

@@ -17,6 +17,7 @@ from typing import Dict
 
 from neuro_san.service.mcp.mcp_errors import MCPError
 
+
 class MCPErrorsUtil:
     """
     Utility class for generating MCP protocol and tool error responses.

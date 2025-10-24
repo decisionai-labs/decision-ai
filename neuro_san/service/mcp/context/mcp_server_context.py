@@ -21,6 +21,7 @@ from neuro_san.service.mcp.session.mcp_session_manager import MCPSessionManager
 
 MCP_VERSION: str = "2025-06-18"
 
+
 class MCPServerContext:
     """
     Class representing the server run-time context,
