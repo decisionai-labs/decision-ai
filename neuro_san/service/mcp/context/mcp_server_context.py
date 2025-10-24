@@ -60,5 +60,3 @@ class MCPServerContext:
         :return: The session manager
         """
         return self.session_manager
-
-

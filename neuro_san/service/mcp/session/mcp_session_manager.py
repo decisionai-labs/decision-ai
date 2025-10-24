@@ -14,9 +14,7 @@ See class comment for details
 """
 import threading
 
-from typing import Any
 from typing import Dict
-from typing import List
 
 import uuid
 import base64

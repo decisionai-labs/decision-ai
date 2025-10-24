@@ -18,6 +18,9 @@ from typing import Dict
 from neuro_san.service.mcp.mcp_errors import MCPError
 
 class MCPErrorsUtil:
+    """
+    Utility class for generating MCP protocol and tool error responses.
+    """
 
     @classmethod
     def get_protocol_error(cls, request_id, error: MCPError, extra_msg: str = None) -> Dict[str, Any]:

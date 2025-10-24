@@ -46,6 +46,7 @@ class MCPInitializeProcessor:
         # Also: we don't look at possible session ID present in the incoming request.
         # Future versions may implement more complex negotiation logic.
 
+        _ = params
         # Create new client session:
         session: MCPClientSession = self.mcp_context.get_session_manager().create_session()
         session_id: str = session.get_id()
@@ -89,8 +90,11 @@ class MCPInitializeProcessor:
         """
         success: bool = self.mcp_context.get_session_manager().activate_session(session_id)
         if success:
-            self.logger.info(metadata, "Activated MCP client session with id: %s", session_id)
+            self.logger.info(metadata,
+                             "Activated MCP client session with id: %s",
+                             session_id)
         else:
-            self.logger.info(metadata, "Failed to activate MCP client session with id: %s - session not found", session_id)
+            self.logger.info(metadata,
+                             "Failed to activate MCP client session with id: %s - session not found",
+                             session_id)
         return success
-

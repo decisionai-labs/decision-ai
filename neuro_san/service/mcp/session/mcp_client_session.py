@@ -12,9 +12,6 @@
 """
 See class comment for details
 """
-from typing import Any
-from typing import Dict
-from typing import List
 
 class MCPClientSession:
     """
@@ -45,10 +42,3 @@ class MCPClientSession:
         Set the session active flag.
         """
         self.session_is_active = is_active
-
-
-
-
-
-
-

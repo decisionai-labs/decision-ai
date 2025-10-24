@@ -19,6 +19,9 @@ class MCPError(Enum):
     """
     Enum class for standard MCP error codes and brief messages.
     """
+    # Standard and additional JSON-RPC 2.0 errors;
+    # we keep naming consistent with JSON-RPC 2.0 spec.
+    # pylint: disable=invalid-name
     ParseError = (-32700, "Parse error")
     InvalidRequest = (-32600, "Invalid Request")
     NoMethod = (-32601, "Method not found")
