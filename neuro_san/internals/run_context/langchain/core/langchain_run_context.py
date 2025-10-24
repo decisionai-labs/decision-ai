@@ -49,7 +49,6 @@ from neuro_san.internals.journals.originating_journal import OriginatingJournal
 from neuro_san.internals.messages.origination import Origination
 from neuro_san.internals.messages.agent_tool_result_message import AgentToolResultMessage
 from neuro_san.internals.messages.base_message_dictionary_converter import BaseMessageDictionaryConverter
-from neuro_san.internals.run_context.interfaces.agent_network_inspector import AgentNetworkInspector
 from neuro_san.internals.run_context.interfaces.run import Run
 from neuro_san.internals.run_context.interfaces.run_context import RunContext
 from neuro_san.internals.run_context.interfaces.tool_caller import ToolCaller
@@ -183,8 +182,7 @@ class LangChainRunContext(RunContext):
                                             agent_error_fragments=agent_spec.get("error_fragments"))
 
         if tool_names is not None:
-            inspector: AgentNetworkInspector = self.tool_caller.get_inspector()
-            factory = BaseToolFactory(inspector, self.invocation_context, self.journal)
+            factory = BaseToolFactory(self.tool_caller, self.invocation_context, self.journal)
             for tool_name in tool_names:
                 tool: Union[BaseTool | List[BaseTool]] = await factory.create_base_tool(tool_name)
                 if tool is not None:

@@ -26,6 +26,7 @@ from neuro_san.internals.interfaces.invocation_context import InvocationContext
 from neuro_san.internals.journals.journal import Journal
 from neuro_san.internals.messages.agent_message import AgentMessage
 from neuro_san.internals.run_context.interfaces.agent_network_inspector import AgentNetworkInspector
+from neuro_san.internals.run_context.interfaces.tool_caller import ToolCaller
 from neuro_san.internals.run_context.langchain.core.langchain_openai_function_tool \
     import LangChainOpenAIFunctionTool
 from neuro_san.internals.run_context.langchain.mcp.langchain_mcp_adapter import LangChainMcpAdapter
@@ -40,19 +41,18 @@ class BaseToolFactory:
 
     # pylint: disable=too-many-arguments, too-many-positional-arguments
     def __init__(self,
-                 inspector: AgentNetworkInspector,
+                 tool_caller: ToolCaller,
                  invocation_context: InvocationContext,
                  journal: Journal):
         """
         Constructor
 
-        :param inspector: The AgentNetworkInspector which allows us to look at the
-                graph node's config.
+        :param tool_caller: The ToolCaller creating tools
         :param invocation_context: The context policy container that pertains to the invocation
                     of the agent.
         :param journal: The journal to use when sending framework-level messages to the client
         """
-        self.inspector: AgentNetworkInspector = inspector
+        self.tool_caller: ToolCaller = tool_caller
         self.invocation_context: InvocationContext = invocation_context
         self.journal: Journal = journal
         self.logger: Logger = getLogger(self.__class__.__name__)
@@ -65,7 +65,8 @@ class BaseToolFactory:
         """
 
         # Check our own local inspector. Most tools live in the neighborhood.
-        agent_spec: Dict[str, Any] = self.inspector.get_agent_tool_spec(name)
+        inspector: AgentNetworkInspector = self.tool_caller.get_inspector()
+        agent_spec: Dict[str, Any] = inspector.get_agent_tool_spec(name)
 
         if agent_spec is None:
             return await self.create_external_tool(name)
