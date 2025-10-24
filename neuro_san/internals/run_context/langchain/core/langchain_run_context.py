@@ -61,7 +61,7 @@ from neuro_san.internals.run_context.langchain.core.langchain_openai_function_to
     import LangChainOpenAIFunctionTool
 from neuro_san.internals.run_context.langchain.core.langchain_run import LangChainRun
 from neuro_san.internals.run_context.langchain.journaling.journaling_callback_handler import JournalingCallbackHandler
-from neuro_san.internals.run_context.langchain.journaling.journaling_passthrough import JournalingPassthrough
+from neuro_san.internals.run_context.langchain.journaling.journaling_runnable import JournalingRunnable
 from neuro_san.internals.run_context.langchain.mcp.langchain_mcp_adapter import LangChainMcpAdapter
 from neuro_san.internals.run_context.langchain.token_counting.langchain_token_counter import LangChainTokenCounter
 from neuro_san.internals.run_context.langchain.util.api_key_error_check import ApiKeyErrorCheck
@@ -109,7 +109,7 @@ class LangChainRunContext(RunContext):
         """
         self.chat_history: List[BaseMessage] = []
         self.journal: Journal = None
-        self.passthrough: JournalingPassthrough = None
+        self.passthrough: JournalingRunnable = None
         self.llm_resources: LangChainLlmResources = None
         self.agent_chain: Runnable = None
 
@@ -199,7 +199,7 @@ class LangChainRunContext(RunContext):
                     else:
                         self.tools.append(tool)
 
-        prompt_template: ChatPromptTemplate = await self._create_prompt_template(instructions)
+        prompt_template: ChatPromptTemplate = await self.create_prompt_template(instructions)
 
         self.agent_chain = self.create_agent_with_fallbacks(prompt_template)
         self.resources_created = True
@@ -486,7 +486,7 @@ class LangChainRunContext(RunContext):
 
         return LangChainOpenAIFunctionTool.from_function_json(function_json, self.tool_caller)
 
-    async def _create_prompt_template(self, instructions: str) -> ChatPromptTemplate:
+    async def create_prompt_template(self, instructions: str) -> ChatPromptTemplate:
         """
         Creates a ChatPromptTemplate given the generic instructions
         """
@@ -921,7 +921,7 @@ class LangChainRunContext(RunContext):
 
         # Make a nested chain where each journal is wrapped by the next
         base_journal: Journal = self.invocation_context.get_journal()
-        self.passthrough = JournalingPassthrough(wrapped_journal=base_journal, origin=self.origin)
+        self.passthrough = JournalingRunnable(wrapped_journal=base_journal, origin=self.origin)
         self.journal = OriginatingJournal(self.passthrough, self.origin, self.chat_history)
 
     def update_from_chat_context(self, chat_context: Dict[str, Any]):

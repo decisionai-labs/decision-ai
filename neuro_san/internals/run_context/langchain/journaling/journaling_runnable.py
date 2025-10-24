@@ -25,7 +25,7 @@ from langchain_core.runnables.passthrough import RunnablePassthrough
 from neuro_san.internals.journals.journal import Journal
 
 
-class JournalingPassthrough(RunnablePassthrough, Journal):
+class JournalingRunnable(RunnablePassthrough, Journal):
     """
     RunnablePassthrough implementation that intercepts journal messages
     """
@@ -45,8 +45,8 @@ class JournalingPassthrough(RunnablePassthrough, Journal):
         """
         Constructor
         """
-        # super().__init__(afunc=self.insert_framework_messages, **kwargs)
-        super().__init__(afunc=self.identity, **kwargs)
+        super().__init__(afunc=self.insert_framework_messages, **kwargs)
+        # super().__init__(afunc=self.identity, **kwargs)
         self._journaled: List[BaseMessage] = []
 
     async def write_message(self, message: BaseMessage, origin: List[Dict[str, Any]]):
