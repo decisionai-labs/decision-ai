@@ -98,11 +98,12 @@ class MCPRootHandler(BaseRequestHandler):
                 self.do_finish()
                 return
         except json.JSONDecodeError as exc:
-            error_msg: Dict[str, Any] = \
-                MCPErrorsUtil.get_protocol_error(request_id, MCPError.ParseError, str(exc))
+            # Do not expose raw exception info to client
+            error_msg: Dict[str, Any] = MCPErrorsUtil.get_protocol_error(request_id, MCPError.ParseError, "Malformed JSON payload")
             self.set_status(HTTPStatus.BAD_REQUEST)
             self.write(error_msg)
-            self.logger.error(self.get_metadata(), "error: Invalid JSON format")
+            # Log the full exception/server-side for diagnostics
+            self.logger.error(self.get_metadata(), f"error: Invalid JSON format: {exc}")
             self.do_finish()
             return
 
