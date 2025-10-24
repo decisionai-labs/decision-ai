@@ -71,7 +71,7 @@ API_ERROR_TYPES: Tuple[Type[Any], ...] = ResolverUtil.create_type_tuple([
                                          ])
 
 
-# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-instance-attributes,too-many-public-methods
 class LangChainRunContext(RunContext):
     """
     LangChain implementation on RunContext interface supporting high-level LLM usage
