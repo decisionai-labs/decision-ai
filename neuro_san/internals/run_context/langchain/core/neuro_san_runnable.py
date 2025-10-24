@@ -31,7 +31,6 @@ from langchain_core.language_models.base import BaseLanguageModel
 from langchain_core.messages.ai import AIMessage
 from langchain_core.messages.base import BaseMessage
 from langchain_core.runnables.base import Runnable
-from langchain_core.runnables.config import RunnableConfig
 from langchain_core.runnables.passthrough import RunnablePassthrough
 from langchain_core.runnables.utils import Input
 from langchain_core.runnables.utils import Output
@@ -348,15 +347,3 @@ class NeuroSanRunnable(RunnablePassthrough):
         # See if we had some kind of error and format accordingly, if asked for.
         output = self.error_detector.handle_error(output, backtrace)
         return output
-
-    # pylint: disable=redefined-builtin
-    def invoke(
-        self,
-        input: Input,
-        config: RunnableConfig | None = None,
-        **kwargs: Any,
-    ) -> Output:
-        """
-        Transform a single input into an output.
-        """
-        raise NotImplementedError
