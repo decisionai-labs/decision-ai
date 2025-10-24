@@ -155,7 +155,8 @@ class NeuroSanRunnable(RunnablePassthrough):
             # to the logs.  Add this because some people are interested in it.
             callbacks.append(LoggingCallbackHandler(self.logger))
 
-        runnable_config: Dict[str, Any] = self.prepare_runnable_config(self.session_id, callbacks, recursion_limit)
+        runnable_config: Dict[str, Any] = self.prepare_runnable_config(callbacks=callbacks,
+                                                                       recursion_limit=recursion_limit)
 
         # Chat history is updated in write_message
         recent_human_message: BaseMessage = inputs.get("input")
@@ -165,9 +166,10 @@ class NeuroSanRunnable(RunnablePassthrough):
         token_counter = LangChainTokenCounter(self.primary_llm, self.invocation_context, self.journal, self.origin)
         await token_counter.count_tokens(self.invoke_agent_chain(inputs, runnable_config), max_execution_seconds)
 
-    def prepare_runnable_config(self, session_id: str,
+    def prepare_runnable_config(self, session_id: str = None,
                                 callbacks: List[BaseCallbackHandler] = None,
-                                recursion_limit: int = None) -> Dict[str, Any]:
+                                recursion_limit: int = None,
+                                use_run_name: bool = False) -> Dict[str, Any]:
         """
         Prepare a RunnableConfig for a Runnable invocation.  See:
         https://python.langchain.com/api_reference/core/runnables/langchain_core.runnables.config.RunnableConfig.html
@@ -177,25 +179,29 @@ class NeuroSanRunnable(RunnablePassthrough):
         :param recursion_limit: Maximum number of times a call can recurse.
         :return: A dictionary to be used for a Runnable's invoke config.
         """
+        request_metadata: Dict[str, Any] = self.invocation_context.get_metadata()
 
         # Set up a run name for tracing purposes
-        request_metadata: Dict[str, Any] = self.invocation_context.get_metadata()
-        request_id: str = request_metadata.get("request_id")
-        request_prefix: str = ""
-        if request_id is not None:
-            request_prefix = f"{request_id}-"
-        origin_name: str = Origination.get_full_name_from_origin(self.origin)
-        run_name: str = f"{request_prefix}{origin_name}"
+        run_name: str = None
+        if use_run_name:
+            request_id: str = request_metadata.get("request_id")
+            request_prefix: str = ""
+            if request_id is not None:
+                request_prefix = f"{request_id}-"
+            origin_name: str = Origination.get_full_name_from_origin(self.origin)
+            run_name: str = f"{request_prefix}{origin_name}"
 
-        # Add callbacks as an invoke config
-        runnable_config: Dict[str, Any] = {
-            "configurable": {
-                "session_id": session_id
-            },
-            "run_name": run_name
-        }
+        runnable_config: Dict[str, Any] = {}
 
         # Add some optional stuff
+        if session_id:
+            runnable_config["configurable"] = {
+                "session_id": session_id
+            }
+
+        if run_name:
+            runnable_config["run_name"] = run_name
+
         if callbacks:
             runnable_config["callbacks"] = callbacks
 

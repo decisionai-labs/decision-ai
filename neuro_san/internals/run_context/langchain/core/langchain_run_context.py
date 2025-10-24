@@ -32,6 +32,7 @@ from langchain_core.messages.human import HumanMessage
 from langchain_core.messages.system import SystemMessage
 from langchain_core.prompts.chat import ChatPromptTemplate
 from langchain_core.runnables.base import Runnable
+from langchain_core.runnables.passthrough import RunnablePassthrough
 from langchain_core.tools.base import BaseTool
 
 from leaf_common.config.resolver_util import ResolverUtil
@@ -342,9 +343,13 @@ class LangChainRunContext(RunContext):
                                     tool_caller=self.tool_caller,
                                     error_detector=self.error_detector,
                                     session_id=session_id)
-        runnable_config: Dict[str, Any] = runnable.prepare_runnable_config(session_id)
+        runnable_config: Dict[str, Any] = runnable.prepare_runnable_config(session_id=session_id, use_run_name=True)
 
-        await runnable.ainvoke(input=inputs, config=runnable_config)
+        # This needs to be run as a chain otherwise LangSmith will pick up two
+        # trace names for the same request.
+        chain: Runnable = RunnablePassthrough() | runnable
+
+        await chain.ainvoke(input=inputs, config=runnable_config)
 
         return run
 
