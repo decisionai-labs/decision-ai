@@ -45,6 +45,7 @@ from neuro_san.internals.errors.error_detector import ErrorDetector
 from neuro_san.internals.interfaces.context_type_llm_factory import ContextTypeLlmFactory
 from neuro_san.internals.interfaces.invocation_context import InvocationContext
 from neuro_san.internals.journals.journal import Journal
+from neuro_san.internals.journals.intercepting_journal import InterceptingJournal
 from neuro_san.internals.journals.originating_journal import OriginatingJournal
 from neuro_san.internals.messages.origination import Origination
 from neuro_san.internals.messages.agent_tool_result_message import AgentToolResultMessage
@@ -55,7 +56,6 @@ from neuro_san.internals.run_context.interfaces.tool_caller import ToolCaller
 from neuro_san.internals.run_context.langchain.core.base_tool_factory import BaseToolFactory
 from neuro_san.internals.run_context.langchain.core.langchain_run import LangChainRun
 from neuro_san.internals.run_context.langchain.journaling.journaling_callback_handler import JournalingCallbackHandler
-from neuro_san.internals.run_context.langchain.journaling.journaling_runnable import JournalingRunnable
 from neuro_san.internals.run_context.langchain.token_counting.langchain_token_counter import LangChainTokenCounter
 from neuro_san.internals.run_context.langchain.util.api_key_error_check import ApiKeyErrorCheck
 from neuro_san.internals.run_context.langchain.llms.langchain_llm_resources import LangChainLlmResources
@@ -100,7 +100,7 @@ class LangChainRunContext(RunContext):
         """
         self.chat_history: List[BaseMessage] = []
         self.journal: Journal = None
-        self.passthrough: JournalingRunnable = None
+        self.interceptor: InterceptingJournal = None
         self.llm_resources: LangChainLlmResources = None
         self.agent_chain: Runnable = None
 
@@ -709,7 +709,7 @@ class LangChainRunContext(RunContext):
         self.recent_human_message = None
         self.llm_resources = None
         self.journal = None
-        self.passthrough = None
+        self.interceptor = None
 
     def get_agent_tool_spec(self) -> Dict[str, Any]:
         """
@@ -755,8 +755,8 @@ class LangChainRunContext(RunContext):
 
         # Make a nested chain where each journal is wrapped by the next
         base_journal: Journal = self.invocation_context.get_journal()
-        self.passthrough = JournalingRunnable(wrapped_journal=base_journal, origin=self.origin)
-        self.journal = OriginatingJournal(self.passthrough, self.origin, self.chat_history)
+        self.interceptor = InterceptingJournal(wrapped_journal=base_journal, origin=self.origin)
+        self.journal = OriginatingJournal(self.interceptor, self.origin, self.chat_history)
 
     def update_from_chat_context(self, chat_context: Dict[str, Any]):
         """
