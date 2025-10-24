@@ -327,6 +327,7 @@ class LangChainRunContext(RunContext):
         :param journal: The Journal which captures the "thinking" messages.
         :return: An potentially updated run
         """
+        _ = journal
 
         # Create an agent executor and invoke it with the most recent human message
         # as input.
@@ -369,7 +370,7 @@ class LangChainRunContext(RunContext):
             # to the logs.  Add this because some people are interested in it.
             callbacks.append(LoggingCallbackHandler(self.logger))
 
-        runnable_config: Dict[str, Any] = self.prepare_runnable_config(callbacks, run.get_id(), recursion_limit)
+        runnable_config: Dict[str, Any] = self.prepare_runnable_config(run.get_id(), callbacks, recursion_limit)
 
         # Chat history is updated in write_message
         await self.journal.write_message(self.recent_human_message)
@@ -381,13 +382,15 @@ class LangChainRunContext(RunContext):
 
         return run
 
-    def prepare_runnable_config(self, callbacks: List[BaseCallbackHandler],
-                                session_id: str,
-                                recursion_limit: int) -> Dict[str, Any]:
+    def prepare_runnable_config(self, session_id: str,
+                                callbacks: List[BaseCallbackHandler] = None,
+                                recursion_limit: int = None) -> Dict[str, Any]:
         """
         Prepare a RunnableConfig for a Runnable invocation.  See:
         https://python.langchain.com/api_reference/core/runnables/langchain_core.runnables.config.RunnableConfig.html
 
+        :param session_id: An id for the run
+        :param callbacks: A list of BaseCallbackHandlers to use for the run
         :param recursion_limit: Maximum number of times a call can recurse.
         :return: A dictionary to be used for a Runnable's invoke config.
         """
@@ -406,10 +409,15 @@ class LangChainRunContext(RunContext):
             "configurable": {
                 "session_id": session_id
             },
-            "callbacks": callbacks,
-            "recursion_limit": recursion_limit,
             "run_name": run_name
         }
+
+        # Add some optional stuff
+        if callbacks:
+            runnable_config["callbacks"] = callbacks
+
+        if recursion_limit:
+            runnable_config["recursion_limit"] = recursion_limit
 
         # Maybe add metadata to the config
         # DEF - get this from AGENT_USAGE_LOGGER_METADATA list. Plumbing likely required.
