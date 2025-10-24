@@ -45,7 +45,8 @@ class JournalingPassthrough(RunnablePassthrough, Journal):
         """
         Constructor
         """
-        super().__init__(afunc=self.insert_framework_messages, **kwargs)
+        # super().__init__(afunc=self.insert_framework_messages, **kwargs)
+        super().__init__(afunc=self.identity, **kwargs)
         self._journaled: List[BaseMessage] = []
 
     async def write_message(self, message: BaseMessage, origin: List[Dict[str, Any]]):
@@ -65,6 +66,12 @@ class JournalingPassthrough(RunnablePassthrough, Journal):
         # Keep track of the messages coming through with the same origin
         if origin == self.origin:
             self._journaled.append(message)
+
+    async def identity(self, inputs: Any) -> Any:
+        """
+        Do nothing to the input
+        """
+        return inputs
 
     async def insert_framework_messages(self, inputs: Any) -> Any:
         """
@@ -100,18 +107,15 @@ class JournalingPassthrough(RunnablePassthrough, Journal):
             if journal_message.type == input_message.type and \
                     journal_message.content == input_message.content:
                 # Append and advance both cursors
-                print(f"Same. Appending input message {input_message}")
                 output_messages.append(input_message)
                 journal_cursor = min(journal_cursor + 1, len(self._journaled))
                 input_cursor = min(input_cursor + 1, len(input_messages))
             elif isinstance(input_message, ToolMessage):
                 # Append and advance only the input cursor
-                print(f"Appending input message {input_message}")
                 output_messages.append(input_message)
                 input_cursor = min(input_cursor + 1, len(input_messages))
             else:
                 # Append and advance only the journal cursor
-                print(f"Appending journal message {journal_message}")
                 output_messages.append(journal_message)
                 journal_cursor = min(journal_cursor + 1, len(self._journaled))
 
