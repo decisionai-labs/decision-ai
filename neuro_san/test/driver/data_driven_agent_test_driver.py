@@ -242,7 +242,7 @@ Need at least {num_need_success} to consider {hocon_file} test to be successful.
         text: str = interaction.get("text")
         sly_data: str = interaction.get("sly_data")
         chat_filter: Dict[str, Any] = {
-            "chat_filter_type": interaction.get("chat_filter", "MAXIMAL")
+            "chat_filter_type": interaction.get("chat_filter", "MINIMAL")
         }
         request: Dict[str, Any] = input_processor.formulate_chat_request(text, sly_data, chat_context, chat_filter)
 
