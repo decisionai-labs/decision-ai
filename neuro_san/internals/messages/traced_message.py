@@ -29,6 +29,7 @@ class TracedMessage(BaseMessage):
     so any sensitive information should be redacted via an overridden
     translate_for_trace() method.
 
+    As of 10/25/25:
     LangSmith will only show content in its trace viewer even when there are other
     fields filled in, even in additional kwargs. So this class makes all those fields
     visible by copying anything displayable into additional_kwargs and nulling out
