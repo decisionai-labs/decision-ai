@@ -47,12 +47,21 @@ class InterceptingJournal(Journal):
                     "instantiation_index"   An integer indicating which incarnation
                                             of the tool is being dealt with.
         """
+        # Let the wrapped guy do what he's gunna do
         await self.wrapped_journal.write_message(message, origin)
 
+        # Only consider messages that match the same origin as what we care about.
         if origin == self.origin:
+
             new_message: BaseMessage = message
+
+            # When messages are TracedMessages, capture a version that
+            # has all their fields translated to the additional_kwargs
+            # for better display in tracing/observability applications like
+            # LangSmith.
             if isinstance(message, TracedMessage):
                 new_message = message.__class__(trace_source=message)
+
             self.messages.append(new_message)
 
     def get_messages(self) -> List[BaseMessage]:
