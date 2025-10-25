@@ -20,10 +20,12 @@ from typing import Union
 
 from langchain_core.messages.ai import AIMessage
 
+from neuro_san.internals.messages.traced_message import TracedMessage
 
-class AgentToolResultMessage(AIMessage):
+
+class AgentToolResultMessage(AIMessage, TracedMessage):
     """
-    BaseMessage implementation of a message that came as a result from a tool.
+    TracedMessage implementation of a message that came as a result from a tool.
     We use AIMessage class as a basis so that langchain can interpret the content
     correctly.  The extra field that we add here is an origin list to indicate
     where the the tool result came from.
@@ -31,7 +33,7 @@ class AgentToolResultMessage(AIMessage):
 
     tool_result_origin: Optional[List[Dict[str, Any]]] = None
 
-    type: Literal["agent_tool_result"] = "agent_tool_result"
+    type: Literal["agent-tool-result"] = "agent-tool-result"
 
     def __init__(self, content: Union[str, List[Union[str, Dict]]] = "",
                  tool_result_origin: List[Dict[str, Any]] = None,

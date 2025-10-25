@@ -32,6 +32,7 @@ class AgentFrameworkMessage(TracedMessage):
 
     type: Literal["agent-framework"] = "agent-framework"
 
+    # pylint: disable=too-many-arguments, too-many-positional-arguments
     def __init__(self, content: Union[str, List[Union[str, Dict]]] = "",
                  chat_context: Dict[str, Any] = None,
                  sly_data: Dict[str, Any] = None,
