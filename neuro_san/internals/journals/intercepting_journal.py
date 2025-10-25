@@ -52,7 +52,7 @@ class InterceptingJournal(Journal):
         if origin == self.origin:
             new_message: BaseMessage = message
             if isinstance(message, TracedMessage):
-                new_message = message.__class__(other=message)
+                new_message = message.__class__(trace_source=message)
             self.messages.append(new_message)
 
     def get_messages(self) -> List[BaseMessage]:
