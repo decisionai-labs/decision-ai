@@ -9,15 +9,14 @@
 # neuro-san SDK Software in commercial settings.
 #
 # END COPYRIGHT
+from __future__ import annotations
+
 from typing import Any
 from typing import Dict
 from typing import List
 from typing import Literal
 from typing import Optional
 from typing import Union
-
-from json import dumps
-from typing_extensions import override
 
 from langchain_core.messages.base import BaseMessage
 
@@ -32,7 +31,9 @@ class AgentMessage(BaseMessage):
     type: Literal["agent"] = "agent"
 
     def __init__(self, content: Union[str, List[Union[str, Dict]]] = "",
-                 structure: Dict[str, Any] = None, **kwargs: Any) -> None:
+                 structure: Dict[str, Any] = None,
+                 other: AgentMessage = None,
+                 **kwargs: Any) -> None:
         """
         Pass in content as positional arg.
 
@@ -41,22 +42,31 @@ class AgentMessage(BaseMessage):
             structure: A dictionary to pack into the message
             kwargs: Additional fields to pass to the
         """
-        super().__init__(content=content, **kwargs)
-        self.structure: Dict[str, Any] = structure
+        if other:
+            additional_kwargs: Dict[str, Any] = {}
+            if other.content and len(other.content) > 0:
+                additional_kwargs["content"] = other.content
+            if other.structure:
+                additional_kwargs["structure"] = other.structure
+            super().__init__(content="", additional_kwargs=additional_kwargs, **kwargs)
+        else:
+            super().__init__(content=content, **kwargs)
+            self.structure: Dict[str, Any] = structure
 
-    @override
-    def pretty_repr(self, html: bool = False) -> str:
+    @property
+    def lc_serializable(self) -> bool:
         """
-        Return a pretty representation of the message for display.
-
-        Args:
-            html: Whether to return an HTML-formatted string.
-
-        Returns:
-            A pretty representation of the message.
-
+        Indicates if the object can be serialized by LangChain.
         """
-        pretty: str = super().pretty_repr(html=html)
-        if self.structure:
-            pretty += "\n" + dumps(self.structure, indent=4, sort_keys=True)
-        return pretty
+        return True
+
+    @property
+    def lc_kwargs(self) -> Dict[str, Any]:
+        """
+        :return: the keyword arguments for serialization.
+        """
+        return {
+            "content": self.content,
+            "structure": self.structure,
+            **self.additional_kwargs,
+        }

@@ -31,6 +31,8 @@ from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_core.language_models.base import BaseLanguageModel
 from langchain_core.messages.ai import AIMessage
 from langchain_core.messages.base import BaseMessage
+from langchain_core.messages.human import HumanMessage
+from langchain_core.messages.base import messages_to_dict
 from langchain_core.runnables.base import Other
 from langchain_core.runnables.base import Runnable
 from langchain_core.runnables.base import RunnableConfig
@@ -173,7 +175,7 @@ class NeuroSanRunnable(RunnablePassthrough):
                                                                        recursion_limit=recursion_limit)
 
         # Chat history is updated in write_message
-        recent_human_message: BaseMessage = inputs.get("input")
+        recent_human_message: BaseMessage = HumanMessage(content=inputs.get("input"))
         await self.journal.write_message(recent_human_message)
 
         # Attempt to count tokens/costs while invoking the agent.
@@ -367,7 +369,10 @@ class NeuroSanRunnable(RunnablePassthrough):
         """
         :return: the intercepted outputs
         """
+        intercepted_messages: List[BaseMessage] = self.interceptor.get_messages()
+
+        messages: List[Dict[str, Any]] = messages_to_dict(intercepted_messages)
         outputs: Dict[str, Any] = {
-            "messages": self.interceptor.get_messages()
+            "messages": messages
         }
         return outputs
