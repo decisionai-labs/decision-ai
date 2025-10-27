@@ -44,7 +44,6 @@ from neuro_san.service.utils.server_status import ServerStatus
 from neuro_san.service.utils.server_context import ServerContext
 from neuro_san.service.http.config.http_server_config import HttpServerConfig
 from neuro_san.service.utils.service_resources import ServiceResources
-from neuro_san.service.mcp.context.mcp_server_context import MCPServerContext
 from neuro_san.service.mcp.handlers.mcp_root_handler import MCPRootHandler
 
 
@@ -70,7 +69,6 @@ class HttpServer(AgentAuthorizer, AgentStateListener):
     def __init__(self,
                  server_context: ServerContext,
                  server_config: HttpServerConfig,
-                 mcp_server_context: MCPServerContext,
                  openapi_service_spec_path: str,
                  requests_limit: int,
                  forwarded_request_metadata: str = AgentServer.DEFAULT_FORWARDED_REQUEST_METADATA):
@@ -89,7 +87,6 @@ class HttpServer(AgentAuthorizer, AgentStateListener):
         self.server_config = server_config
         self.http_port = self.server_config.http_port
         self.server_context: ServerContext = server_context
-        self.mcp_server_context: MCPServerContext = mcp_server_context
 
         # Randomize requests limit for this server instance.
         # Lower and upper bounds for number of requests before shutting down
@@ -143,6 +140,11 @@ class HttpServer(AgentAuthorizer, AgentStateListener):
         self.logger.info({}, "HTTP server idle connections timeout: %d seconds",
                          self.server_config.http_idle_connection_timeout_seconds)
         self.logger.info({}, "HTTP server is shutting down after %d requests", self.requests_limit)
+
+        # If HTTP server is ready, our MCP server is also ready, requested or not.
+        server_status.mcp_service.set_status(True)
+        mcp_version: str = self.server_context.get_mcp_server_context().get_protocol_version()
+        self.logger.info({}, f"MCP server is running protocol {mcp_version}")
 
         if self.server_config.http_server_monitor_interval_seconds > 0:
             # Start periodic logging of server resources used:
@@ -279,6 +281,6 @@ class HttpServer(AgentAuthorizer, AgentStateListener):
         return {
             "agent_policy": self,
             "forwarded_request_metadata": self.forwarded_request_metadata,
-            "mcp_context": self.mcp_server_context,
+            "mcp_context": self.server_context.get_mcp_server_context(),
             "network_storage_dict": self.server_context.get_network_storage_dict()
         }

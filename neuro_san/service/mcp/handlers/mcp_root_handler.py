@@ -22,7 +22,7 @@ from http import HTTPStatus
 
 from neuro_san.internals.interfaces.dictionary_validator import DictionaryValidator
 from neuro_san.service.http.handlers.base_request_handler import BaseRequestHandler
-from neuro_san.service.mcp.context.mcp_server_context import MCPServerContext
+from neuro_san.service.utils.mcp_server_context import MCPServerContext
 from neuro_san.service.mcp.session.mcp_session_manager import MCPSessionManager, MCP_SESSION_ID, MCP_PROTOCOL_VERSION
 from neuro_san.service.mcp.util.mcp_errors_util import MCPErrorsUtil
 from neuro_san.service.mcp.mcp_errors import MCPError

@@ -17,7 +17,7 @@ from typing import Dict
 from typing import Tuple
 
 from neuro_san.service.http.logging.http_logger import HttpLogger
-from neuro_san.service.mcp.context.mcp_server_context import MCPServerContext
+from neuro_san.service.utils.mcp_server_context import MCPServerContext
 from neuro_san.service.mcp.session.mcp_client_session import MCPClientSession
 
 
