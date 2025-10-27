@@ -25,7 +25,7 @@ class LangChainRun(Run):
     """
 
     def __init__(self, run_id_base: str, chat_history: List[BaseMessage],
-                 tool_name: str = None, args: Any = None):
+                 tool_name: str = None, args: Any = None, tool_message: BaseMessage = None):
         """
         Constructor
 
@@ -34,11 +34,14 @@ class LangChainRun(Run):
         :param tool_name: The name of the tool to call
         :param args: The arguments used for the tool during the run
                     represented by this instance.
+        :param tool_message: The most recent tool message produced during the run
+                             represented by this instance.
         """
         self.id: str = self._create_run_id(run_id_base, chat_history)
         self.chat_history: List[BaseMessage] = chat_history
         self.tool_name: str = tool_name
         self.args: Any = args
+        self.tool_message: BaseMessage = tool_message
 
     @staticmethod
     def _create_run_id(run_id_base: str, chat_history: List[BaseMessage]) -> str:
@@ -96,9 +99,16 @@ class LangChainRun(Run):
 
     def get_chat_history(self) -> List[BaseMessage]:
         """
-        This is used when the LangChainOpenAIFunctionTool wants to
-        know what the most recent message was from the tool as
-        its output.
+        Get the most recent chat history.
         :return: The list of messages comprising the chat history
         """
         return self.chat_history
+
+    def get_tool_message(self) -> BaseMessage:
+        """
+        This is used when the LangChainOpenAIFunctionTool wants to
+        know what the most recent message was from the tool as
+        its output.
+        :return: The tool message comprising the tool output
+        """
+        return self.tool_message
