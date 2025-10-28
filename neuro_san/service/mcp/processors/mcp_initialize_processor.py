@@ -17,17 +17,17 @@ from typing import Dict
 from typing import Tuple
 
 from neuro_san.service.http.logging.http_logger import HttpLogger
-from neuro_san.service.utils.mcp_server_context import MCPServerContext
-from neuro_san.service.mcp.session.mcp_client_session import MCPClientSession
+from neuro_san.service.utils.mcp_server_context import McpServerContext
+from neuro_san.service.mcp.session.mcp_client_session import McpClientSession
 
 
-class MCPInitializeProcessor:
+class McpInitializeProcessor:
     """
     Class implementing client session initialization.
     """
-    def __init__(self, mcp_context: MCPServerContext, logger: HttpLogger):
+    def __init__(self, mcp_context: McpServerContext, logger: HttpLogger):
         self.logger: HttpLogger = logger
-        self.mcp_context: MCPServerContext = mcp_context
+        self.mcp_context: McpServerContext = mcp_context
 
     async def initialize_handshake(
             self,
@@ -49,7 +49,7 @@ class MCPInitializeProcessor:
 
         _ = params
         # Create new client session:
-        session: MCPClientSession = self.mcp_context.get_session_manager().create_session()
+        session: McpClientSession = self.mcp_context.get_session_manager().create_session()
         session_id: str = session.get_id()
         self.logger.info(metadata, "Created new MCP client session with id: %s", session_id)
 

@@ -21,7 +21,7 @@ import jsonschema
 from neuro_san.internals.interfaces.dictionary_validator import DictionaryValidator
 
 
-class MCPRequestValidator(DictionaryValidator):
+class McpRequestValidator(DictionaryValidator):
     """
     Class implementing MCP request validation against MCP protocol schema.
     """

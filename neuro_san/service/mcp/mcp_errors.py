@@ -15,7 +15,7 @@ See class comment for details
 from enum import Enum
 
 
-class MCPError(Enum):
+class McpError(Enum):
     """
     Enum class for standard MCP error codes and brief messages.
     """

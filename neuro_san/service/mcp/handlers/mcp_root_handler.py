@@ -22,18 +22,18 @@ from http import HTTPStatus
 
 from neuro_san.internals.interfaces.dictionary_validator import DictionaryValidator
 from neuro_san.service.http.handlers.base_request_handler import BaseRequestHandler
-from neuro_san.service.utils.mcp_server_context import MCPServerContext
-from neuro_san.service.mcp.session.mcp_session_manager import MCPSessionManager, MCP_SESSION_ID, MCP_PROTOCOL_VERSION
-from neuro_san.service.mcp.util.mcp_errors_util import MCPErrorsUtil
-from neuro_san.service.mcp.mcp_errors import MCPError
-from neuro_san.service.mcp.processors.mcp_tools_processor import MCPToolsProcessor
-from neuro_san.service.mcp.processors.mcp_resources_processor import MCPResourcesProcessor
-from neuro_san.service.mcp.processors.mcp_prompts_processor import MCPPromptsProcessor
-from neuro_san.service.mcp.processors.mcp_initialize_processor import MCPInitializeProcessor
-from neuro_san.service.mcp.processors.mcp_ping_processor import MCPPingProcessor
+from neuro_san.service.utils.mcp_server_context import McpServerContext
+from neuro_san.service.mcp.session.mcp_session_manager import McpSessionManager, MCP_SESSION_ID, MCP_PROTOCOL_VERSION
+from neuro_san.service.mcp.util.mcp_errors_util import McpErrorsUtil
+from neuro_san.service.mcp.mcp_errors import McpError
+from neuro_san.service.mcp.processors.mcp_tools_processor import McpToolsProcessor
+from neuro_san.service.mcp.processors.mcp_resources_processor import McpResourcesProcessor
+from neuro_san.service.mcp.processors.mcp_prompts_processor import McpPromptsProcessor
+from neuro_san.service.mcp.processors.mcp_initialize_processor import McpInitializeProcessor
+from neuro_san.service.mcp.processors.mcp_ping_processor import McpPingProcessor
 
 
-class MCPRootHandler(BaseRequestHandler):
+class McpRootHandler(BaseRequestHandler):
     """
     Class implementing top-level MCP request handler.
     Note that since /mcp is our single MCP endpoint,
@@ -53,8 +53,8 @@ class MCPRootHandler(BaseRequestHandler):
                     AgentNetworkStorage instance which keeps all the AgentNetwork instances
                     of a particular grouping.
         """
-        # type: MCPServerContext
-        self.mcp_context: MCPServerContext = kwargs.pop("mcp_context", None)
+        # type: McpServerContext
+        self.mcp_context: McpServerContext = kwargs.pop("mcp_context", None)
         # Initialize members of the base class BaseRequestHandler:
         super().initialize(**kwargs)
 
@@ -91,7 +91,7 @@ class MCPRootHandler(BaseRequestHandler):
             if validation_errors:
                 extra_error: str = "; ".join(validation_errors)
                 error_msg: Dict[str, Any] =\
-                    MCPErrorsUtil.get_protocol_error(request_id, MCPError.InvalidRequest, extra_error)
+                    McpErrorsUtil.get_protocol_error(request_id, McpError.InvalidRequest, extra_error)
                 self.set_status(HTTPStatus.BAD_REQUEST)
                 self.write(error_msg)
                 self.logger.error(self.get_metadata(), f"Error: Invalid MCP request: {extra_error}")
@@ -99,9 +99,9 @@ class MCPRootHandler(BaseRequestHandler):
                 return
         except json.JSONDecodeError as exc:
             error_msg: Dict[str, Any] =\
-                MCPErrorsUtil.get_protocol_error(
+                McpErrorsUtil.get_protocol_error(
                     request_id,
-                    MCPError.ParseError,
+                    McpError.ParseError,
                     "Invalid JSON format")
             self.set_status(HTTPStatus.BAD_REQUEST)
             self.write(error_msg)
@@ -129,7 +129,7 @@ class MCPRootHandler(BaseRequestHandler):
         if protocol_version != self.mcp_context.get_protocol_version():
             extra_error: str = f"unsupported protocol version {protocol_version}"
             error_msg: Dict[str, Any] =\
-                MCPErrorsUtil.get_protocol_error(request_id, MCPError.InvalidProtocolVersion, extra_error)
+                McpErrorsUtil.get_protocol_error(request_id, McpError.InvalidProtocolVersion, extra_error)
             self.set_status(HTTPStatus.BAD_REQUEST)
             self.write(error_msg)
             self.logger.error(self.get_metadata(), f"error: {extra_error}")
@@ -137,12 +137,12 @@ class MCPRootHandler(BaseRequestHandler):
             return
         session_active: bool = False
         if session_id is not None:
-            session_manager: MCPSessionManager = self.mcp_context.get_session_manager()
+            session_manager: McpSessionManager = self.mcp_context.get_session_manager()
             session_active = session_manager.is_session_active(session_id)
         if not session_active:
             extra_error: str = "invalid or inactive session id"
             error_msg: Dict[str, Any] =\
-                MCPErrorsUtil.get_protocol_error(request_id, MCPError.InvalidSession, extra_error)
+                McpErrorsUtil.get_protocol_error(request_id, McpError.InvalidSession, extra_error)
             self.set_status(HTTPStatus.UNAUTHORIZED)
             self.write(error_msg)
             self.logger.error(self.get_metadata(), f"error: {extra_error}")
@@ -151,14 +151,14 @@ class MCPRootHandler(BaseRequestHandler):
 
         try:
             if method == "tools/list":
-                tools_processor: MCPToolsProcessor =\
-                    MCPToolsProcessor(self.logger, self.network_storage_dict, self.agent_policy)
+                tools_processor: McpToolsProcessor =\
+                    McpToolsProcessor(self.logger, self.network_storage_dict, self.agent_policy)
                 result_dict: Dict[str, Any] = await tools_processor.list_tools(request_id, metadata)
                 self.set_status(HTTPStatus.OK)
                 self.write(result_dict)
             elif method == "tools/call":
-                tools_processor: MCPToolsProcessor =\
-                    MCPToolsProcessor(self.logger, self.network_storage_dict, self.agent_policy)
+                tools_processor: McpToolsProcessor =\
+                    McpToolsProcessor(self.logger, self.network_storage_dict, self.agent_policy)
                 call_params: Dict[str, Any] = data.get("params", {})
                 tool_name: str = call_params.get("name")
                 prompt: str = call_params.get("arguments", {}).get("input", "")
@@ -166,12 +166,12 @@ class MCPRootHandler(BaseRequestHandler):
                 self.set_status(HTTPStatus.OK)
                 self.write(result_dict)
             elif method == "resources/list":
-                resources_processor: MCPResourcesProcessor = MCPResourcesProcessor(self.logger)
+                resources_processor: McpResourcesProcessor = McpResourcesProcessor(self.logger)
                 result_dict: Dict[str, Any] = await resources_processor.list_resources(request_id, metadata)
                 self.set_status(HTTPStatus.OK)
                 self.write(result_dict)
             elif method == "prompts/list":
-                prompts_processor: MCPPromptsProcessor = MCPPromptsProcessor(self.logger)
+                prompts_processor: McpPromptsProcessor = McpPromptsProcessor(self.logger)
                 result_dict: Dict[str, Any] = await prompts_processor.list_prompts(request_id, metadata)
                 self.set_status(HTTPStatus.OK)
                 self.write(result_dict)
@@ -179,13 +179,13 @@ class MCPRootHandler(BaseRequestHandler):
                 # Method is not found/not supported
                 extra_error: str = f"method {method} not found"
                 error_msg: Dict[str, Any] =\
-                    MCPErrorsUtil.get_protocol_error(request_id, MCPError.NoMethod, extra_error)
+                    McpErrorsUtil.get_protocol_error(request_id, McpError.NoMethod, extra_error)
                 self.set_status(HTTPStatus.BAD_REQUEST)
                 self.write(error_msg)
                 self.logger.error(self.get_metadata(), f"error: Method {method} not found")
         except Exception as exc:  # pylint: disable=broad-exception-caught
             error_msg: Dict[str, Any] =\
-                MCPErrorsUtil.get_protocol_error(request_id, MCPError.ServerError, str(exc))
+                McpErrorsUtil.get_protocol_error(request_id, McpError.ServerError, str(exc))
             self.set_status(HTTPStatus.INTERNAL_SERVER_ERROR)
             self.write(error_msg)
             self.logger.error(self.get_metadata(), "error: Server error")
@@ -216,7 +216,7 @@ class MCPRootHandler(BaseRequestHandler):
         try:
             if method == "initialize":
                 # Handle handshake/initialize session request
-                handshake_processor: MCPInitializeProcessor = MCPInitializeProcessor(self.mcp_context, self.logger)
+                handshake_processor: McpInitializeProcessor = McpInitializeProcessor(self.mcp_context, self.logger)
                 result_dict, session_id =\
                     await handshake_processor.initialize_handshake(request_id, metadata, request_data["params"])
                 self.set_header(MCP_SESSION_ID, session_id)
@@ -226,7 +226,7 @@ class MCPRootHandler(BaseRequestHandler):
             if method == "notifications/initialized":
                 # Handle client acknowledgement of initialization response,
                 # this activates the session on the server side for further operations.
-                handshake_processor: MCPInitializeProcessor = MCPInitializeProcessor(self.mcp_context, self.logger)
+                handshake_processor: McpInitializeProcessor = McpInitializeProcessor(self.mcp_context, self.logger)
                 result: bool = await handshake_processor.activate_session(session_id, metadata)
                 response_code: int = HTTPStatus.ACCEPTED if result else HTTPStatus.NOT_FOUND
                 self.set_header(MCP_SESSION_ID, session_id)
@@ -236,7 +236,7 @@ class MCPRootHandler(BaseRequestHandler):
             if method == "ping":
                 # Handle client-side ping,
                 # we don't care about sessions here.
-                ping_processor: MCPPingProcessor = MCPPingProcessor(self.logger)
+                ping_processor: McpPingProcessor = McpPingProcessor(self.logger)
                 _ = await ping_processor.ping(session_id, metadata)
                 response_code: int = HTTPStatus.OK
                 self.set_status(response_code)
@@ -244,7 +244,7 @@ class MCPRootHandler(BaseRequestHandler):
                 return None, True
         except Exception as exc:  # pylint: disable=broad-exception-caught
             error_msg: Dict[str, Any] = \
-                MCPErrorsUtil.get_protocol_error(request_id, MCPError.ServerError, str(exc))
+                McpErrorsUtil.get_protocol_error(request_id, McpError.ServerError, str(exc))
             self.set_status(HTTPStatus.INTERNAL_SERVER_ERROR)
             self.write(error_msg)
             self.logger.error(self.get_metadata(), "error: Server error")
@@ -269,14 +269,14 @@ class MCPRootHandler(BaseRequestHandler):
 
         request_status: int = HTTPStatus.NO_CONTENT
         if session_id is not None:
-            session_manager: MCPSessionManager = self.mcp_context.get_session_manager()
+            session_manager: McpSessionManager = self.mcp_context.get_session_manager()
             deleted: bool = session_manager.delete_session(session_id)
             if deleted:
                 self.logger.info(metadata, "Session %s deleted by client", session_id)
             else:
                 extra_error: str = "Session id not found"
                 error_msg: Dict[str, Any] =\
-                    MCPErrorsUtil.get_protocol_error(request_id, MCPError.InvalidSession, extra_error)
+                    McpErrorsUtil.get_protocol_error(request_id, McpError.InvalidSession, extra_error)
                 self.set_status(HTTPStatus.NOT_FOUND)
                 self.write(error_msg)
                 self.logger.error(metadata, f"Error: {extra_error}")

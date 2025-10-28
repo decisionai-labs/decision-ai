@@ -22,11 +22,11 @@ from neuro_san.service.http.interfaces.agent_authorizer import AgentAuthorizer
 from neuro_san.service.generic.async_agent_service import AsyncAgentService
 from neuro_san.service.generic.async_agent_service_provider import AsyncAgentServiceProvider
 from neuro_san.session.direct_concierge_session import DirectConciergeSession
-from neuro_san.service.mcp.util.mcp_errors_util import MCPErrorsUtil
+from neuro_san.service.mcp.util.mcp_errors_util import McpErrorsUtil
 from neuro_san.service.http.logging.http_logger import HttpLogger
 
 
-class MCPToolsProcessor:
+class McpToolsProcessor:
     """
     Class implementing "tools"-related MCP requests.
     """
@@ -77,7 +77,7 @@ class MCPToolsProcessor:
         service_provider: AsyncAgentServiceProvider = self.agent_policy.allow(tool_name)
         if service_provider is None:
             # No such tool is found:
-            return MCPErrorsUtil.get_tool_error(request_id, f"Tool not found: {tool_name}")
+            return McpErrorsUtil.get_tool_error(request_id, f"Tool not found: {tool_name}")
         service: AsyncAgentService = service_provider.get_service()
 
         input_request: Dict[str, Any] = self._get_chat_input_request(prompt)
@@ -89,7 +89,7 @@ class MCPToolsProcessor:
                 if partial_response is not None:
                     response_text = response_text + partial_response
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            return MCPErrorsUtil.get_tool_error(request_id, f"Failed to execute tool {tool_name}: {str(exc)}")
+            return McpErrorsUtil.get_tool_error(request_id, f"Failed to execute tool {tool_name}: {str(exc)}")
 
         # Return tool call result:
         return {

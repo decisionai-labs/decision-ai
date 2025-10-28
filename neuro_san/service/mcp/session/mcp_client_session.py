@@ -14,7 +14,7 @@ See class comment for details
 """
 
 
-class MCPClientSession:
+class McpClientSession:
     """
     Class representing a client session with the MCP service.
     """

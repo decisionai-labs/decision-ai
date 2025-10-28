@@ -17,8 +17,8 @@ import json
 
 from neuro_san import TOP_LEVEL_DIR
 from neuro_san.internals.interfaces.dictionary_validator import DictionaryValidator
-from neuro_san.service.mcp.validation.mcp_request_validator import MCPRequestValidator
-from neuro_san.service.mcp.session.mcp_session_manager import MCPSessionManager
+from neuro_san.service.mcp.validation.mcp_request_validator import McpRequestValidator
+from neuro_san.service.mcp.session.mcp_session_manager import McpSessionManager
 
 # MCP protocol version supported by this service
 # Protocol specification is available at:
@@ -26,7 +26,7 @@ from neuro_san.service.mcp.session.mcp_session_manager import MCPSessionManager
 MCP_VERSION: str = "2025-06-18"
 
 
-class MCPServerContext:
+class McpServerContext:
     """
     Class representing the server run-time context,
     necessary for handling MCP clients requests.
@@ -45,18 +45,19 @@ class MCPServerContext:
         :param enabled: Flag indicating if the service should be enabled
         """
         if not self.enabled and enabled:
+            print(">>>>>>>>>>>> Enabling MCP service...")
             # MCP service is being enabled, set it up:
             schema_name: str = f"service/mcp/validation/mcp-schema-{MCP_VERSION}.json"
             self.protocol_schema_filepath = TOP_LEVEL_DIR.get_file_in_basis(schema_name)
             try:
                 with open(self.protocol_schema_filepath, "r", encoding="utf-8") as schema_file:
                     self.protocol_schema = json.load(schema_file)
-                    self.request_validator = MCPRequestValidator(self.protocol_schema)
+                    self.request_validator = McpRequestValidator(self.protocol_schema)
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 raise RuntimeError(f"Cannot load MCP protocol schema from "
                                    f"'{self.protocol_schema_filepath}': {str(exc)}") from exc
             # Create new session manager:
-            self.session_manager = MCPSessionManager()
+            self.session_manager = McpSessionManager()
         self.enabled = enabled
 
     def is_enabled(self) -> bool:
@@ -81,7 +82,7 @@ class MCPServerContext:
         """
         return self.request_validator
 
-    def get_session_manager(self) -> MCPSessionManager:
+    def get_session_manager(self) -> McpSessionManager:
         """
         Get the MCP session manager for this context.
         :return: The session manager

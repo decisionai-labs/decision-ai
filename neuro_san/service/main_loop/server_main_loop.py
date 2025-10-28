@@ -36,7 +36,7 @@ from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_SERVER
 from neuro_san.service.http.config.http_server_config import HttpServerConfig
 from neuro_san.service.interfaces.agent_server import AgentServer
 from neuro_san.service.http.server.http_server import HttpServer
-from neuro_san.service.utils.mcp_server_context import MCPServerContext
+from neuro_san.service.utils.mcp_server_context import McpServerContext
 from neuro_san.service.watcher.main_loop.storage_watcher import StorageWatcher
 from neuro_san.service.utils.server_status import ServerStatus
 from neuro_san.service.utils.server_context import ServerContext
@@ -183,8 +183,8 @@ class ServerMainLoop:
             # This is a signal to other code to not even bother with Reservationists
             self.server_context.no_queues()
         # Do we to enable MCP service?
-        if args.mcp_enable.lower() == "true":
-            server_status.mcp_service.set_requested(True)
+        if args.mcp_enable.lower() != "true":
+            server_status.mcp_service.set_requested(False)
 
         self.http_server_config.http_connections_backlog = args.http_connections_backlog
         self.http_server_config.http_idle_connection_timeout_seconds = args.http_idle_connections_timeout

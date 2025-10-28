@@ -16,16 +16,16 @@ import html
 from typing import Any
 from typing import Dict
 
-from neuro_san.service.mcp.mcp_errors import MCPError
+from neuro_san.service.mcp.mcp_errors import McpError
 
 
-class MCPErrorsUtil:
+class McpErrorsUtil:
     """
     Utility class for generating MCP protocol and tool error responses.
     """
 
     @classmethod
-    def get_protocol_error(cls, request_id, error: MCPError, extra_msg: str = None) -> Dict[str, Any]:
+    def get_protocol_error(cls, request_id, error: McpError, extra_msg: str = None) -> Dict[str, Any]:
         """
         Generate a standard MCP protocol error response.
         :param request_id: MCP request id;

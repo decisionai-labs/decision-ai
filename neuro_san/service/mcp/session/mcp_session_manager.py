@@ -19,13 +19,13 @@ from typing import Dict
 import uuid
 import base64
 
-from neuro_san.service.mcp.session.mcp_client_session import MCPClientSession
+from neuro_san.service.mcp.session.mcp_client_session import McpClientSession
 
 MCP_SESSION_ID: str = "Mcp-Session-Id"
 MCP_PROTOCOL_VERSION: str = "MCP-Protocol-Version"
 
 
-class MCPSessionManager:
+class McpSessionManager:
     """
     Class creating and managing client sessions with the MCP service.
     """
@@ -33,16 +33,16 @@ class MCPSessionManager:
     def __init__(self):
         # Lock to protect access to the sessions dictionary
         self.lock: threading.Lock = threading.Lock()
-        self.sessions: Dict[str, MCPClientSession] = {}
+        self.sessions: Dict[str, McpClientSession] = {}
 
-    def create_session(self) -> MCPClientSession:
+    def create_session(self) -> McpClientSession:
         """
         Create a new client session with the given client id.
 
         :return: The created MCPClientSession
         """
         session_id: str = self._generate_id()
-        client_session: MCPClientSession = MCPClientSession(session_id)
+        client_session: McpClientSession = McpClientSession(session_id)
         self.sessions[session_id] = client_session
         return client_session
 
@@ -55,7 +55,7 @@ class MCPSessionManager:
                  False if session with given id does not exist
         """
         with self.lock:
-            session: MCPClientSession = self.sessions.get(session_id)
+            session: McpClientSession = self.sessions.get(session_id)
             if session is not None:
                 session.set_active(True)
                 return True
@@ -82,7 +82,7 @@ class MCPSessionManager:
                  False otherwise
         """
         with self.lock:
-            session: MCPClientSession = self.sessions.get(session_id)
+            session: McpClientSession = self.sessions.get(session_id)
             if session is not None:
                 return session.is_active()
             return False

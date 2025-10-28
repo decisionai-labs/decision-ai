@@ -18,7 +18,7 @@ from typing import Dict
 from neuro_san.service.http.logging.http_logger import HttpLogger
 
 
-class MCPPingProcessor:
+class McpPingProcessor:
     """
     Class implementing MCP protocol pings.
     """
