@@ -103,7 +103,7 @@ class McpToolsProcessor:
                 "content": [
                     {
                         "type": "text",
-                        "text": response_text
+                        "text": RequestsUtil.safe_message(response_text)
                     }
                 ],
                 "isError": False
