@@ -244,10 +244,13 @@ class McpRootHandler(BaseRequestHandler):
                 return None, True
         except Exception as exc:  # pylint: disable=broad-exception-caught
             error_msg: Dict[str, Any] = \
-                McpErrorsUtil.get_protocol_error(request_id, McpError.ServerError, str(exc))
+                McpErrorsUtil.get_protocol_error(
+                    request_id,
+                    McpError.ServerError,
+                    "exception during request handling")
             self.set_status(HTTPStatus.INTERNAL_SERVER_ERROR)
             self.write(error_msg)
-            self.logger.error(self.get_metadata(), "error: Server error")
+            self.logger.error(self.get_metadata(), "error: Server error: %s", str(exc))
             return None, True
         return None, False
 

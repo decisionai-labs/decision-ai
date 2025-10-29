@@ -35,7 +35,7 @@ class McpErrorsUtil:
         """
         msg: str = error.str_label
         if extra_msg is not None:
-            msg = f"{msg}: {extra_msg}"
+            msg = f"{msg}: {RequestsUtil.safe_message(extra_msg)}"
         return {
             "jsonrpc": "2.0",
             # Appease code scanning tools by escaping the id field:

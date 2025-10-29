@@ -36,7 +36,6 @@ from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_SERVER
 from neuro_san.service.http.config.http_server_config import HttpServerConfig
 from neuro_san.service.interfaces.agent_server import AgentServer
 from neuro_san.service.http.server.http_server import HttpServer
-from neuro_san.service.utils.mcp_server_context import McpServerContext
 from neuro_san.service.watcher.main_loop.storage_watcher import StorageWatcher
 from neuro_san.service.utils.server_status import ServerStatus
 from neuro_san.service.utils.server_context import ServerContext

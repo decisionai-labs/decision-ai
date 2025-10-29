@@ -30,3 +30,12 @@ class RequestsUtil:
         if isinstance(request_id, str):
             return html.escape(request_id)
         return request_id
+
+    @staticmethod
+    def safe_message(msg: str) -> str:
+        """
+        Return HTML-safe representation of string message to be sent back in MCP response.
+        :param msg: message string;
+        :return: HTML-escaped message string
+        """
+        return html.escape(msg)
