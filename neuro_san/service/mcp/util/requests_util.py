@@ -27,8 +27,12 @@ class RequestsUtil:
         :param request_id: MCP request id (as received from user);
         :return: HTML-escaped request id string
         """
-        if isinstance(request_id, (str, int)):
-            return html.escape(str(request_id))
+        if isinstance(request_id, str):
+            return html.escape(request_id)
+        # Do not escape integers, just return as-is
+        # otherwise, MCP client gets confused and could reject this response
+        if isinstance(request_id, int):
+            return request_id
         return "invalid"
 
     @staticmethod
