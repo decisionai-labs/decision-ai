@@ -29,6 +29,8 @@ class RequestsUtil:
         """
         if isinstance(request_id, str):
             return html.escape(request_id)
+        # Do not escape integers, just return as-is
+        # otherwise, MCP client gets confused and could reject this response
         if isinstance(request_id, int):
             return request_id
         return "invalid"
