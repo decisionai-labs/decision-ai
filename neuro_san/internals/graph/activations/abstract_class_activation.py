@@ -193,6 +193,7 @@ class AbstractClassActivation(AbstractCallableActivation):
         d)  Does the specified class name match what is actually implemented in the file?
         e)  If an agent network contains both specific and global CodedTools,
             the global module must not have the same name as the agent network.
+    3. Is AGENT_TOOL_PATH findable from what is set for your PYTHONPATH?
     """
                 raise ValueError(message) from second_exception
 
