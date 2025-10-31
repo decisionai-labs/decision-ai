@@ -163,8 +163,9 @@ class NeuroSanRunnable(RunnablePassthrough):
         runnable_metadata.update(to_add)
 
         request_keys: str = os.getenv("AGENT_TRACING_METADATA_REQUEST_KEYS",
-                                      os.getenv("AGENT_USAGE_LOGGER_KEYS",
-                                                "request_id user_id"))
+                                      os.getenv("AGENT_USAGE_LOGGER_METADATA",
+                                                os.getenv("AGENT_FORWARDED_REQUEST_METADATA",
+                                                          "request_id user_id")))
         to_add: Dict[str, Any] = MetadataUtil.minimize_metadata(request_metadata, request_keys)
         runnable_metadata.update(to_add)
 
