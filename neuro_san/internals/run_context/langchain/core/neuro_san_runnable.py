@@ -243,7 +243,7 @@ class NeuroSanRunnable(RunnablePassthrough):
 
         # Add values for listed env vars if they have values.
         # Defaults are standard env vars for kubernetes deployments
-        env_vars_str: str = os.getenv("AGENT_TRACING_ENV_VARS", "POD_NAME POD_NAMESPACE POD_IP NODE_NAME")
+        env_vars_str: str = os.getenv("AGENT_TRACING_METADATA_ENV_VARS", "POD_NAME POD_NAMESPACE POD_IP NODE_NAME")
         if env_vars_str:
             env_vars: List[str] = env_vars_str.split(" ")
             for env_var in env_vars:
