@@ -39,6 +39,7 @@ from neuro_san.internals.chat.chat_history_message_processor import ChatHistoryM
 from neuro_san.internals.graph.registry.agent_network import AgentNetwork
 from neuro_san.internals.graph.registry.agent_tool_registry import AgentToolRegistry
 from neuro_san.internals.graph.activations.sly_data_redactor import SlyDataRedactor
+from neuro_san.internals.interfaces.context_type_tracing_context_factory import ContextTypeTracingContextFactory
 from neuro_san.internals.interfaces.front_man import FrontMan
 from neuro_san.internals.interfaces.invocation_context import InvocationContext
 from neuro_san.internals.interfaces.run_target import RunTarget
@@ -48,8 +49,6 @@ from neuro_san.internals.messages.base_message_dictionary_converter import BaseM
 from neuro_san.internals.run_context.factory.run_context_factory import RunContextFactory
 from neuro_san.internals.run_context.factory.master_tracing_context_factory import MasterTracingContextFactory
 from neuro_san.internals.run_context.interfaces.run_context import RunContext
-from neuro_san.internals.run_context.interfaces.context_type_tracing_context_factory \
-    import ContextTypeTracingContextFactory
 from neuro_san.message_processing.message_processor import MessageProcessor
 from neuro_san.message_processing.answer_message_processor import AnswerMessageProcessor
 from neuro_san.message_processing.structure_message_processor import StructureMessageProcessor
@@ -195,7 +194,8 @@ class DataDrivenChatSession(RunTarget):
 
         tracing_factory: ContextTypeTracingContextFactory = \
             MasterTracingContextFactory.create_tracing_context_factory()
-        run_target: RunTarget = tracing_factory.create_tracing_context(self)
+        config: Dict[str, Any] = {}
+        run_target: RunTarget = tracing_factory.create_tracing_context(config, self)
 
         await run_target.run_it(inputs)
 
