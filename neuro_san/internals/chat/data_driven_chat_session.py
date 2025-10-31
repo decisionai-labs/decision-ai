@@ -41,6 +41,7 @@ from neuro_san.internals.graph.registry.agent_tool_registry import AgentToolRegi
 from neuro_san.internals.graph.activations.sly_data_redactor import SlyDataRedactor
 from neuro_san.internals.interfaces.front_man import FrontMan
 from neuro_san.internals.interfaces.invocation_context import InvocationContext
+from neuro_san.internals.interfaces.run_target import RunTarget
 from neuro_san.internals.journals.journal import Journal
 from neuro_san.internals.messages.agent_framework_message import AgentFrameworkMessage
 from neuro_san.internals.messages.base_message_dictionary_converter import BaseMessageDictionaryConverter
@@ -57,7 +58,7 @@ PATIENCE_ERRORS: Tuple[Type[Any], ...] = ResolverUtil.create_type_tuple([
 
 
 # pylint: disable=too-many-instance-attributes
-class DataDrivenChatSession:
+class DataDrivenChatSession(RunTarget):
     """
     ChatSession implementation that consolidates policy
     in using data-driven agent tool graphs.

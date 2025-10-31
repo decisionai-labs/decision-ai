@@ -37,12 +37,13 @@ from langchain_core.runnables.utils import Input
 from langchain_core.runnables.utils import Output
 
 from neuro_san.internals.interfaces.invocation_context import InvocationContext
+from neuro_san.internals.interfaces.run_target import RunTarget
 from neuro_san.internals.journals.intercepting_journal import InterceptingJournal
 from neuro_san.internals.messages.origination import Origination
 from neuro_san.internals.utils.metadata_util import MetadataUtil
 
 
-class NeuroSanRunnable(RunnablePassthrough):
+class NeuroSanRunnable(RunnablePassthrough, RunTarget):
     """
     RunnablePassthrough implementation that intercepts journal messages
     for a particular origin.
@@ -73,7 +74,8 @@ class NeuroSanRunnable(RunnablePassthrough):
         """
         Constructor
         """
-        super().__init__(afunc=self.run_it, **kwargs)
+        run_target: RunTarget = kwargs.pop('run_target', self)
+        super().__init__(afunc=run_target.run_it, **kwargs)
         self.logger: Logger = getLogger(self.__class__.__name__)
 
     # pylint: disable=redefined-builtin
