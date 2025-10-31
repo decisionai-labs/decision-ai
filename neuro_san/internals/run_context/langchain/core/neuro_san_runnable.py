@@ -110,17 +110,16 @@ class NeuroSanRunnable(RunnablePassthrough):
         :param recursion_limit: Maximum number of times a call can recurse.
         :return: A dictionary to be used for a Runnable's invoke config.
         """
-        request_metadata: Dict[str, Any] = self.invocation_context.get_metadata()
+        agent_name: str = self.invocation_context.get_agent_name()
 
         # Set up a run name for tracing purposes
         run_name: str = None
         if use_run_name:
-            request_id: str = request_metadata.get("request_id")
-            request_prefix: str = ""
-            if request_id is not None:
-                request_prefix = f"{request_id}-"
+            agent_prefix: str = ""
+            if agent_name is not None:
+                agent_prefix = f"{agent_name}:"
             origin_name: str = Origination.get_full_name_from_origin(self.origin)
-            run_name: str = f"{request_prefix}{origin_name}"
+            run_name: str = f"{agent_prefix}{origin_name}"
 
         runnable_config: Dict[str, Any] = {}
 
@@ -140,17 +139,16 @@ class NeuroSanRunnable(RunnablePassthrough):
             runnable_config["recursion_limit"] = recursion_limit
 
         # Only add metadata if we have something
-        runnable_metadata: Dict[str, Any] = self.prepare_tracing_metadata(request_metadata)
+        runnable_metadata: Dict[str, Any] = self.prepare_tracing_metadata()
         if runnable_metadata:
             runnable_config["metadata"] = runnable_metadata
 
         return runnable_config
 
-    def prepare_tracing_metadata(self, request_metadata: Dict[str, Any]) -> Dict[str, Any]:
+    def prepare_tracing_metadata(self) -> Dict[str, Any]:
         """
         Prepare a dictionary of metadata for tracing purposes.
 
-        :param request_metadata: The metadata to use for the run
         :return: A dictionary of metadata for run tracing
         """
         runnable_metadata: Dict[str, Any] = {}
@@ -166,6 +164,7 @@ class NeuroSanRunnable(RunnablePassthrough):
                                       os.getenv("AGENT_USAGE_LOGGER_METADATA",
                                                 os.getenv("AGENT_FORWARDED_REQUEST_METADATA",
                                                           "request_id user_id")))
+        request_metadata: Dict[str, Any] = self.invocation_context.get_metadata()
         to_add: Dict[str, Any] = MetadataUtil.minimize_metadata(request_metadata, request_keys)
         runnable_metadata.update(to_add)
 
