@@ -160,12 +160,16 @@ class NeuroSanRunnable(RunnablePassthrough):
         if env_vars_str:
             env_vars: List[str] = env_vars_str.split(" ")
             for env_var in env_vars:
+                if not env_var:
+                    continue
                 value: str = os.getenv(env_var)
                 if value:
                     runnable_metadata[env_var] = value
 
         request_keys: List[str] = ["request_id", "user_id"]
         for key in request_keys:
+            if not key:
+                continue
             value: Any = request_metadata.get(key)
             if value is not None:
                 runnable_metadata[key] = value
