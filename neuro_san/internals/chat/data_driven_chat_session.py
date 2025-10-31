@@ -76,6 +76,7 @@ class DataDrivenChatSession:
 
         self.front_man: FrontMan = None
         self.sly_data: Dict[str, Any] = {}
+        self.invocation_context: InvocationContext = None
 
     async def set_up(self, invocation_context: InvocationContext,
                      chat_context: Dict[str, Any] = None):
@@ -181,11 +182,35 @@ class DataDrivenChatSession:
         :return: Nothing.  Response values are put on a queue whose consumtion is
                 managed by the Iterator aspect of AsyncCollatingQueue on the InvocationContext.
         """
+        self.invocation_context = invocation_context
+        inputs: Dict[str, Any] = {
+            "user_input": user_input,
+            "sly_data": sly_data,
+            "chat_context": chat_context
+        }
+        await self.run_it(inputs)
+
+    async def run_it(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Main entry-point method for accepting new user input
+
+        :param inputs: A dictionary with the following keys:
+                "user_input": A string with the user's input
+                "sly_data": A mapping whose keys might be referenceable by agents, but whose
+                             values should not appear in agent chat text. Can be None.
+                "chat_context": A ChatContext dictionary that contains all the state necessary
+                                to carry on a previous conversation, possibly from a different server.
+        :return: A dictionary with the user's input
+        """
+        user_input: str = inputs.get("user_input")
+        sly_data: Dict[str, Any] = inputs.get("sly_data")
+        chat_context: Dict[str, Any] = inputs.get("chat_context")
+
         if self.front_man is None:
-            await self.set_up(invocation_context, chat_context)
+            await self.set_up(self.invocation_context, chat_context)
 
         # Save information about chat
-        chat_messages: Iterator[Dict[str, Any]] = await self.chat(user_input, invocation_context, sly_data)
+        chat_messages: Iterator[Dict[str, Any]] = await self.chat(user_input, self.invocation_context, sly_data)
         message_list: List[Dict[str, Any]] = list(chat_messages)
 
         # Determine the chat_context to enable continuing the conversation
@@ -216,13 +241,13 @@ class DataDrivenChatSession:
         # Stream over chat state as the last message
         message = AgentFrameworkMessage(content=answer, chat_context=return_chat_context,
                                         sly_data=return_sly_data, structure=structure)
-        journal: Journal = invocation_context.get_journal()
+        journal: Journal = self.invocation_context.get_journal()
         await journal.write_message(message, origin=None)
 
         # Put an end-marker on the queue to tell the consumer we truly are done
         # and it doesn't need to wait for any more messages.
         # The consumer await-s for queue.get()
-        queue: AsyncCollatingQueue = invocation_context.get_queue()
+        queue: AsyncCollatingQueue = self.invocation_context.get_queue()
 
         # The synchronous=True is necessary when an async HTTP request is at the get()-ing end of the queue,
         # as the journal messages come from inside a separate event loop from that request. The lock
@@ -232,12 +257,16 @@ class DataDrivenChatSession:
 
         # Now that we are done, tell the Reservationist that we used for this request
         # that there will be no more Reservations to corral.
-        reservationist: Reservationist = invocation_context.get_reservationist()
+        reservationist: Reservationist = self.invocation_context.get_reservationist()
         if reservationist is not None:
             await reservationist.close()
 
         # Close any objects on sly data that can be closed.
         await self.close_sly_data()
+
+        # Bogus output, but need something for interface
+        outputs: Dict[str, Any] = inputs
+        return outputs
 
     async def delete_resources(self):
         """
