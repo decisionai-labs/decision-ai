@@ -115,11 +115,21 @@ class NeuroSanRunnable(RunnablePassthrough):
         # Set up a run name for tracing purposes
         run_name: str = None
         if use_run_name:
+
             agent_prefix: str = ""
-            if agent_name is not None:
-                agent_prefix = f"{agent_name}:"
-            origin_name: str = Origination.get_full_name_from_origin(self.origin)
-            run_name: str = f"{agent_prefix}{origin_name}"
+            if agent_name:
+                agent_prefix = agent_name
+
+            origin_name: str = ""
+            if self.origin:
+                full_name: str = Origination.get_full_name_from_origin(self.origin)
+                origin_name = f"{full_name}"
+
+            delimiter: str = ""
+            if agent_prefix and origin_name:
+                delimiter = ":"
+
+            run_name: str = f"{agent_prefix}{delimiter}{origin_name}"
 
         runnable_config: Dict[str, Any] = {}
 
