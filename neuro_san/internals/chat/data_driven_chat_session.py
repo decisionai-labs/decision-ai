@@ -214,10 +214,10 @@ class DataDrivenChatSession(RunTarget):
         tracing_factory: ContextTypeTracingContextFactory = \
             MasterTracingContextFactory.create_tracing_context_factory()
         # For the factory args, we are our own run_target.
-        run_target: RunTarget = tracing_factory.create_tracing_context(config, run_target=self)
+        tracing_context: RunTarget = tracing_factory.create_tracing_context(config, run_target=self)
 
         # Run the run_target that was given back by the factory.
-        await run_target.run_it(inputs)
+        await tracing_context.run_it(inputs)
 
     async def run_it(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
         """
