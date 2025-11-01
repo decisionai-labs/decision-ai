@@ -49,7 +49,7 @@ class LangChainTracingContext(RunTarget):
         :return: The outputs of the run.
         """
         runnable = NeuroSanRunnable(run_target=self.run_target, **self.config)
-        runnable_config: Dict[str, Any] = runnable.prepare_runnable_config()
+        runnable_config: Dict[str, Any] = runnable.prepare_runnable_config(use_run_name=True)
 
         chain: Runnable = RunnablePassthrough() | runnable
 
