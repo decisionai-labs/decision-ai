@@ -97,6 +97,8 @@ class NeuroSanRunnable(RunnablePassthrough, RunTarget):
         # Calling the super here means that run_it() below will be called
         # as part of the RunnablePassthrough infrastructure.
         _: Other = await super().ainvoke(input, config, **kwargs)
+
+        # Collect intercepted outputs to report back to the tracing infrastructure.
         outputs: Dict[str, Any] = self.get_intercepted_outputs()
         return outputs
 
