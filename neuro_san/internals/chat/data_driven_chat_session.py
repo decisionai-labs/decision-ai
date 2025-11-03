@@ -233,6 +233,9 @@ class DataDrivenChatSession(RunTarget):
         :param inputs: An AgentFrameworkMessage populated with the user's input.
         :return: The user input. (Outputs are handled by the tracing context infrastructure.)
         """
+        # Get all our real input values from the original_input_message.
+        # If we got it from the inputs arg, we'd get the for-show message
+        # which has fields rearranged and even redacted.
         user_input: str = self.original_input_message.content
         sly_data: Dict[str, Any] = self.original_input_message.sly_data
         chat_context: Dict[str, Any] = self.original_input_message.chat_context
