@@ -198,9 +198,14 @@ class DataDrivenChatSession(RunTarget):
         self.interceptor = InterceptingJournal(journal, origin=None)
 
         # Set up an input message that will show up in an Observability/tracing app
+        # We keep this guy around for the duration of the chat session so that this class
+        # has a pristine copy of what the inputs for use within run_it().
         self.original_input_message = AgentFrameworkMessage(content=user_input,
                                                             chat_context=chat_context,
                                                             sly_data=sly_data)
+        # Make a copy of the input message for use in the tracing context
+        # We can't use the same object as original_input_message because
+        # the tracing infrastructure ends up transforming the message for display.
         input_message_for_show = AgentFrameworkMessage(trace_source=self.original_input_message)
 
         # Set up configuration for creating the tracing context.
