@@ -203,3 +203,4 @@
     # - "parameters" are arguments' definitions and types.
     # Note: Parameters are optional and may be omitted if not required.
     # See "parameters" section in https://github.com/cognizant-ai-lab/neuro-san/blob/main/docs/agent_hocon_reference.md
+}
