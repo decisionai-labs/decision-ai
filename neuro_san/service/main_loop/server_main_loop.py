@@ -38,7 +38,6 @@ from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_CONNEC
 from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_IDLE_CONNECTIONS_TIMEOUT_SECONDS
 from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_SERVER_INSTANCES
 from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_SERVER_MONITOR_INTERVAL_SECONDS
-from neuro_san.service.http.config.http_server_config import DEFAULT_HTTP_CHAT_REQUEST_TIMEOUT_SECONDS
 from neuro_san.service.http.config.http_server_config import HttpServerConfig
 from neuro_san.service.interfaces.agent_server import AgentServer
 from neuro_san.service.http.server.http_server import HttpServer
