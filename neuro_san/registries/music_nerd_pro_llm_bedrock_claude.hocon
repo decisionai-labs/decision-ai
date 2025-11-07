@@ -26,8 +26,6 @@
     },
     "llm_config": {
         "model_name": "bedrock-us-claude-3-7-sonnet",
-        # enable when your local AWS profile listed note: Github Action not required.
-        # "credentials_profile_name": "daiDev"
     },
     "tools": [
         # This first agent definition is regarded as the "Front Man", which
