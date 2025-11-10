@@ -23,6 +23,7 @@ from asyncio import AbstractEventLoop
 from copy import deepcopy
 from logging import getLogger
 from logging import Logger
+import traceback
 
 from langchain_core.messages.ai import AIMessage
 from langchain_core.messages.base import BaseMessage
@@ -266,30 +267,39 @@ Some hints:
         await self.journal.write_message(message)
 
         try:
-            # Try the preferred async_invoke()
-            retval = await coded_tool.async_invoke(self.arguments, self.sly_data)
+            tool_error: bool = False
+            try:
+                # Try the preferred async method
+                retval = await coded_tool.async_invoke(self.arguments, self.sly_data)
 
-        except NotImplementedError:
-            # That didn't work, so try running the synchronous method as an async task
-            # within the confines of the proper executor.
-
-            # Warn that there is a better alternative.
-            message = f"""
+            except NotImplementedError:
+                # That didn't work, so try running the synchronous method as an async task
+                # within the confines of the proper executor.
+                # Warn that there is a better alternative
+                message = f"""
 Running CodedTool class {coded_tool.__class__.__name__}.invoke() synchronously in an asynchronous environment.
 This can lead to performance problems when running within a server. Consider porting to the async_invoke() method.
 """
-            self.logger.info(message)
-            message = AgentMessage(content=message)
-            await self.journal.write_message(message)
+                self.logger.info(message)
+                await self.journal.write_message(AgentMessage(content=message))
 
-            # Try to run in the executor.
-            invocation_context = self.run_context.get_invocation_context()
-            executor: AsyncioExecutor = invocation_context.get_asyncio_executor()
-            loop: AbstractEventLoop = executor.get_event_loop()
-            retval = await loop.run_in_executor(None, coded_tool.invoke, arguments, sly_data)
+                # Try to run in the executor.
+                invocation_context = self.run_context.get_invocation_context()
+                executor: AsyncioExecutor = invocation_context.get_asyncio_executor()
+                loop: AbstractEventLoop = executor.get_event_loop()
+                retval = await loop.run_in_executor(None, coded_tool.invoke, arguments, sly_data)
+        # pylint: disable=broad-exception-caught
+        except Exception as exception:
+            # There was an error invoking the CodedTool.
+            # Log it and return an error string.
+            tool_error = True
+            retval = f"Error: {str(exception)}"
+            self.logger.error("Error invoking CodedTool %s: %s", coded_tool.__class__.__name__, str(exception))
+            self.logger.error(traceback.format_exc())
 
         retval_dict: Dict[str, Any] = {
             "tool_end": True,
+            "tool_error": tool_error,
             "tool_output": retval
         }
         message = AgentMessage(content="Got result:", structure=retval_dict)

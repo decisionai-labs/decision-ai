@@ -220,16 +220,14 @@ It's function_json is described thusly:
 
         # pylint: disable=broad-exception-caught
         except Exception as exception:
-            # Report the exception, but return None as value from function.
+            # Report the exception, but return exception as value from function.
             # This actually allows LLMs to recognize that something is wrong
             # and verbally report on that.
             logger = logging.getLogger(self.__class__.__name__)
             logger.error("Tool._arun() got Exception: %s", str(exception))
             logger.error(traceback.format_exc())
             run = None
-
-        if run is None:
-            return None
+            return str(exception)
 
         # Assume the answer is latest tool message in the Run.
         the_answer: BaseMessage = run.get_tool_message()
