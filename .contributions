@@ -153,3 +153,4 @@
 # 2025-10-28 18:53:40 - feat: add health check endpoint
 # 2025-11-07 19:28:35 - fix: patch memory leak in event handler
 # 2025-11-10 15:37:36 - test: expand coverage for transaction module
+# 2025-11-12 11:58:13 - test: add integration tests for new endpoints
