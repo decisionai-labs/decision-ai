@@ -170,7 +170,7 @@ class McpToolsProcessor:
             # For backward compatibility, also add text version of structure:
             structure_str: str = f"```json\n{json.dumps(result_structure, indent=2)}\n```"
             result_text = result_text + structure_str
-        call_result["result"]["content"][0]["text"] = result_text
+        call_result["result"]["content"][0]["text"] = RequestsUtil.safe_message(result_text)
         return call_result
 
     async def _get_tool_description(self, agent_name: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
