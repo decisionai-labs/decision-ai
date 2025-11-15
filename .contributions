@@ -157,3 +157,4 @@
 # 2025-11-12 14:49:32 - fix: handle null balance gracefully
 # 2025-11-13 19:34:52 - chore: bump minor versions
 # 2025-11-13 16:57:34 - feat: enhance logging for debug mode
+# 2025-11-14 20:07:50 - fix: resolve edge case in token parsing
