@@ -158,6 +158,8 @@ class AbstractClassActivation(AbstractCallableActivation):
             module_name = module_name[:-1]
 
         # Resolve the class and the method
+
+        # "this_agent_tool_path" is the root path from AGENT_TOOL_PATH plus the agent network name.
         this_agent_tool_path: str = self.factory.get_agent_tool_path()
         packages: List[str] = [this_agent_tool_path]
         resolver: Resolver = Resolver(packages)
@@ -165,25 +167,25 @@ class AbstractClassActivation(AbstractCallableActivation):
         try:
             python_class = resolver.resolve_class_in_module(class_name, module_name)
         except (ValueError, AttributeError):
-            # Drop the last segment to go one level up in the module path
-            parent_path: str = this_agent_tool_path.rsplit(".", 1)[0]
-            packages = [parent_path]
+            # Since the agent network can have hierarchical structure with "/", we have to reconstruct
+            # the AGENT_TOOL_PATH accordingly to find the correct root module.
+            agent_network_name: str = self.factory.agent_network.get_network_name()
+            agent_network_name_parts: List[str] = agent_network_name.split("/")
+            this_agent_tool_path_parts: List[str] = this_agent_tool_path.split(".")
+            agent_tool_path: str = ".".join(this_agent_tool_path_parts[:-len(agent_network_name_parts)])
+            packages = [agent_tool_path]
             resolver = Resolver(packages)
 
             try:
                 python_class = resolver.resolve_class_in_module(class_name, module_name)
             except (ValueError, AttributeError) as second_exception:
-                # Get all but the last module in the path.
-                # This is what was actually used for AGENT_TOOL_PATH
-                agent_tool_path: str = ".".join(this_agent_tool_path.split(".")[:-1])
-                agent_network: str = this_agent_tool_path.split(".")[-1]
                 agent_name: str = self.factory.get_name_from_spec(self.agent_tool_spec)
                 message = f"""
     Could not find class "{class_name}"
     in module "{module_name}"
     under AGENT_TOOL_PATH "{agent_tool_path}"
     for the agent called "{agent_name}"
-    in the agent network "{agent_network}".
+    in the agent network "{agent_network_name}".
 
     Check these things:
     1.  Is there a typo in your AGENT_TOOL_PATH?
