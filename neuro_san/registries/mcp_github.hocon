@@ -91,7 +91,7 @@
                     # Users may specify different authorization credentials for different MCP URLs.
                     # For example, sly_data can contain:
                     # {
-                    #     "headers": {
+                    #     "http_headers": {
                     #         "<MCP_URL_1>": {      
                     #             "Authorization": "Bearer <token_value>"
                     #         },
