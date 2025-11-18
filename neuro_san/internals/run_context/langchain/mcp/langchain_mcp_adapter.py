@@ -21,6 +21,8 @@ from typing import List
 from typing import Optional
 
 import copy
+from logging import Logger
+from logging import getLogger
 import threading
 
 from langchain_core.tools import BaseTool
@@ -42,6 +44,7 @@ class LangChainMcpAdapter:
         Constructor
         """
         self.client_allowed_tools: List[str] = []
+        self.logger: Logger = getLogger(self.__class__.__name__)
 
     @staticmethod
     def _load_mcp_clients_info():
@@ -60,6 +63,7 @@ class LangChainMcpAdapter:
             self,
             server_url: str,
             allowed_tools: Optional[List[str]] = None,
+            headers: Optional[Dict[str, Any]] = None
     ) -> List[BaseTool]:
         """
         Fetches tools from the given MCP server and returns them as a list of LangChain-compatible tools.
@@ -67,6 +71,7 @@ class LangChainMcpAdapter:
         :param server_url: URL of the MCP server, e.g. https://mcp.deepwiki.com/mcp or http://localhost:8000/mcp/
         :param allowed_tools: Optional list of tool names to filter from the server's available tools.
                               If None, all tools from the server will be returned.
+        :param headers: Optional dictionary of HTTP headers to include in the MCP client requests.
 
         :return: A list of LangChain BaseTool instances retrieved from the MCP server.
         """
@@ -77,11 +82,14 @@ class LangChainMcpAdapter:
             "url": server_url,
             "transport": "streamable_http",
         }
-        # Try to look up authentication details from the URL
-        headers_dict: Dict[str, Any] =\
-            self._mcp_clients_info.get(server_url, {}).get("headers")
+        # Try to look up authentication details first from the sly data then from the MCP clients info.
+        headers_dict: Dict[str, Any] = headers or self._mcp_clients_info.get(server_url, {}).get("headers")
         if headers_dict:
-            mcp_tool_dict["headers"] = copy.copy(headers_dict)
+            if isinstance(headers_dict, dict):
+                # Use a copy to avoid modifying the original headers dictionary.
+                mcp_tool_dict["headers"] = copy.copy(headers_dict)
+            else:
+                self.logger.error("MCP client headers for server %s must be a dictionary.",  server_url)
 
         client = MultiServerMCPClient(
             {"server": mcp_tool_dict}
