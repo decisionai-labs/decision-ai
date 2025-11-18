@@ -86,7 +86,7 @@
                     # This specific tool requires issue number, repo name, and owner name to be provided
                     # Furthermore, it requires authentication via an Authorization header.
 
-                    # Authentication can be provided via the "headers" field in sly_data.
+                    # Authentication can be provided via the "http_headers" field in sly_data.
                     # The required fields depend on the authentication scheme expected by each MCP server.
                     # Users may specify different authorization credentials for different MCP URLs.
                     # For example, sly_data can contain:
