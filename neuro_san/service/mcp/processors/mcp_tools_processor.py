@@ -66,8 +66,7 @@ class McpToolsProcessor:
         result_dict: Dict[str, Any] = session.list(data)
         tools_description: List[Dict[str, Any]] = []
         for agent_dict in result_dict.get("agents", []):
-            agent_name: str = agent_dict["agent_name"]
-            tool_dict: Dict[str, Any] = await self._get_tool_description(agent_name, metadata)
+            tool_dict: Dict[str, Any] = await self._get_tool_description(agent_dict)
             tools_description.append(tool_dict)
         return {
             "jsonrpc": "2.0",
@@ -77,17 +76,22 @@ class McpToolsProcessor:
             }
         }
 
-    async def call_tool(self, request_id, metadata: Dict[str, Any], tool_name: str, prompt: str) -> Dict[str, Any]:
+    async def call_tool(self, request_id, metadata: Dict[str, Any],
+                        tool_name: str, prompt: str, chat_context: str, sly_data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Call MCP tool, which executes neuro-san agent chat request.
         :param request_id: MCP request id;
         :param metadata: http-level request metadata;
         :param tool_name: tool name;
         :param prompt: input prompt as a string;
+        :param chat_context: chat context string, could be None;
+        :param sly_data: arbitrary JSON dictionary containing sly_data, could be None;
         :return: json dictionary with tool response in MCP format;
                  or json dictionary with error message in MCP format.
         """
         # pylint: disable=too-many-locals
+        # pylint: disable=too-many-arguments
+        # pylint: disable=too-many-positional-arguments
 
         service_provider: AsyncAgentServiceProvider = self.agent_policy.allow(tool_name)
         if service_provider is None:
@@ -99,18 +103,21 @@ class McpToolsProcessor:
             # For asyncio.timeout(), None means no timeout:
             tool_timeout_seconds = None
 
-        input_request: Dict[str, Any] = self._get_chat_input_request(prompt)
+        input_request: Dict[str, Any] = self._get_chat_input_request(prompt, chat_context, sly_data)
         response_text: str = ""
         response_structure: Dict[str, Any] = None
+        response_sly_data: Dict[str, Any] = None
         try:
             async with asyncio.timeout(tool_timeout_seconds):
                 result_generator = service.streaming_chat(input_request, metadata)
                 async for result_dict in result_generator:
-                    partial_response, structure_data = await self._extract_tool_response_part(result_dict)
+                    partial_response, sly_data, structure_data = await self._extract_tool_response_part(result_dict)
                     if partial_response is not None:
                         response_text = response_text + partial_response
                     if structure_data is not None:
                         response_structure = structure_data
+                    if sly_data is not None:
+                        response_sly_data = sly_data
 
         except (asyncio.CancelledError, tornado.iostream.StreamClosedError):
             self.logger.info(metadata, "Tool execution %s cancelled/stream closed.", tool_name)
@@ -136,13 +143,15 @@ class McpToolsProcessor:
                     await result_generator.aclose()
 
         # Return tool call result:
-        call_result: Dict[str, Any] = await self.build_tool_call_result(request_id, response_text, response_structure)
+        call_result: Dict[str, Any] =\
+            await self.build_tool_call_result(request_id, response_text, response_sly_data, response_structure)
         return call_result
 
     async def build_tool_call_result(
             self,
             request_id,
             result_text: str,
+            result_sly_data: Dict[str, Any],
             result_structure: Dict[str, Any]) -> Dict[str, Any]:
         """
         Build MCP tool call result dictionary from given text and structure parts.
@@ -166,54 +175,77 @@ class McpToolsProcessor:
         }
         # Construct actual tool call result:
         if result_structure is not None:
-            call_result["result"]["structuredContent"] = result_structure
+            call_result["result"]["structuredContent"]["result"] = result_structure
             # For backward compatibility, also add text version of structure:
             structure_str: str = f"```json\n{json.dumps(result_structure, indent=2)}\n```"
             result_text = result_text + structure_str
+        if result_sly_data is not None:
+            call_result["result"]["structuredContent"]["sly_data"] = result_sly_data
         call_result["result"]["content"][0]["text"] = RequestsUtil.safe_message(result_text)
         return call_result
 
-    async def _get_tool_description(self, agent_name: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        service_provider: AsyncAgentServiceProvider = self.agent_policy.allow(agent_name)
-        if service_provider is None:
-            return None
-        service: AsyncAgentService = service_provider.get_service()
-        function_dict: Dict[str, Any] = await service.function({}, metadata)
-        tool_description: str = function_dict.get("function", {}).get("description", "")
+    async def _get_tool_description(self, agent_info_dict: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Get MCP tool description for given agent.
+        :param agent_info_dict: dictionary with agent information;
+        :return: MCP tool description dictionary
+        """
         return {
-            "name": agent_name,
-            "description": tool_description,
+            "name": agent_info_dict.get("agent_name", ""),
+            "description": agent_info_dict.get("description", ""),
+            "tags": agent_info_dict.get("tags", ""),
             "inputSchema": {
                 "type": "object",
                 "properties": {
                     "input": {
                         "type": "string",
                         "description": "text input for chat request"
+                    },
+                    "chat_context": {
+                        "type": "string",
+                        "description": "optional chat context"
+                    },
+                    "sly_data": {
+                        "type": "object",
+                        "description": "optional arbitrary JSON dictionary",
+                        "additionalProperties": True
                     }
                 },
                 "required": ["input"]
             }
         }
 
-    async def _extract_tool_response_part(self, response_dict: Dict[str, Any]) -> Tuple[str, Dict[str, Any]]:
+    async def _extract_tool_response_part(
+            self, response_dict: Dict[str, Any]) -> Tuple[str, Dict[str, Any], Dict[Dict[str, Any]]]:
         """
         Extract tool response part from the given streaming chat response dictionary.
         :param response_dict: streaming chat response dictionary;
-        :return: tuple of (text part as string or None, structure part as dictionary or None)
+        :return: tuple of 3 values:
+            text part as string or None,
+            sly data as dictionary or None,
+            structure part as dictionary or None
         """
         response_part_dict: Dict[str, Any] = response_dict.get("response", {})
         response_type: str = response_part_dict.get("type", "")
         if response_type == "AGENT_FRAMEWORK":
-            return response_part_dict.get("text", None), response_part_dict.get("structure", None)
-        return None, None
+            text: str = response_part_dict.get("text", None)
+            sly_data: Dict[str, Any] = response_part_dict.get("sly_data", None)
+            structure_data: Dict[str, Any] = response_part_dict.get("structure", None)
+            return text, sly_data, structure_data
+        return None, None, None
 
-    def _get_chat_input_request(self, input_text: str) -> Dict[str, Any]:
+    def _get_chat_input_request(self,
+                                input_text: str,
+                                chat_context: str,
+                                sly_data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Construct Python dictionary expected by "streaming_chat" service API call.
         :param input_text: input user prompt;
+        :param chat_context: chat context string, could be None;
+        :param sly_data: arbitrary JSON dictionary containing sly_data, could be None;
         :return: "streaming_chat" service API input dictionary
         """
-        return {
+        request_dict: Dict[str, Any] = {
             "user_message": {
                 "type": 2,
                 "text": input_text
@@ -222,3 +254,8 @@ class McpToolsProcessor:
                 "chat_filter_type": "MAXIMAL"
             }
         }
+        if chat_context is not None:
+            request_dict["chat_context"] = chat_context
+        if sly_data is not None:
+            request_dict["sly_data"] = sly_data
+        return request_dict
