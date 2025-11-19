@@ -167,6 +167,7 @@ class ServerMainLoop:
         self.http_port = args.http_port
         if self.http_port == 0:
             server_status.http_service.set_requested(False)
+        self.server_context.set_server_port(self.http_port)
 
         self.server_name_for_logs = args.server_name_for_logs
         self.max_concurrent_requests = args.max_concurrent_requests

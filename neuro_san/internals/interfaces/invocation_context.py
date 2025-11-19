@@ -111,3 +111,9 @@ class InvocationContext:
         :return: The Reservationist instance for the session
         """
         raise NotImplementedError
+
+    def get_port(self) -> int:
+        """
+        :return: The port on which the server was started
+        """
+        raise NotImplementedError

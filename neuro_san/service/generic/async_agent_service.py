@@ -93,6 +93,7 @@ class AsyncAgentService:
         self.agent_network_provider: AgentNetworkProvider = agent_network_provider
         self.agent_name: str = agent_name
         self.request_counter = AtomicCounter()
+        self.port: int = server_context.get_server_port()
 
         self.async_executor_pool: AsyncioExecutorPool = server_context.get_executor_pool()
         self.reload_factories()
@@ -254,7 +255,8 @@ class AsyncAgentService:
             self.llm_factory,
             self.toolbox_factory,
             metadata,
-            reservationist)
+            reservationist,
+            self.port)
         invocation_context.start()
 
         # Set up logging inside async thread

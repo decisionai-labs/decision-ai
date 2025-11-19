@@ -60,7 +60,8 @@ class ExternalAgentSessionFactory(AsyncAgentSessionFactory):
         :return: An AsyncAgentSession through which communications about the external agent can be made.
         """
 
-        agent_location: Dict[str, str] = ExternalAgentParsing.parse_external_agent(agent_url)
+        server_port: int = invocation_context.get_port()
+        agent_location: Dict[str, str] = ExternalAgentParsing.parse_external_agent(agent_url, server_port=server_port)
         session: AsyncAgentSession = self.create_session_from_location_dict(agent_location, invocation_context)
         return session
 

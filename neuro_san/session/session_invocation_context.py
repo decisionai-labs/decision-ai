@@ -54,7 +54,8 @@ class SessionInvocationContext(InvocationContext):
                  llm_factory: ContextTypeLlmFactory,
                  toolbox_factory: ContextTypeToolboxFactory = None,
                  metadata: Dict[str, str] = None,
-                 reservationist: Reservationist = None):
+                 reservationist: Reservationist = None,
+                 port: int = None):
         """
         Constructor
 
@@ -69,6 +70,7 @@ class SessionInvocationContext(InvocationContext):
                          the header. Default is None. Preferred format is a
                          dictionary of string keys to string values.
         :param reservationist: The Reservationist instance to use.
+        :param port: The port on which the server was started
         """
 
         # From args
@@ -79,6 +81,7 @@ class SessionInvocationContext(InvocationContext):
         self.toolbox_factory: ContextTypeToolboxFactory = toolbox_factory
         self.metadata: Dict[str, str] = metadata
         self.reservationist: Reservationist = reservationist
+        self.port: int = port
 
         # Internal
         # Get an async executor to run all tasks for this session instance:
@@ -181,6 +184,12 @@ class SessionInvocationContext(InvocationContext):
         :return: The agent name for the session
         """
         return self.agent_name
+
+    def get_port(self) -> int:
+        """
+        :return: The port on which the server was started
+        """
+        return self.port
 
     def reset(self):
         """

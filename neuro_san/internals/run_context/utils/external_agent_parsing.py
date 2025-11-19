@@ -19,7 +19,6 @@ from typing import Dict
 from typing import List
 from typing import Union
 
-from os import environ
 from urllib.parse import ParseResult
 from urllib.parse import urlparse
 
@@ -31,9 +30,11 @@ class ExternalAgentParsing:
     """
 
     @staticmethod
-    def parse_external_agent(agent_url: str) -> Dict[str, str]:
+    def parse_external_agent(agent_url: str, server_port: int = None) -> Dict[str, str]:
         """
         :param agent_url: The URL describing where to find the desired agent.
+        :param server_port: The port that the server is listening on
+                            Does not have to be set for all operations.
         :return: A Dictionary with the following keys:
                 "host" - the hostname where the agent lives
                 "port" - the port on the host which serves up the agent (if any)
@@ -76,7 +77,7 @@ class ExternalAgentParsing:
             # If we are localhost and no port was specified in the url,
             # use the port that was configured for the server.
             # If this is not set, it will default to None, which is fine.
-            port = environ.get("AGENT_HTTP_PORT")
+            port = server_port
 
         # Get the agent name from the URL by looking at the path
         # Remove any leading slashes from the path for the agent name.
