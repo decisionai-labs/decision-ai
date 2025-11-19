@@ -105,6 +105,7 @@ class AgentService:
         self.llm_factory: ContextTypeLlmFactory = MasterLlmFactory.create_llm_factory(config)
         self.toolbox_factory: ContextTypeToolboxFactory = MasterToolboxFactory.create_toolbox_factory(config)
         self.async_executor_pool: AsyncioExecutorPool = server_context.get_executor_pool()
+        self.port: int = server_context.get_server_port()
 
         self.request_timeout_seconds: float = agent_network.get_request_timeout_seconds()
 
@@ -255,7 +256,8 @@ class AgentService:
             self.llm_factory,
             self.toolbox_factory,
             metadata,
-            reservationist)
+            reservationist,
+            self.port)
         invocation_context.start()
 
         # Set up logging inside async thread

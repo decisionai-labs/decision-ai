@@ -21,6 +21,7 @@ from janus import Queue
 
 from leaf_common.asyncio.asyncio_executor_pool import AsyncioExecutorPool
 
+from neuro_san.interfaces.agent_session_constants import AgentSessionConstants
 from neuro_san.internals.chat.async_collating_queue import AsyncCollatingQueue
 from neuro_san.internals.network_providers.agent_network_storage import AgentNetworkStorage
 from neuro_san.internals.network_providers.expiring_agent_network_storage import ExpiringAgentNetworkStorage
@@ -41,6 +42,7 @@ class ServerContext:
         self.executor_pool = AsyncioExecutorPool(reuse_mode=True)
         self.queues: Queue[AsyncCollatingQueue] = Queue()
         self.mcp_server_context: McpServerContext = McpServerContext()
+        self.server_port: int = AgentSessionConstants.DEFAULT_HTTP_PORT
 
         # Dictionary is string key (describing scope) to AgentNetworkStorage grouping.
         self.network_storage_dict: Dict[str, AgentNetworkStorage] = {
@@ -91,3 +93,15 @@ class ServerContext:
         :return: The MCPServerContext for MCP service operations
         """
         return self.mcp_server_context
+
+    def set_server_port(self, port: int):
+        """
+        Sets the server port
+        """
+        self.server_port = port
+
+    def get_server_port(self) -> int:
+        """
+        :return: The Server port
+        """
+        return self.server_port
