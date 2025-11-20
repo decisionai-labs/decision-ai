@@ -24,7 +24,7 @@
         "description": "Complex agent network consisting of several LLM-based agents using AAOSA prompting federation."
         "tags": ["example", "aaosa"],
         "sample_queries": [
-            "I just go married. What do I need to update in the system?",
+            "I just got married. What do I need to update in the system?",
             "I'm relocating to another country. What do I need to do?",
         ]
     },
