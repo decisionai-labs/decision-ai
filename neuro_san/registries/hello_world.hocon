@@ -23,6 +23,10 @@
     "metadata": {
         "description": "Simple agent network consisting of two LLM-based agents."
         "tags": ["example"],
+        "sample_queries": [
+            "From earth, I approach a new planet and wish to send a short 2-word greeting to the new orb.",
+            "Greet developers that wrote their very first program",
+        ]
     },
     "llm_config": {
         "model_name": "gpt-4o",

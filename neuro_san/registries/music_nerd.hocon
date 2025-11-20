@@ -23,6 +23,10 @@
     "metadata": {
         "description": "Simple agent network using a single LLM-based agent",
         "tags": ["example"],
+        "sample_queries": [
+            "Which band wrote Yellow Submarine?",
+            "Where are they from?",
+        ]
     },
     "llm_config": {
         "model_name": "gpt-4o",
