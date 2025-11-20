@@ -23,6 +23,10 @@
     "metadata": {
         "description": "Gets current date and time for a specified timezone.",
         "tags": ["example", "utility"],
+        "sample_queries": [
+            "What time is it?",
+            "What time is it in San Francisco?",
+        ]
     },
     "llm_config": {
         "model_name": "gpt-4o",

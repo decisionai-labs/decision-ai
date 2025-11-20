@@ -358,6 +358,12 @@ A list of strings that describe grouping attributes of the agent network.
 The idea here is that any given server can describe groupings of agent networks
 however it wants to.
 
+#### sample_queries
+
+A list of sample query strings that can be asked of the agent network.
+These queries serve as examples to help users understand what kinds of questions or requests
+are appropriate for the agent network.
+
 ## Single Agent Specification
 
 Settings for individual agents are specified by their own dictionary within the list of [tools](#tools) for the network.

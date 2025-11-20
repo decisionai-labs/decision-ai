@@ -23,6 +23,10 @@
     "metadata": {
         "description": "Slightly more complex agent network breaking down tasks",
         "tags": ["example"],
+        "sample_queries": [
+            "Which band wrote Yellow Submarine?",
+            "Where are they from?",
+        ]
     },
     "llm_config": {
         "model_name": "gpt-4o",
