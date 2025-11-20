@@ -66,7 +66,8 @@ class McpToolsProcessor:
         result_dict: Dict[str, Any] = session.list(data)
         tools_description: List[Dict[str, Any]] = []
         for agent_dict in result_dict.get("agents", []):
-            tool_dict: Dict[str, Any] = await self._get_tool_description(agent_dict)
+            agent_name: str = agent_dict["agent_name"]
+            tool_dict: Dict[str, Any] = await self._get_tool_description(agent_name, metadata)
             tools_description.append(tool_dict)
         return {
             "jsonrpc": "2.0",
@@ -161,6 +162,9 @@ class McpToolsProcessor:
         :param result_structure: tool call result structure part;
         :return: json dictionary with tool call result in MCP format;
         """
+        # Result sly data does NOT make it into tool call result.
+        _ = result_sly_data
+
         call_result: Dict[str, Any] = {
             "jsonrpc": "2.0",
             "id": RequestsUtil.safe_request_id(request_id),
@@ -175,29 +179,24 @@ class McpToolsProcessor:
             }
         }
         # Construct actual tool call result:
-        structured_content: Dict[str, Any] = {}
         if result_structure is not None:
-            structured_content["result"] = result_structure
+            call_result["result"]["structuredContent"] = result_structure
             # For backward compatibility, also add text version of structure:
             structure_str: str = f"```json\n{json.dumps(result_structure, indent=2)}\n```"
             result_text = result_text + structure_str
-        if result_sly_data is not None:
-            structured_content["sly_data"] = result_sly_data
-        if len(structured_content) > 0:
-            call_result["result"]["structuredContent"] = structured_content
         call_result["result"]["content"][0]["text"] = RequestsUtil.safe_message(result_text)
         return call_result
 
-    async def _get_tool_description(self, agent_info_dict: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Get MCP tool description for given agent.
-        :param agent_info_dict: dictionary with agent information;
-        :return: MCP tool description dictionary
-        """
+    async def _get_tool_description(self, agent_name: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
+        service_provider: AsyncAgentServiceProvider = self.agent_policy.allow(agent_name)
+        if service_provider is None:
+            return None
+        service: AsyncAgentService = service_provider.get_service()
+        function_dict: Dict[str, Any] = await service.function({}, metadata)
+        tool_description: str = function_dict.get("function", {}).get("description", "")
         return {
-            "name": agent_info_dict.get("agent_name", ""),
-            "description": agent_info_dict.get("description", ""),
-            "tags": agent_info_dict.get("tags", ""),
+            "name": agent_name,
+            "description": tool_description,
             "inputSchema": {
                 "type": "object",
                 "properties": {
