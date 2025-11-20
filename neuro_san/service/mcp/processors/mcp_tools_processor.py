@@ -175,16 +175,16 @@ class McpToolsProcessor:
             }
         }
         # Construct actual tool call result:
-        structuredContent: Dict[str, Any] = {}
+        structured_content: Dict[str, Any] = {}
         if result_structure is not None:
-            structuredContent["result"] = result_structure
+            structured_content["result"] = result_structure
             # For backward compatibility, also add text version of structure:
             structure_str: str = f"```json\n{json.dumps(result_structure, indent=2)}\n```"
             result_text = result_text + structure_str
         if result_sly_data is not None:
-            structuredContent["sly_data"] = result_sly_data
-        if len(structuredContent) > 0:
-            call_result["result"]["structuredContent"] = structuredContent
+            structured_content["sly_data"] = result_sly_data
+        if len(structured_content) > 0:
+            call_result["result"]["structuredContent"] = structured_content
         call_result["result"]["content"][0]["text"] = RequestsUtil.safe_message(result_text)
         return call_result
 
