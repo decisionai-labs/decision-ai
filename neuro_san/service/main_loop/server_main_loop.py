@@ -143,7 +143,7 @@ class ServerMainLoop:
                                 help="Http server resources monitoring/logging interval in seconds "
                                      "0 means no logging")
         arg_parser.add_argument("--mcp_enable", type=str,
-                                default=os.environ.get("AGENT_MCP_ENABLE", "false"),
+                                default=os.environ.get("AGENT_MCP_ENABLE", "true"),
                                 help="'true' if MCP protocol service should be enabled")
         arg_parser.add_argument("--mcp_only", type=str,
                                 default=os.environ.get("AGENT_MCP_ONLY", "false"),
