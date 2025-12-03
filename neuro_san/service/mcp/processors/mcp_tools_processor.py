@@ -111,18 +111,15 @@ class McpToolsProcessor:
         input_request: Dict[str, Any] = self._get_chat_input_request(prompt, chat_context, sly_data)
         response_text: str = ""
         response_structure: Dict[str, Any] = None
-        response_sly_data: Dict[str, Any] = None
         try:
             async with asyncio.timeout(tool_timeout_seconds):
                 result_generator = service.streaming_chat(input_request, metadata)
                 async for result_dict in result_generator:
-                    partial_response, sly_data, structure_data = await self._extract_tool_response_part(result_dict)
+                    partial_response, structure_data = await self._extract_tool_response_part(result_dict)
                     if partial_response is not None:
                         response_text = response_text + partial_response
                     if structure_data is not None:
                         response_structure = structure_data
-                    if sly_data is not None:
-                        response_sly_data = sly_data
 
         except (asyncio.CancelledError, tornado.iostream.StreamClosedError):
             self.logger.info(metadata, "Tool execution %s cancelled/stream closed.", tool_name)
@@ -139,7 +136,7 @@ class McpToolsProcessor:
             return McpErrorsUtil.get_tool_error(request_id, f"Failed to execute tool {tool_name}")
 
         finally:
-            # We are done with response stream,
+            # We are done with the response stream,
             # ensure generator is closed properly in any case:
             if result_generator is not None:
                 with contextlib.suppress(Exception):
@@ -149,25 +146,21 @@ class McpToolsProcessor:
 
         # Return tool call result:
         call_result: Dict[str, Any] =\
-            await self.build_tool_call_result(request_id, response_text, response_sly_data, response_structure)
+            await self.build_tool_call_result(request_id, response_text, response_structure)
         return call_result
 
     async def build_tool_call_result(
             self,
             request_id,
             result_text: str,
-            result_sly_data: Dict[str, Any],
             result_structure: Dict[str, Any]) -> Dict[str, Any]:
         """
         Build MCP tool call result dictionary from given text and structure parts.
         :param request_id: MCP request id;
         :param result_text: tool call result text part;
-        :param result_sly_data: tool call result sly_data part;
         :param result_structure: tool call result structure part;
         :return: json dictionary with tool call result in MCP format;
         """
-        # Result sly data does NOT make it into tool call result.
-        _ = result_sly_data
 
         call_result: Dict[str, Any] = {
             "jsonrpc": "2.0",
@@ -223,23 +216,21 @@ class McpToolsProcessor:
         }
 
     async def _extract_tool_response_part(
-            self, response_dict: Dict[str, Any]) -> Tuple[str, Dict[str, Any], Dict[str, Any]]:
+            self, response_dict: Dict[str, Any]) -> Tuple[str, Dict[str, Any]]:
         """
-        Extract tool response part from the given streaming chat response dictionary.
+        Extract the tool response part from the given streaming chat response dictionary.
         :param response_dict: streaming chat response dictionary;
-        :return: tuple of 3 values:
+        :return: tuple of 2 values:
             text part as string or None,
-            sly data as dictionary or None,
             structure part as dictionary or None
         """
         response_part_dict: Dict[str, Any] = response_dict.get("response", {})
         response_type: str = response_part_dict.get("type", "")
         if response_type == "AGENT_FRAMEWORK":
             text: str = response_part_dict.get("text", None)
-            sly_data: Dict[str, Any] = response_part_dict.get("sly_data", None)
             structure_data: Dict[str, Any] = response_part_dict.get("structure", None)
-            return text, sly_data, structure_data
-        return None, None, None
+            return text, structure_data
+        return None, None
 
     def _get_chat_input_request(self,
                                 input_text: str,

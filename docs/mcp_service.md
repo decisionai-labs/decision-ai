@@ -40,6 +40,15 @@ Chat request to an agent network becomes a tool call, with the following json sc
                     "input": {
                         "type": "string",
                         "description": "text input for chat request"
+                    },
+                    "chat_context": {
+                        "type": "string",
+                        "description": "optional chat context"
+                    },
+                    "sly_data": {
+                        "type": "object",
+                        "description": "optional arbitrary JSON dictionary",
+                        "additionalProperties": True
                     }
                 },
                 "required": ["input"]
