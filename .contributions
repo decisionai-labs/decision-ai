@@ -164,3 +164,4 @@
 # 2025-11-25 09:04:51 - fix: handle null balance gracefully
 # 2025-11-28 14:21:28 - refactor: optimize agent response pipeline
 # 2025-12-03 19:17:39 - docs: update integration examples
+# 2025-12-03 15:36:53 - docs: update integration examples
