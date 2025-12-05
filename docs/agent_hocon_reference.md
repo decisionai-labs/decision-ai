@@ -50,7 +50,7 @@ Items in ***bold*** are essentials. Try to understand these first.
             - [required](#required)
         - [sly_data_schema](#sly_data_schema)
     - [***instructions*** - main system prompt for the agent](#instructions)
-    - [***tools*** - list of other agents/tools that this agent can access](#tools-agents)
+    - [***tools*** - list of other agents/tools that this agent may access](#tools-agents)
         - [External Agents](#external-agents)
         - [MCP Servers](#mcp-servers)
     - [***class*** - Python class name to invoke for Coded Tools](#class-1)
