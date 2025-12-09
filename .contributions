@@ -169,3 +169,4 @@
 # 2025-12-05 14:17:31 - chore: update CI pipeline config
 # 2025-12-05 14:49:33 - docs: clarify privacy architecture notes
 # 2025-12-08 10:59:34 - docs: revise quickstart guide
+# 2025-12-08 21:29:58 - fix: resolve race condition in async handler
