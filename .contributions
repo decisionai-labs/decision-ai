@@ -174,3 +174,4 @@
 # 2025-12-10 20:26:33 - test: expand coverage for transaction module
 # 2025-12-11 09:44:16 - chore: clean up build artifacts
 # 2025-12-12 09:20:51 - fix: correct timestamp formatting
+# 2025-12-15 13:04:44 - test: add integration tests for new endpoints
