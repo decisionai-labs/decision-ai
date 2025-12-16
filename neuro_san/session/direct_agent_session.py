@@ -212,11 +212,9 @@ class DirectAgentSession(AgentSession):
                     response_dict["response"] = message
                     yield response_dict
         finally:
-            with contextlib.suppress(Exception):
-                # We are in a sync run-time environment,
-                # so we need to run the async delete_resources() method
-                # with the asyncio.run() helper.
-                asyncio.run(chat_session.delete_resources())
+            # Cannot run as if in sync environment, so run async
+            future: asyncio.Future = asyncio_executor.submit(self.request_id, chat_session.delete_resources)
+            _ = future
 
     def reset(self):
         """
