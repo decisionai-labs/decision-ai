@@ -78,14 +78,19 @@ class McpToolsProcessor:
         }
 
     async def call_tool(self, request_id, metadata: Dict[str, Any],
-                        tool_name: str, prompt: str, chat_context: str, sly_data: Dict[str, Any]) -> Dict[str, Any]:
+                        tool_name: str,
+                        prompt: Dict[str, Any],
+                        chat_context: Dict[str, Any],
+                        chat_filter: Dict[str, Any],
+                        sly_data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Call MCP tool, which executes neuro-san agent chat request.
         :param request_id: MCP request id;
         :param metadata: http-level request metadata;
         :param tool_name: tool name;
-        :param prompt: input prompt as a string;
-        :param chat_context: chat context string, could be None;
+        :param prompt: input prompt as a JSON structure;
+        :param chat_context: chat context JSON structure, could be None;
+        :param chat_filter: chat filter type JSON structure, could be None;
         :param sly_data: arbitrary JSON dictionary containing sly_data, could be None;
         :return: json dictionary with tool response in MCP format;
                  or json dictionary with error message in MCP format.
@@ -108,7 +113,7 @@ class McpToolsProcessor:
             # For asyncio.timeout(), None means no timeout:
             tool_timeout_seconds = None
 
-        input_request: Dict[str, Any] = self._get_chat_input_request(prompt, chat_context, sly_data)
+        input_request: Dict[str, Any] = self._get_chat_input_request(prompt, chat_context, chat_filter, sly_data)
         response_text: str = ""
         response_structure: Dict[str, Any] = None
         try:
@@ -194,25 +199,7 @@ class McpToolsProcessor:
         return {
             "name": agent_name,
             "description": tool_description,
-            "inputSchema": {
-                "type": "object",
-                "properties": {
-                    "input": {
-                        "type": "string",
-                        "description": "text input for chat request"
-                    },
-                    "chat_context": {
-                        "type": "string",
-                        "description": "optional chat context"
-                    },
-                    "sly_data": {
-                        "type": "object",
-                        "description": "optional arbitrary JSON dictionary",
-                        "additionalProperties": True
-                    }
-                },
-                "required": ["input"]
-            }
+            "inputSchema": self.TOOL_CALL_PARAMETERS_SCHEMA
         }
 
     async def _extract_tool_response_part(
@@ -233,27 +220,182 @@ class McpToolsProcessor:
         return None, None
 
     def _get_chat_input_request(self,
-                                input_text: str,
-                                chat_context: str,
+                                user_message: Dict[str, Any],
+                                chat_context: Dict[str, Any],
+                                chat_filter: Dict[str, Any],
                                 sly_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Construct Python dictionary expected by "streaming_chat" service API call.
-        :param input_text: input user prompt;
-        :param chat_context: chat context string, could be None;
+        Construct a Python dictionary expected by "streaming_chat" service API call.
+        :param user_message: user message JSON structure;
+        :param chat_context: chat context JSON structure, could be None;
+        :param chat_filter: chat filter type JSON structure, could be None;
         :param sly_data: arbitrary JSON dictionary containing sly_data, could be None;
         :return: "streaming_chat" service API input dictionary
         """
         request_dict: Dict[str, Any] = {
-            "user_message": {
-                "type": 2,
-                "text": input_text
-            },
-            "chat_filter": {
-                "chat_filter_type": "MAXIMAL"
-            }
+            "user_message": user_message
         }
+        if chat_filter is not None:
+            request_dict["chat_filter"] = chat_filter
         if chat_context is not None:
             request_dict["chat_context"] = chat_context
         if sly_data is not None:
             request_dict["sly_data"] = sly_data
         return request_dict
+
+    TOOL_CALL_PARAMETERS_SCHEMA: Dict[str, Any] = {
+        "type": "object",
+        "$defs": {
+            "ChatContext": {
+                "type": "object",
+                "properties": {
+                    "chat_histories": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/ChatHistory"
+                        },
+                        "description": "A potentially full list of chat histories that pertain to the node. These will typically come in the last message of any particular agent's chat stream.   Do not expect any or all internal agents will broadcast their chat history, but you can at least expect the front-man to broadcast his."
+                    }
+                },
+                "description": "Message for holding the state of play for any chat session such that should the client send this back to the service, a different server knows exactly where to pick up where the previous conversation left off."
+            },
+            "ChatFilter": {
+                "type": "object",
+                "properties": {
+                    "chat_filter_type": {
+                        "enum": [
+                            "UNKNOWN",
+                            "MINIMAL",
+                            "MAXIMAL"
+                        ],
+                        "type": "string",
+                        "description": "For now allow for an enum to describe how we want chat messages streamed. In the future the description of this server-side filter might offer more fine-grained control (hence an encapsulating structure).",
+                        "format": "enum"
+                    }
+                },
+                "description": "Allows for controlling the messages that get streamed via StreamingChat."
+            },
+            "ChatHistory": {
+                "type": "object",
+                "properties": {
+                    "origin": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/Origin"
+                        }
+                    },
+                    "messages": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/ChatMessage"
+                        }
+                    }
+                },
+                "description": "A structure for storing chat history for a given node in the graph described by the origin."
+            },
+            "ChatMessage": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "enum": [
+                            "UNKNOWN",
+                            "SYSTEM",
+                            "HUMAN",
+                            "AI",
+                            "AGENT",
+                            "AGENT_FRAMEWORK",
+                            "AGENT_TOOL_RESULT",
+                            "AGENT_PROGRESS"
+                        ],
+                        "type": "string",
+                        "description": "The type of chat message",
+                        "format": "enum"
+                    },
+                    "text": {
+                        "type": "string",
+                        "description": "String contents of any chat message"
+                    },
+                    "mime_data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/MimeData"
+                        },
+                        "description": "Optional bytes for any non-text media referenced by this message. For some chat sources, the string text field might also be populated as a reference for how the data was created.  If this happens, then it should be safe to assume that the text is enough to represent the message in any history carried forward. As of 1/13/25 this is a forward-looking, experimental field not likely to be used in regular operation until we can get proper plumbing of such data in place."
+                    },
+                    "origin": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/Origin"
+                        },
+                        "description": "Optional list of Origin structures (see above) describing the origin of the chat message. The intent here is to be able to distiguish responses from nested agents. For each top-level agent/front-man (perhaps on another server) that is called, an extra structure is added to the list."
+                    },
+                    "structure": {
+                        "type": "object",
+                        "description": "Optional structure for a message whose contents are parsed JSON. The idea is to have the server side do the parsing when requested by the agent spec. As of 1/30/25 this is a forward-looking, experimental field not likely to be used in regular operation until we can get proper plumbing of such data in place."
+                    },
+                    "chat_context": {
+                        "$ref": "#/$defs/ChatContext"
+                    },
+                    "tool_result_origin": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/$defs/Origin"
+                        },
+                        "description": "Optional list of Origin structures (see above) describing the origin of a tool result."
+                    },
+                    "sly_data": {
+                        "type": "object",
+                        "description": "This is an entirely optional map whose keys refer to data that is better left out of the LLM chat stream.  The keys themselves might appear in the chat stream, referring to the data, but the data itself does not. The intent is for the key references to be passed to tools, which then grab the values by programmatic means, but these tools might also have private data to send back to the client as well."
+                    }
+                },
+                "description": "Structure describing a single chat message. This could be a single response, or a list of these might comprise a chat history."
+            },
+            "MimeData": {
+                "type": "object",
+                "properties": {
+                    "mime_type": {
+                        "type": "string",
+                        "description": "MIME type of the image data"
+                    },
+                    "mime_bytes": {
+                        "type": "string",
+                        "description": "Raw bytes of the image",
+                        "format": "byte"
+                    }
+                },
+                "description": "A Message identifying image data"
+            },
+            "Origin": {
+                "type": "object",
+                "properties": {
+                    "tool": {
+                        "type": "string",
+                        "description": "String name of the originating tool, as per the agent spec."
+                    },
+                    "instantiation_index": {
+                        "type": "integer",
+                        "description": "Some tools can be called more than once by one or more different paths. Allow for an instantiation index to distinguish these in the chat stream. Index counting starts at 0.",
+                        "format": "int32"
+                    }
+                }
+            }
+        },
+        "properties": {
+            "sly_data": {
+                "type": "object",
+                "description": "This is an entirely optional map whose keys refer to data that is better left out of the LLM chat stream.  The keys themselves might appear in the chat stream, referring to the data, but the data itself does not. The intent is for the key references to be passed to tools, which then grab the values by programmatic means.",
+                "additionalProperties": True
+            },
+            "user_message": {
+                "$ref": "#/$defs/ChatMessage"
+            },
+            "chat_context": {
+                "$ref": "#/$defs/ChatContext"
+            },
+            "chat_filter": {
+                "$ref": "#/$defs/ChatFilter"
+            }
+        },
+        "required": ["user_message"]
+    }
+

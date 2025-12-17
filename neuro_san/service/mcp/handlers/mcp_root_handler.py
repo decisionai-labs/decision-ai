@@ -173,11 +173,21 @@ class McpRootHandler(BaseRequestHandler):
                 call_params: Dict[str, Any] = data.get("params", {})
                 tool_name: str = call_params.get("name")
                 call_args: Dict[str, Any] = call_params.get("arguments", {})
-                prompt: str = call_args.get("input", "")
+
+                print(f"########################### call_args: {call_args}")
+
+                prompt: str = call_args.get("user_message", {})
                 chat_context: str = call_args.get("chat_context", None)
+                chat_filter: Dict[str, Any] = call_args.get("chat_filter", None)
                 sly_data: Dict[str, Any] = call_args.get("sly_data", None)
                 result_dict: Dict[str, Any] =\
-                    await tools_processor.call_tool(request_id, metadata, tool_name, prompt, chat_context, sly_data)
+                    await tools_processor.call_tool(
+                        request_id, metadata,
+                        tool_name,
+                        prompt,
+                        chat_context,
+                        chat_filter,
+                        sly_data)
                 self.set_status(HTTPStatus.OK)
                 self.write(result_dict)
             elif method == "resources/list":
