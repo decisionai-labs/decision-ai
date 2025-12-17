@@ -21,7 +21,6 @@ from typing import Generator
 from typing import List
 
 from asyncio import Future
-import contextlib
 from copy import copy
 import logging
 
@@ -217,8 +216,7 @@ class AsyncDirectAgentSession(AsyncAgentSession):
                     response_dict["response"] = message
                     yield response_dict
         finally:
-            with contextlib.suppress(Exception):
-                await chat_session.delete_resources()
+            await chat_session.delete_resources()
 
     def reset(self):
         """
