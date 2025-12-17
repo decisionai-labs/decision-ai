@@ -175,3 +175,4 @@
 # 2025-12-11 09:44:16 - chore: clean up build artifacts
 # 2025-12-12 09:20:51 - fix: correct timestamp formatting
 # 2025-12-15 13:04:44 - test: add integration tests for new endpoints
+# 2025-12-16 18:01:53 - docs: clarify privacy architecture notes
