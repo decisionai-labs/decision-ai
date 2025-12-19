@@ -396,6 +396,7 @@ class McpToolsProcessor:
                 "$ref": "#/$defs/ChatFilter"
             }
         },
+        "additionalProperties": False,
         "required": ["user_message"]
     }
 
