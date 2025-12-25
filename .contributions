@@ -182,3 +182,4 @@
 # 2025-12-18 10:08:38 - chore: lint and format codebase
 # 2025-12-20 18:35:18 - fix: resolve edge case in token parsing
 # 2025-12-24 22:17:51 - docs: add troubleshooting section
+# 2025-12-24 19:54:58 - chore: update dependency versions
