@@ -20,8 +20,6 @@ See class comment for details
 from typing import Any
 from typing import Dict
 
-import json
-
 from neuro_san.service.http.handlers.base_request_handler import BaseRequestHandler
 
 

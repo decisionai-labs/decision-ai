@@ -254,10 +254,16 @@ class McpToolsProcessor:
                         "items": {
                             "$ref": "#/$defs/ChatHistory"
                         },
-                        "description": "A potentially full list of chat histories that pertain to the node. These will typically come in the last message of any particular agent's chat stream.   Do not expect any or all internal agents will broadcast their chat history, but you can at least expect the front-man to broadcast his."
+                        "description": "A potentially full list of chat histories that pertain to the node. "
+                                       "These will typically come in the last message of any "
+                                       "particular agent's chat stream.   Do not expect any or all internal agents "
+                                       "will broadcast their chat history, but you can at least "
+                                       "expect the front-man to broadcast his."
                     }
                 },
-                "description": "Message for holding the state of play for any chat session such that should the client send this back to the service, a different server knows exactly where to pick up where the previous conversation left off."
+                "description": "Message for holding the state of play for any chat session such "
+                               "that should the client send this back to the service, a different server "
+                               "knows exactly where to pick up where the previous conversation left off."
             },
             "ChatFilter": {
                 "type": "object",
@@ -269,7 +275,9 @@ class McpToolsProcessor:
                             "MAXIMAL"
                         ],
                         "type": "string",
-                        "description": "For now allow for an enum to describe how we want chat messages streamed. In the future the description of this server-side filter might offer more fine-grained control (hence an encapsulating structure).",
+                        "description": "For now allow for an enum to describe how we want chat messages streamed. "
+                                       "In the future the description of this server-side filter might offer "
+                                       "more fine-grained control (hence an encapsulating structure).",
                         "format": "enum"
                     }
                 },
@@ -291,7 +299,8 @@ class McpToolsProcessor:
                         }
                     }
                 },
-                "description": "A structure for storing chat history for a given node in the graph described by the origin."
+                "description": "A structure for storing chat history for a given node "
+                               "in the graph described by the origin."
             },
             "ChatMessage": {
                 "type": "object",
@@ -320,18 +329,33 @@ class McpToolsProcessor:
                         "items": {
                             "$ref": "#/$defs/MimeData"
                         },
-                        "description": "Optional bytes for any non-text media referenced by this message. For some chat sources, the string text field might also be populated as a reference for how the data was created.  If this happens, then it should be safe to assume that the text is enough to represent the message in any history carried forward. As of 1/13/25 this is a forward-looking, experimental field not likely to be used in regular operation until we can get proper plumbing of such data in place."
+                        "description": "Optional bytes for any non-text media referenced by this message. "
+                                       "For some chat sources, the string text field might also be populated "
+                                       "as a reference for how the data was created.  If this happens, "
+                                       "then it should be safe to assume that the text is enough to represent "
+                                       "the message in any history carried forward. "
+                                       "As of 1/13/25 this is a forward-looking, experimental field not likely "
+                                       "to be used in regular operation until we can get proper plumbing "
+                                       "of such data in place."
                     },
                     "origin": {
                         "type": "array",
                         "items": {
                             "$ref": "#/$defs/Origin"
                         },
-                        "description": "Optional list of Origin structures (see above) describing the origin of the chat message. The intent here is to be able to distiguish responses from nested agents. For each top-level agent/front-man (perhaps on another server) that is called, an extra structure is added to the list."
+                        "description": "Optional list of Origin structures (see above) describing the origin "
+                                       "of the chat message. The intent here is to be able to distiguish responses "
+                                       "from nested agents. For each top-level agent/front-man "
+                                       "(perhaps on another server) that is called, "
+                                       "an extra structure is added to the list."
                     },
                     "structure": {
                         "type": "object",
-                        "description": "Optional structure for a message whose contents are parsed JSON. The idea is to have the server side do the parsing when requested by the agent spec. As of 1/30/25 this is a forward-looking, experimental field not likely to be used in regular operation until we can get proper plumbing of such data in place."
+                        "description": "Optional structure for a message whose contents are parsed JSON. "
+                                       "The idea is to have the server side do the parsing when requested "
+                                       "by the agent spec. As of 1/30/25 this is a forward-looking, "
+                                       "experimental field not likely to be used in regular operation "
+                                       "until we can get proper plumbing of such data in place."
                     },
                     "chat_context": {
                         "$ref": "#/$defs/ChatContext"
@@ -341,14 +365,21 @@ class McpToolsProcessor:
                         "items": {
                             "$ref": "#/$defs/Origin"
                         },
-                        "description": "Optional list of Origin structures (see above) describing the origin of a tool result."
+                        "description": "Optional list of Origin structures (see above) "
+                                       "describing the origin of a tool result."
                     },
                     "sly_data": {
                         "type": "object",
-                        "description": "This is an entirely optional map whose keys refer to data that is better left out of the LLM chat stream.  The keys themselves might appear in the chat stream, referring to the data, but the data itself does not. The intent is for the key references to be passed to tools, which then grab the values by programmatic means, but these tools might also have private data to send back to the client as well."
+                        "description": "This is an entirely optional map whose keys refer to data "
+                                       "that is better left out of the LLM chat stream.  The keys themselves "
+                                       "might appear in the chat stream, referring to the data, but the data itself "
+                                       "does not. The intent is for the key references to be passed to tools, "
+                                       "which then grab the values by programmatic means, but these tools might also "
+                                       "have private data to send back to the client as well."
                     }
                 },
-                "description": "Structure describing a single chat message. This could be a single response, or a list of these might comprise a chat history."
+                "description": "Structure describing a single chat message. This could be a single response, "
+                               "or a list of these might comprise a chat history."
             },
             "MimeData": {
                 "type": "object",
@@ -374,7 +405,9 @@ class McpToolsProcessor:
                     },
                     "instantiation_index": {
                         "type": "integer",
-                        "description": "Some tools can be called more than once by one or more different paths. Allow for an instantiation index to distinguish these in the chat stream. Index counting starts at 0.",
+                        "description": "Some tools can be called more than once by one or more different paths. "
+                                       "Allow for an instantiation index to distinguish these in the chat stream. "
+                                       "Index counting starts at 0.",
                         "format": "int32"
                     }
                 }
@@ -384,7 +417,11 @@ class McpToolsProcessor:
                 "properties": {
                     "sly_data": {
                         "type": "object",
-                        "description": "This is an entirely optional map whose keys refer to data that is better left out of the LLM chat stream.  The keys themselves might appear in the chat stream, referring to the data, but the data itself does not. The intent is for the key references to be passed to tools, which then grab the values by programmatic means.",
+                        "description": "This is an entirely optional map whose keys refer to data "
+                                       "that is better left out of the LLM chat stream.  "
+                                       "The keys themselves might appear in the chat stream, referring to the data, "
+                                       "but the data itself does not. The intent is for the key references "
+                                       "to be passed to tools, which then grab the values by programmatic means.",
                         "additionalProperties": True
                     },
                     "user_message": {
@@ -404,4 +441,3 @@ class McpToolsProcessor:
         "additionalProperties": False,
         "required": ["user_message"]
     }
-

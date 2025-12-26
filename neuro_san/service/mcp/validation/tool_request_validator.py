@@ -64,7 +64,7 @@ class ToolRequestValidator(DictionaryValidator):
         Recognizes local refs of the form:
           - "#/components/schemas/Name"
         """
-        _REF_DEFS_RE = re.compile(r"^#/components/schemas/([^/]+)$")
+        _ref_defs_re = re.compile(r"^#/components/schemas/([^/]+)$")
         out: Set[str] = set()
 
         def visit(node: Any):
@@ -72,7 +72,7 @@ class ToolRequestValidator(DictionaryValidator):
                 # Collect $ref if present
                 ref = node.get("$ref")
                 if isinstance(ref, str):
-                    m_ref = _REF_DEFS_RE.match(ref)
+                    m_ref = _ref_defs_re.match(ref)
                     if m_ref:
                         out.add(m_ref.group(1))
                 # Recurse through all values (including keys like allOf/anyOf/etc.)
