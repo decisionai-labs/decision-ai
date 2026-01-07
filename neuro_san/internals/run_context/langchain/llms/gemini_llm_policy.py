@@ -88,16 +88,37 @@ class GeminiLlmPolicy(LlmPolicy):
         # This used to be a v1betaGenerativeServiceAsyncClient, aka
         # google.ai.generativelanguage_v1beta.GenerativeServiceAsyncClient.
         # however, langchain-google-genai==4.0.0 migrated to google-genai,
-        # and now it is google.genai.client.AsyncClient
-        # but we don't really want to do the Resolver thing here just for type hints.
+        # and now When ChatGoogleGenerativeAI is instantiated, it creates google.genai.Client 
+        # via the validate_environment method 
+        # (https://github.com/langchain-ai/langchain-google/blob/main/libs/genai/langchain_google_genai/chat_models.py#L2306).
+        #
+        # The google.genai.Client internally creates both sync and async client instances,
+        # so both Client and AsyncClient (accessible via client.aio) are instantiated 
+        # at this time.
+        #
+        # The async_client @property 
+        # (https://github.com/langchain-ai/langchain-google/blob/main/libs/genai/langchain_google_genai/chat_models.py#L2476)
+        # simply returns self.client.aio - it doesn't create a new client, just provides
+        # convenient access to the already-instantiated AsyncClient.
+        #
+        # Therefore, both clients exist immediately upon ChatGoogleGenerativeAI instantiation
+        # and both should be closed during cleanup.
+        #
+        # References:
         # https://github.com/langchain-ai/langchain-google/releases/tag/libs%2Fgenai%2Fv4.0.0
         # https://github.com/googleapis/python-genai/blob/main/google/genai/client.py
         # https://reference.langchain.com/python/integrations/langchain_google_genai/ChatGoogleGenerativeAI/
         # #langchain_google_genai.ChatGoogleGenerativeAI.async_client
-        async_client: Any = self.llm.async_client
-        if async_client is not None:
+
+        # Close sync client
+        if self.llm.client is not None:
             with suppress(Exception):
-                await async_client.aclose()
+                self.llm.client.close()
+
+        # Close async client  
+        if self.llm.async_client is not None:
+            with suppress(Exception):
+                await self.llm.async_client.aclose()
 
         # Let's not do this again, shall we?
         self.llm = None
