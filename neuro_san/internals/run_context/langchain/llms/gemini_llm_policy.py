@@ -90,14 +90,16 @@ class GeminiLlmPolicy(LlmPolicy):
         # however, langchain-google-genai==4.0.0 migrated to google-genai,
         # and now When ChatGoogleGenerativeAI is instantiated, it creates google.genai.Client
         # via the validate_environment method
-        # (https://github.com/langchain-ai/langchain-google/blob/main/libs/genai/langchain_google_genai/chat_models.py#L2306).
+        # (https://github.com/langchain-ai/langchain-google/blob/main/libs/genai/langchain_google_genai/
+        # chat_models.py#L2306).
         #
         # The google.genai.Client internally creates both sync and async client instances,
         # so both Client and AsyncClient (accessible via client.aio) are instantiated
         # at this time.
         #
         # The async_client @property
-        # (https://github.com/langchain-ai/langchain-google/blob/main/libs/genai/langchain_google_genai/chat_models.py#L2476)
+        # (https://github.com/langchain-ai/langchain-google/blob/main/libs/genai/langchain_google_genai/
+        # chat_models.py#L2476)
         # simply returns self.client.aio - it doesn't create a new client, just provides
         # convenient access to the already-instantiated AsyncClient.
         #
