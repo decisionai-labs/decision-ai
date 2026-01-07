@@ -57,6 +57,7 @@ class GeminiLlmPolicy(LlmPolicy):
             timeout=config.get("timeout"),
             top_k=config.get("top_k"),
             top_p=config.get("top_p"),
+            thinking_level=config.get("thinking_level"),
 
             # If omitted, this defaults to the global verbose value,
             # accessible via langchain_core.globals.get_verbose():
@@ -72,10 +73,6 @@ class GeminiLlmPolicy(LlmPolicy):
             # To prevent this, we explicitly set verbose=False here (which matches the default
             # global verbose value) so that the warning is never triggered.
             verbose=False,
-
-            # We always want an async client, but grpc_asyncio is the only option,
-            # as there is no async rest client at the moment.
-            transport="grpc_asyncio",
         )
         return llm
 
@@ -87,13 +84,19 @@ class GeminiLlmPolicy(LlmPolicy):
             return
 
         # Do the necessary reach-ins to successfully shut down the web client
-        # This is really a v1betaGenerativeServiceAsyncClient, aka
+        # This used to be a v1betaGenerativeServiceAsyncClient, aka
         # google.ai.generativelanguage_v1beta.GenerativeServiceAsyncClient.
+        # however, langchain-google-genai==4.0.0 migrated to google-genai,
+        # and now it is google.genai.client.AsyncClient
         # but we don't really want to do the Resolver thing here just for type hints.
-        async_client_running: Any = self.llm.async_client_running
-        if async_client_running is not None:
+        # https://github.com/langchain-ai/langchain-google/releases/tag/libs%2Fgenai%2Fv4.0.0
+        # https://github.com/googleapis/python-genai/blob/main/google/genai/client.py
+        # https://reference.langchain.com/python/integrations/langchain_google_genai/ChatGoogleGenerativeAI/
+        # #langchain_google_genai.ChatGoogleGenerativeAI.async_client
+        async_client: Any = self.llm.async_client
+        if async_client is not None:
             with suppress(Exception):
-                await async_client_running.transport.close()
+                await async_client.aclose()
 
         # Let's not do this again, shall we?
         self.llm = None
