@@ -30,8 +30,6 @@ class ServedManifestConfigFilter(ConfigFilter):
     that are not supposed to be served.
     """
 
-    SKIP_VALUE: str = "skip"
-
     def __init__(self, manifest_file: str, warn_on_skip: bool = True, entry_for_skipped: bool = False):
         """
         Constructor
@@ -61,7 +59,7 @@ class ServedManifestConfigFilter(ConfigFilter):
         for key, value in basis_config.items():
 
             skip: bool = False
-            if value is None or value == self.SKIP_VALUE:
+            if value is None:
                 skip = True
             elif isinstance(value, dict) and not value.get("serve", False):
                 skip = True
@@ -74,7 +72,7 @@ class ServedManifestConfigFilter(ConfigFilter):
                 # Instead of merely omitting the entry, we set it to None.
                 # This allows for multiple manifest overlays to work.
                 if self.entry_for_skipped:
-                    filtered[key] = self.SKIP_VALUE
+                    filtered[key] = value
             else:
                 filtered[key] = value
 

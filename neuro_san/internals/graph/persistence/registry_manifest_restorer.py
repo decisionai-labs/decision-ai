@@ -140,7 +140,7 @@ class RegistryManifestRestorer(Restorer):
         # At this point only hocon files we are going to serve up are in the one_manifest.
         for manifest_key, manifest_dict in one_manifest.items():
 
-            usable_network: bool = isinstance(manifest_dict, dict)
+            usable_network: bool = isinstance(manifest_dict, dict) and manifest_dict.get("serve", False)
 
             # We'll need to use an agent mapper to get to this agent definition file.
             agent_filepath: str = self.agent_mapper.agent_name_to_filepath(manifest_key)
@@ -170,7 +170,7 @@ class RegistryManifestRestorer(Restorer):
 
             # Figure out where we want to put the network per the network's manifest dictionary
             storage: str = "public"
-            if usable_network and not manifest_dict.get("public"):
+            if not manifest_dict.get("public"):
                 storage = "protected"
 
             agent_networks[storage][network_name] = agent_network
