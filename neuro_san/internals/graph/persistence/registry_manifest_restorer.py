@@ -69,13 +69,15 @@ class RegistryManifestRestorer(Restorer):
             # We have no manifest list coming in, so check an env variable for a definition.
             manifest_file: str = os.environ.get("AGENT_MANIFEST_FILE")
             if manifest_file is None:
-                # No env var, so fallback to whatis coded in this repo.
+                # No env var, so fallback to what is coded in this repo.
                 manifest_file = REGISTRIES_DIR.get_file_in_basis("manifest.hocon")
 
             # Add what was found above
-            self.manifest_files.append(manifest_file)
+            use_files: List[str] = manifest_file.split(" ")
+            self.manifest_files.extend(use_files)
         elif isinstance(manifest_files, str):
-            self.manifest_files.append(manifest_files)
+            use_files: List[str] = manifest_files.split(" ")
+            self.manifest_files.extend(use_files)
         else:
             self.manifest_files = manifest_files
 
