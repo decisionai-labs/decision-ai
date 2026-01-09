@@ -107,7 +107,7 @@ class RegistryStorageUpdater(AbstractStorageUpdater):
                          modified, added, deleted)
         self.logger.info("Updating manifest file: %s", self.manifest_path)
 
-        agent_networks: Dict[str, Dict[str, AgentNetwork]] = RegistryManifestRestorer().restore(self.manifest_path)
+        agent_networks: Dict[str, Dict[str, AgentNetwork]] = RegistryManifestRestorer(self.manifest_path).restore()
 
         for storage_type in ["public", "protected"]:
             storage: AgentNetworkStorage = self.network_storage_dict.get(storage_type)
