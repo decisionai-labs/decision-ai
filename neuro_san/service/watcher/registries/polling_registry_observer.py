@@ -38,7 +38,7 @@ class PollingRegistryObserver(RegistryObserver):
 
     def __init__(self, manifest_path: Union[str, List[str]], poll_seconds: int):
 
-        self.manifest_path: str = manifest_path
+        self.manifest_path: Union[str, List[str]] = manifest_path
         self.registry_observers: Dict[str, PollingObserver] = {}
         self.logger: Logger = getLogger(self.__class__.__name__)
         self.poll_seconds: int = poll_seconds
