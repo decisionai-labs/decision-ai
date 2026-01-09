@@ -86,7 +86,7 @@ class RegistryStorageUpdater(AbstractStorageUpdater):
         # Log the NEXT update time
         next_time = time.time() + self.get_update_period_in_seconds()
         next_time_fmt: str = datetime.datetime.fromtimestamp(next_time).isoformat()
-        self.logger.info("Next time manifest will be checked for updates: %s", next_time_fmt)
+        self.logger.debug("Next time manifest will be checked for updates: %s", next_time_fmt)
 
     def update_storage(self):
         """
