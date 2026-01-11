@@ -1,0 +1,82 @@
+# NeuroSanSolana - Solana Blockchain Agent
+# Privacy Hack Submission - solana.com/privacyhack
+# 
+# This agent network queries Solana blockchain data while keeping wallet addresses private.
+
+{
+    "metadata": {
+        "description": "Solana blockchain agent for querying wallet balances and network data"
+        "tags": ["solana", "blockchain", "privacy-hack", "web3"],
+        "sample_queries": [
+            "What is the balance of this wallet?",
+            "Query the SOL balance for the provided address",
+            "Check the wallet balance on devnet"
+        ]
+    },
+    
+    # Using Claude 3.5 Sonnet as the LLM
+    "llm_config": {
+        "model_name": "claude-3-5-sonnet-20241022",
+        "api_type": "anthropic"
+    },
+    
+    "tools": [
+        # Front-man agent that handles user interactions
+        {
+            "name": "solana_agent",
+            
+            "function": {
+                "description": """
+I am a Solana blockchain agent. I can query wallet balances and network data.
+Provide a wallet address via the private sly_data channel, and I will fetch the balance.
+""",
+                # Schema for private wallet input
+                "sly_data_schema": {
+                    "type": "object",
+                    "properties": {
+                        "wallet_pubkey": {
+                            "type": "string",
+                            "description": "The Solana wallet public key (base58 encoded) - kept private"
+                        }
+                    },
+                    "required": ["wallet_pubkey"]
+                }
+            },
+            
+            "instructions": """
+You are a helpful Solana blockchain assistant. 
+When asked about wallet balances, use the balance_tool to fetch the data.
+The wallet address is provided privately via sly_data and should never be exposed in chat.
+Always respond with clear, formatted information about the wallet balance.
+If an error occurs, explain what went wrong in a helpful way.
+""",
+            
+            # Allow balance results to flow upstream
+            "allow": {
+                "to_upstream": {
+                    "sly_data": ["balance_result"]
+                }
+            },
+            
+            "tools": ["balance_tool"]
+        },
+        
+        # CodedTool for fetching Solana balance
+        {
+            "name": "balance_tool",
+            "function": {
+                "description": "Fetches the SOL balance for a wallet from the Solana network",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "rpc_url": {
+                            "type": "string",
+                            "description": "Solana RPC endpoint URL (default: devnet)"
+                        }
+                    }
+                }
+            },
+            "class": "solana.balance.GetBalance"
+        }
+    ]
+}
