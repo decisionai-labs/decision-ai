@@ -1,33 +1,41 @@
-# NeuroSanSolana - Solana Blockchain Agent
+# NeuroSanSolana - Solana Blockchain Agent Network
 # Privacy Hack Submission - solana.com/privacyhack
 # 
-# This agent network queries Solana blockchain data while keeping wallet addresses private.
+# A privacy-preserving AI agent that queries Solana blockchain data
+# while keeping wallet addresses hidden from the LLM context.
 
 {
     "metadata": {
-        "description": "Solana blockchain agent for querying wallet balances and network data"
-        "tags": ["solana", "blockchain", "privacy-hack", "web3"],
+        "description": "Privacy-preserving Solana blockchain agent - wallet addresses never exposed to AI"
+        "tags": ["solana", "blockchain", "privacy-hack", "web3", "defi"],
         "sample_queries": [
-            "What is the balance of this wallet?",
-            "Query the SOL balance for the provided address",
-            "Check the wallet balance on devnet"
+            "What is my SOL balance?",
+            "Show me my token holdings",
+            "What are my recent transactions?",
+            "List my NFTs"
         ]
     },
     
-    # Using Claude 3 Haiku (Anthropic)
+    # Using Claude 3 Haiku for fast, efficient responses
     "llm_config": {
         "model_name": "claude-3-haiku",
     },
     
     "tools": [
-        # Front-man agent that handles user interactions
+        # ==============================================
+        # FRONT-MAN AGENT - Handles all user interactions
+        # ==============================================
         {
             "name": "solana_agent",
             
             "function": {
                 "description": """
-I am a Solana blockchain agent. I can query wallet balances and network data.
-Provide a wallet address via the private sly_data channel, and I will fetch the balance.
+I am a privacy-preserving Solana assistant. I can:
+- Query SOL and token balances
+- View transaction history  
+- Discover NFTs in your wallet
+
+Your wallet address is kept PRIVATE via the sly_data channel - I perform queries without ever seeing your address in my context.
 """,
                 # Schema for private wallet input
                 "sly_data_schema": {
@@ -35,7 +43,11 @@ Provide a wallet address via the private sly_data channel, and I will fetch the 
                     "properties": {
                         "wallet_pubkey": {
                             "type": "string",
-                            "description": "The Solana wallet public key (base58 encoded) - kept private"
+                            "description": "Solana wallet public key (base58) - kept private from AI"
+                        },
+                        "rpc_url": {
+                            "type": "string", 
+                            "description": "Optional: Custom RPC endpoint (default: mainnet)"
                         }
                     },
                     "required": ["wallet_pubkey"]
@@ -43,40 +55,111 @@ Provide a wallet address via the private sly_data channel, and I will fetch the 
             },
             
             "instructions": """
-You are a helpful Solana blockchain assistant. 
-The wallet address has ALREADY been provided privately via sly_data - you have it.
-When the user asks about balance, immediately use the balance_tool - don't ask for the wallet address.
-The balance_tool will automatically read the wallet from sly_data.
-Never expose or mention the wallet address in your response - keep it private.
-Always respond with clear, formatted information about the wallet balance.
+You are a helpful, privacy-focused Solana blockchain assistant.
+
+IMPORTANT - PRIVACY RULES:
+1. The wallet address is ALREADY provided via sly_data - you have access to it
+2. NEVER ask the user for their wallet address
+3. NEVER expose or mention the wallet address in your responses
+4. Simply use the appropriate tool to fulfill the user's request
+
+TOOL USAGE:
+- For SOL balance: use balance_tool
+- For token holdings: use token_tool  
+- For transaction history: use transaction_tool
+- For NFT discovery: use nft_tool
+
+Always respond with clear, well-formatted information. Use markdown for readability.
 """,
             
-            # Allow balance results to flow upstream
+            # Allow results to flow upstream privately
             "allow": {
                 "to_upstream": {
-                    "sly_data": ["balance_result"]
+                    "sly_data": ["balance_result", "tokens_result", "tx_result", "nft_result"]
                 }
             },
             
-            "tools": ["balance_tool"]
+            "tools": ["balance_tool", "token_tool", "transaction_tool", "nft_tool"]
         },
         
-        # CodedTool for fetching Solana balance
+        # ==============================================
+        # CODED TOOLS - Blockchain query implementations
+        # ==============================================
+        
+        # SOL Balance Tool
         {
             "name": "balance_tool",
             "function": {
-                "description": "Fetches the SOL balance for a wallet from the Solana network",
+                "description": "Fetches the SOL balance for the wallet",
                 "parameters": {
                     "type": "object",
                     "properties": {
                         "rpc_url": {
                             "type": "string",
-                            "description": "Solana RPC endpoint URL (default: devnet)"
+                            "description": "Solana RPC endpoint (default: mainnet)"
                         }
                     }
                 }
             },
             "class": "solana.balance.GetBalance"
+        },
+        
+        # SPL Token Balances Tool
+        {
+            "name": "token_tool",
+            "function": {
+                "description": "Fetches all SPL token balances for the wallet",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "rpc_url": {
+                            "type": "string",
+                            "description": "Solana RPC endpoint (default: mainnet)"
+                        }
+                    }
+                }
+            },
+            "class": "solana.tokens.GetTokenBalances"
+        },
+        
+        # Transaction History Tool
+        {
+            "name": "transaction_tool",
+            "function": {
+                "description": "Fetches recent transaction history for the wallet",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "limit": {
+                            "type": "integer",
+                            "description": "Number of transactions to fetch (max 10, default 5)"
+                        },
+                        "rpc_url": {
+                            "type": "string",
+                            "description": "Solana RPC endpoint (default: mainnet)"
+                        }
+                    }
+                }
+            },
+            "class": "solana.transactions.GetTransactions"
+        },
+        
+        # NFT Discovery Tool
+        {
+            "name": "nft_tool",
+            "function": {
+                "description": "Discovers NFTs owned by the wallet",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "rpc_url": {
+                            "type": "string",
+                            "description": "Solana RPC endpoint (default: mainnet)"
+                        }
+                    }
+                }
+            },
+            "class": "solana.nfts.GetNFTs"
         }
     ]
 }

@@ -1,6 +1,6 @@
 # 🧠 NeuroSanSolana
 
-> **A Solana-powered AI agent network** - Fork of [neuro-san](https://github.com/cognizant-ai-lab/neuro-san) with native Solana blockchain integration.
+> **Privacy-First AI Agents for Solana** — The first AI agent framework that keeps your wallet private from the AI itself.
 
 [![Solana Privacy Hack](https://img.shields.io/badge/Solana-Privacy_Hack-14F195?style=for-the-badge&logo=solana&logoColor=white)](https://solana.com/privacyhack)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
@@ -8,14 +8,46 @@
 
 ---
 
-## 🚀 What is NeuroSanSolana?
+## 🔒 The Privacy Problem
 
-NeuroSanSolana combines the power of **neuro-san's multi-agent AI networks** with **Solana blockchain** capabilities. Build AI agents that can:
+Traditional AI blockchain assistants require your wallet address in the prompt — meaning:
+- ❌ AI providers see (and log) your addresses
+- ❌ Your holdings are exposed in prompt history  
+- ❌ Fine-tuning could leak your data
 
-- 💰 Query wallet balances (SOL & tokens)
-- 🔒 Keep wallet addresses private via `sly_data`
-- 🤖 Use Claude, GPT-4, or any LLM provider
-- 🌐 Connect to any Solana RPC (devnet, mainnet, custom)
+**NeuroSanSolana fixes this** with a zero-knowledge architecture.
+
+---
+
+## ✨ How It Works
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  User Request: "What are my token balances?"                │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+    ┌────────────────────┴────────────────────┐
+    │           sly_data (private)            │
+    │  {"wallet_pubkey": "YourWallet..."}     │
+    └────────────────────┬────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────────┐
+│  🧠 AI Agent (Claude/GPT-4)                                 │
+│  • Receives request: "What are my token balances?"          │
+│  • NEVER sees the wallet address                            │
+│  • Delegates to tools that read sly_data privately          │
+└─────────────────────────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────────┐
+│  ⚡ Solana RPC                                               │
+│  • Tools query blockchain with private wallet               │
+│  • Results flow back through agent                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+Your wallet address travels through the **sly_data channel**, completely bypassing the AI's context window.
 
 ---
 
@@ -24,10 +56,10 @@ NeuroSanSolana combines the power of **neuro-san's multi-agent AI networks** wit
 ### 1. Clone & Setup
 
 ```bash
-git clone https://github.com/NeuroSolanaAgents/NeuroSanSolana.git
-cd NeuroSanSolana
+git clone https://github.com/NeuroSolanaAgents/neurosan.git
+cd neurosan
 
-# Create virtual environment (requires Python 3.10+)
+# Create virtual environment
 python3.11 -m venv venv
 source venv/bin/activate
 
@@ -43,44 +75,76 @@ export PYTHONPATH=$(pwd)
 export AGENT_TOOL_PATH=$(pwd)/coded_tools
 ```
 
-### 3. Run the Solana Agent
+### 3. Run Your First Query
 
 ```bash
+# Query SOL balance (wallet hidden from AI!)
 python -m neuro_san.client.agent_cli \
   --agent solana_agent \
-  --sly_data '{"wallet_pubkey": "So11111111111111111111111111111111111111112"}' \
-  "What is the balance of this wallet?"
-```
-
-**Output:**
-```
-Balance: 0.0000 SOL (0 lamports)
+  --sly_data '{"wallet_pubkey": "YourWalletAddressHere"}' \
+  "What is my SOL balance?"
 ```
 
 ---
 
-## 🔐 Privacy-First Design
+## 🛠️ Available Tools
 
-NeuroSanSolana uses neuro-san's `sly_data` channel to keep wallet addresses **out of the LLM chat stream**:
+| Tool | Description | Privacy |
+|------|-------------|---------|
+| **GetBalance** | Query SOL balance | ✅ Wallet via sly_data |
+| **GetTokenBalances** | All SPL token holdings | ✅ Wallet via sly_data |
+| **GetTransactions** | Recent transaction history | ✅ Wallet via sly_data |
+| **GetNFTs** | Discover owned NFTs | ✅ Wallet via sly_data |
+
+All tools automatically read `wallet_pubkey` from the private sly_data channel.
+
+---
+
+## 📝 Example Queries
 
 ```bash
-# Wallet address stays private - never exposed to the AI model's context
---sly_data '{"wallet_pubkey": "YourWalletAddress..."}'
-```
+# Check token holdings
+--sly_data '{"wallet_pubkey": "..."}' "Show me my token balances"
 
-This is perfect for building **privacy-preserving blockchain AI assistants**.
+# View recent transactions  
+--sly_data '{"wallet_pubkey": "..."}' "What are my last 5 transactions?"
+
+# Find NFTs
+--sly_data '{"wallet_pubkey": "..."}' "What NFTs do I own?"
+```
 
 ---
 
-## 🛠️ Agent Configuration
+## 🏗️ Project Structure
 
-The Solana agent is defined in `neuro_san/registries/solana_agent.hocon`:
+```
+NeuroSanSolana/
+├── coded_tools/
+│   └── solana/
+│       ├── __init__.py
+│       ├── balance.py          # GetBalance
+│       ├── tokens.py           # GetTokenBalances
+│       ├── transactions.py     # GetTransactions
+│       └── nfts.py             # GetNFTs
+├── neuro_san/
+│   └── registries/
+│       └── solana_agent.hocon  # Agent config
+├── docs/
+│   └── landing/
+│       └── index.html          # Landing page
+└── README.md
+```
+
+---
+
+## 🔧 Configuration
+
+The agent is defined in `neuro_san/registries/solana_agent.hocon`:
 
 ```hocon
 {
     "llm_config": {
-        "model_name": "claude-3-5-sonnet-20241022",
-        "api_type": "anthropic"
+        "model_name": "claude-3-haiku",
     },
     "tools": [
         {
@@ -90,16 +154,12 @@ The Solana agent is defined in `neuro_san/registries/solana_agent.hocon`:
                     "properties": {
                         "wallet_pubkey": {
                             "type": "string",
-                            "description": "Solana wallet public key - kept private"
+                            "description": "Solana wallet - kept private"
                         }
                     }
                 }
             },
-            "tools": ["balance_tool"]
-        },
-        {
-            "name": "balance_tool",
-            "class": "solana.balance.GetBalance"
+            "tools": ["balance_tool", "token_tool", "transaction_tool", "nft_tool"]
         }
     ]
 }
@@ -107,18 +167,15 @@ The Solana agent is defined in `neuro_san/registries/solana_agent.hocon`:
 
 ---
 
-## 📁 Project Structure
+## 🌐 RPC Configuration
 
-```
-NeuroSanSolana/
-├── coded_tools/
-│   └── solana/
-│       ├── __init__.py
-│       └── balance.py          # GetBalance CodedTool
-├── neuro_san/
-│   └── registries/
-│       └── solana_agent.hocon  # Agent config
-└── README.md
+By default, tools connect to **mainnet**. Override with:
+
+```bash
+--sly_data '{
+  "wallet_pubkey": "...",
+  "rpc_url": "https://api.devnet.solana.com"
+}'
 ```
 
 ---
@@ -129,22 +186,30 @@ This project is a submission for the [**Solana Privacy Hack**](https://solana.co
 
 **Theme:** Privacy-preserving AI agents for Web3
 
+**Key Innovation:** Using neuro-san's `sly_data` architecture to create the first AI blockchain assistant that maintains true privacy from the AI model itself.
+
 ---
 
-## ⭐ Support
+## 🤝 Contributing
 
-If you find this useful, please **star this repo!** ⭐
-
-```
-gh repo star NeuroSolanaAgents/NeuroSanSolana
-```
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
 ## 📜 License
 
-Apache 2.0 - See [LICENSE.txt](LICENSE.txt)
+Apache 2.0 — See [LICENSE.txt](LICENSE.txt)
 
 ---
 
-**Built with 💜 by [NeuroSolanaAgents](https://github.com/NeuroSolanaAgents)**
+## ⭐ Star This Repo
+
+If you find this useful, please star the repo!
+
+```bash
+gh repo star NeuroSolanaAgents/neurosan
+```
+
+---
+
+**Built with 💜 for the Solana Privacy Hack by [NeuroSolanaAgents](https://github.com/NeuroSolanaAgents)**

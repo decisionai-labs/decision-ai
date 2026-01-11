@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroSanSolana - Privacy-Preserving AI Agents for Solana</title>
+    <meta name="description" content="The first AI agent framework that keeps your wallet private from the AI itself. Build privacy-preserving blockchain assistants with NeuroSanSolana.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --solana-green: #14F195;
+            --solana-purple: #9945FF;
+            --solana-gradient: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(20, 20, 30, 0.8);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-subtle: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(153, 69, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(153, 69, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-1 {
+            top: -200px;
+            left: -200px;
+            background: var(--solana-purple);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .glow-2 {
+            bottom: -200px;
+            right: -200px;
+            background: var(--solana-green);
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--solana-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--solana-gradient);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(153, 69, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 120px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(153, 69, 255, 0.15);
+            border: 1px solid rgba(153, 69, 255, 0.3);
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--solana-purple);
+            margin-bottom: 32px;
+        }
+
+        .badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--solana-green);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .gradient-text {
+            background: var(--solana-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Demo Terminal */
+        .terminal {
+            background: rgba(10, 10, 20, 0.9);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            margin: 80px auto 0;
+            max-width: 800px;
+            overflow: hidden;
+            box-shadow: 
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #ff5f57; }
+        .terminal-dot.yellow { background: #febc2e; }
+        .terminal-dot.green { background: #28c840; }
+
+        .terminal-title {
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal-body {
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .terminal-line {
+            opacity: 0;
+            animation: typeIn 0.5s ease forwards;
+        }
+
+        .terminal-line:nth-child(1) { animation-delay: 0.5s; }
+        .terminal-line:nth-child(2) { animation-delay: 1s; }
+        .terminal-line:nth-child(3) { animation-delay: 1.5s; }
+        .terminal-line:nth-child(4) { animation-delay: 2s; }
+        .terminal-line:nth-child(5) { animation-delay: 2.5s; }
+        .terminal-line:nth-child(6) { animation-delay: 3s; }
+        .terminal-line:nth-child(7) { animation-delay: 3.5s; }
+
+        @keyframes typeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .prompt { color: var(--solana-green); }
+        .command { color: var(--text-primary); }
+        .flag { color: var(--solana-purple); }
+        .string { color: #f9a825; }
+        .comment { color: #546e7a; }
+        .output { color: var(--text-secondary); }
+        .highlight { color: var(--solana-green); font-weight: 600; }
+
+        /* Features Section */
+        .features {
+            padding: 120px 0;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--solana-purple);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 64px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(153, 69, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--solana-gradient);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Comparison Section */
+        .comparison {
+            padding: 120px 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 32px;
+            backdrop-filter: blur(10px);
+        }
+
+        .comparison-card.bad {
+            border-color: rgba(255, 95, 87, 0.3);
+        }
+
+        .comparison-card.good {
+            border-color: rgba(20, 241, 149, 0.3);
+        }
+
+        .comparison-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .comparison-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .comparison-card.bad .comparison-icon {
+            background: rgba(255, 95, 87, 0.2);
+        }
+
+        .comparison-card.good .comparison-icon {
+            background: rgba(20, 241, 149, 0.2);
+        }
+
+        .comparison-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .comparison-list li:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-list li::before {
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .comparison-card.bad .comparison-list li::before {
+            content: '❌';
+        }
+
+        .comparison-card.good .comparison-list li::before {
+            content: '✅';
+        }
+
+        /* Tools Section */
+        .tools {
+            padding: 120px 0;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            border-color: var(--solana-green);
+            transform: scale(1.02);
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .tool-card h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tool-card p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: var(--solana-gradient);
+            border-radius: 24px;
+            padding: 64px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--bg-dark);
+            border-radius: 22px;
+            z-index: 0;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .cta p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-text a {
+            color: var(--solana-green);
+            text-decoration: none;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 60px 0 80px;
+            }
+
+            .terminal {
+                margin: 60px auto 0;
+            }
+
+            .terminal-body {
+                font-size: 0.75rem;
+                padding: 16px;
+                overflow-x: auto;
+            }
+
+            .features, .comparison, .tools, .cta {
+                padding: 80px 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cta-box {
+                padding: 48px 24px;
+            }
+
+            .cta h2 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+
+    <!-- Navigation -->
+    <nav class="container">
+        <div class="logo">
+            <div class="logo-icon">🧠</div>
+            <span>NeuroSanSolana</span>
+        </div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#tools">Tools</a>
+            <a href="https://github.com/NeuroSolanaAgents/neurosan">Docs</a>
+        </div>
+        <a href="https://github.com/NeuroSolanaAgents/neurosan" class="btn btn-secondary">
+            ⭐ Star on GitHub
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero container">
+        <div class="badge">
+            🏆 Solana Privacy Hack Submission
+        </div>
+        <h1>
+            AI Agents That<br>
+            <span class="gradient-text">Can't See Your Wallet</span>
+        </h1>
+        <p class="hero-subtitle">
+            The first AI agent framework that keeps your wallet address <strong>private from the AI itself</strong>. 
+            Build privacy-preserving blockchain assistants with confidence.
+        </p>
+        <div class="hero-buttons">
+            <a href="https://github.com/NeuroSolanaAgents/neurosan" class="btn btn-primary">
+                🚀 Get Started
+            </a>
+            <a href="#demo" class="btn btn-secondary">
+                ▶️ Watch Demo
+            </a>
+        </div>
+
+        <!-- Terminal Demo -->
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot red"></div>
+                <div class="terminal-dot yellow"></div>
+                <div class="terminal-dot green"></div>
+                <span class="terminal-title">neuro-san • solana_agent</span>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line">
+                    <span class="prompt">$</span> <span class="command">python -m neuro_san.client.agent_cli</span> <span class="flag">\</span>
+                </div>
+                <div class="terminal-line">
+                    &nbsp;&nbsp;<span class="flag">--agent</span> solana_agent <span class="flag">\</span>
+                </div>
+                <div class="terminal-line">
+                    &nbsp;&nbsp;<span class="flag">--sly_data</span> <span class="string">'{"wallet_pubkey": "Your...Wallet"}'</span> <span class="flag">\</span>
+                </div>
+                <div class="terminal-line">
+                    &nbsp;&nbsp;<span class="string">"What are my token balances?"</span>
+                </div>
+                <div class="terminal-line"><br></div>
+                <div class="terminal-line">
+                    <span class="comment"># 🔒 Wallet address transmitted via sly_data</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="comment"># ✅ AI never sees your address in its context</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison container" id="privacy">
+        <div class="section-label">The Problem</div>
+        <h2 class="section-title">Traditional AI ≠ Privacy</h2>
+        
+        <div class="comparison-grid">
+            <div class="comparison-card bad">
+                <div class="comparison-header">
+                    <div class="comparison-icon">🤖</div>
+                    <h3>Traditional AI Assistants</h3>
+                </div>
+                <ul class="comparison-list">
+                    <li>Wallet exposed in chat prompts</li>
+                    <li>AI providers log your addresses</li>
+                    <li>Prompt history = privacy leak</li>
+                    <li>Fine-tuning could expose data</li>
+                </ul>
+            </div>
+            <div class="comparison-card good">
+                <div class="comparison-header">
+                    <div class="comparison-icon">🧠</div>
+                    <h3>NeuroSanSolana</h3>
+                </div>
+                <ul class="comparison-list">
+                    <li>Wallet hidden via <code>sly_data</code></li>
+                    <li>AI context never sees address</li>
+                    <li>Zero knowledge architecture</li>
+                    <li>Privacy by design</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features container" id="features">
+        <div class="section-label">Capabilities</div>
+        <h2 class="section-title">Built for Web3 Privacy</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>sly_data Channel</h3>
+                <p>Sensitive data flows through a private channel that bypasses the LLM context entirely. Your wallet address never touches AI memory.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>Any LLM Provider</h3>
+                <p>Works with Claude, GPT-4, Llama, and any OpenAI-compatible endpoint. Switch models without changing your agent logic.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Full Solana Support</h3>
+                <p>Query balances, tokens, transactions, and NFTs. Connect to devnet, mainnet, or any custom RPC endpoint.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧩</div>
+                <h3>Modular Tools</h3>
+                <p>Extend with custom CodedTools. Build DeFi assistants, portfolio trackers, or any blockchain-aware agent.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Multi-Agent Networks</h3>
+                <p>Compose complex agent hierarchies. Frontend agents delegate to specialized tools while maintaining privacy boundaries.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📜</div>
+                <h3>Open Source</h3>
+                <p>Apache 2.0 licensed. Audit the code, contribute improvements, and build with confidence.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools container" id="tools">
+        <div class="section-label">Included Tools</div>
+        <h2 class="section-title">Privacy-Preserving Solana Tools</h2>
+        
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">💰</div>
+                <h4>GetBalance</h4>
+                <p>Query SOL balance without exposing wallet</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">🪙</div>
+                <h4>GetTokenBalances</h4>
+                <p>Fetch all SPL token holdings privately</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">📜</div>
+                <h4>GetTransactions</h4>
+                <p>View transaction history securely</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">🖼️</div>
+                <h4>GetNFTs</h4>
+                <p>Discover NFTs without revealing ownership</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta container">
+        <div class="cta-box">
+            <div class="cta-content">
+                <h2>Ready to Build Private AI Agents?</h2>
+                <p>Get started in minutes with NeuroSanSolana. Clone the repo and run your first privacy-preserving Solana query.</p>
+                <div class="hero-buttons">
+                    <a href="https://github.com/NeuroSolanaAgents/neurosan" class="btn btn-primary">
+                        📦 Clone Repository
+                    </a>
+                    <a href="https://github.com/NeuroSolanaAgents/neurosan/blob/main/README.md" class="btn btn-secondary">
+                        📖 Read the Docs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="container">
+        <div class="footer-links">
+            <a href="https://github.com/NeuroSolanaAgents/neurosan">GitHub</a>
+            <a href="https://github.com/NeuroSolanaAgents/neurosan/issues">Issues</a>
+            <a href="https://solana.com/privacyhack">Privacy Hack</a>
+        </div>
+        <p class="footer-text">
+            Built with 💜 for the <a href="https://solana.com/privacyhack">Solana Privacy Hack</a><br>
+            Fork of <a href="https://github.com/cognizant-ai-lab/neuro-san">neuro-san</a> by Cognizant AI Lab
+        </p>
+    </footer>
+</body>
+</html>
