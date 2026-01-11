@@ -84,6 +84,9 @@
     "assess_failure.hocon": true,
     "chat_mock_llm_echo.hocon": true,
 
+    # Solana blockchain agent for Privacy Hack
+    "solana_agent.hocon": true,
+
     # STOP AND READ: YOU PROBABLY DON'T WANT TO ADD YOUR .hocon FILE HERE.
     #
     # The agent network .hocon files above are examples specific to the neuro-san library.

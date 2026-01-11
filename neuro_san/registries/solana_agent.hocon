@@ -14,10 +14,9 @@
         ]
     },
     
-    # Using Claude 3.5 Sonnet as the LLM
+    # Using Claude 3 Haiku (Anthropic)
     "llm_config": {
-        "model_name": "claude-3-5-sonnet-20241022",
-        "api_type": "anthropic"
+        "model_name": "claude-3-haiku",
     },
     
     "tools": [
@@ -45,10 +44,11 @@ Provide a wallet address via the private sly_data channel, and I will fetch the 
             
             "instructions": """
 You are a helpful Solana blockchain assistant. 
-When asked about wallet balances, use the balance_tool to fetch the data.
-The wallet address is provided privately via sly_data and should never be exposed in chat.
+The wallet address has ALREADY been provided privately via sly_data - you have it.
+When the user asks about balance, immediately use the balance_tool - don't ask for the wallet address.
+The balance_tool will automatically read the wallet from sly_data.
+Never expose or mention the wallet address in your response - keep it private.
 Always respond with clear, formatted information about the wallet balance.
-If an error occurs, explain what went wrong in a helpful way.
 """,
             
             # Allow balance results to flow upstream
