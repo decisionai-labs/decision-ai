@@ -55,10 +55,27 @@ export function Footer() {
                         </Link>
                     </div>
 
-                    {/* Solana badge */}
-                    <div className="flex items-center gap-2 text-sm text-[#9CA3AF]">
-                        <span>Built for</span>
-                        <span className="font-medium text-[#14B8A6]">Solana</span>
+                    {/* Team link */}
+                    <div className="flex items-center gap-4 text-sm">
+                        <span className="text-[#9CA3AF]">From</span>
+                        <Link
+                            href="https://github.com/cognizant-ai-lab"
+                            target="_blank"
+                            className="text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+                        >
+                            cognizant-ai-lab
+                        </Link>
+                        <span className="text-[#E5E7EB]">•</span>
+                        <Link
+                            href="https://twitter.com/decision__ai"
+                            target="_blank"
+                            className="text-[#6B7280] hover:text-[#1A1A1A] transition-colors flex items-center gap-1"
+                        >
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                            @decision__ai
+                        </Link>
                     </div>
                 </div>
             </div>
