@@ -188,3 +188,4 @@
 # 2026-01-03 20:12:56 - fix: handle null balance gracefully
 # 2026-01-05 20:21:15 - test: add regression tests for wallet flow
 # 2026-01-08 22:18:21 - fix: resolve edge case in token parsing
+# 2026-01-12 20:01:58 - docs: clarify privacy architecture notes
