@@ -8,12 +8,13 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 export const Card = forwardRef<HTMLDivElement, CardProps>(
     ({ className = '', hover = false, padding = 'md', children, ...props }, ref) => {
         const baseStyles = `
-      bg-white rounded-xl border border-[#E5E7EB]
-      transition-all duration-200 ease-out
+      bg-white rounded-2xl border border-[#E5E7EB]
+      transition-all duration-300 ease-out
+      backdrop-blur-sm
     `;
 
         const hoverStyles = hover
-            ? 'hover:translate-y-[-2px] hover:shadow-md cursor-pointer'
+            ? 'hover:translate-y-[-4px] hover:shadow-xl hover:border-[#14B8A6]/20 cursor-pointer'
             : '';
 
         const paddings = {

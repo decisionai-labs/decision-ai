@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
 import { Card } from './ui/Card';
 
 const steps = [
@@ -34,13 +37,36 @@ const steps = [
 ];
 
 export function HowItWorks() {
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <section id="how-it-works" className="py-24 px-6 bg-white">
-            <div className="max-w-6xl mx-auto">
+        <section id="how-it-works" ref={sectionRef} className="py-24 px-6 bg-white relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute inset-0 bg-gradient-mesh opacity-50" />
+
+            <div className="max-w-6xl mx-auto relative z-10">
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A1A1A] mb-4">
-                        How It Works
+                        How It <span className="text-gradient">Works</span>
                     </h2>
                     <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
                         Three simple steps to interact with Solana while keeping your wallet private.
@@ -48,22 +74,29 @@ export function HowItWorks() {
                 </div>
 
                 {/* Steps */}
-                <div className="grid md:grid-cols-3 gap-8">
-                    {steps.map((step, index) => (
-                        <div key={step.number} className="relative">
-                            {/* Connector line */}
-                            {index < steps.length - 1 && (
-                                <div className="hidden md:block absolute top-12 left-[calc(50%+60px)] w-[calc(100%-120px)] h-px bg-[#E5E7EB]" />
-                            )}
+                <div className="grid md:grid-cols-3 gap-8 relative">
+                    {/* Animated connecting line */}
+                    <div className={`hidden md:block absolute top-16 left-[16.67%] right-[16.67%] h-0.5 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                        <div className={`h-full bg-gradient-to-r from-[#14B8A6] via-[#0D9488] to-[#14B8A6] transition-transform duration-1000 origin-left ${isVisible ? 'scale-x-100' : 'scale-x-0'}`}
+                            style={{ transitionDelay: '600ms' }}
+                        />
+                    </div>
 
-                            <Card hover className="text-center h-full">
-                                {/* Number badge */}
-                                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#FAFAF8] border border-[#E5E7EB] text-[#14B8A6] text-sm font-semibold mb-6">
+                    {steps.map((step, index) => (
+                        <div
+                            key={step.number}
+                            className={`relative transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+                            style={{ transitionDelay: `${200 + index * 150}ms` }}
+                        >
+                            <Card hover className="text-center h-full card-shine relative z-10">
+                                {/* Number badge with gradient */}
+                                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-[#14B8A6] to-[#0D9488] text-white text-lg font-bold mb-6 shadow-lg glow-teal animate-float-slow"
+                                    style={{ animationDelay: `${index * 200}ms` }}>
                                     {step.number}
                                 </div>
 
                                 {/* Icon */}
-                                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#CCFBF1] text-[#0D9488] mb-4">
+                                <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-[#CCFBF1] to-[#F0FDFA] text-[#0D9488] mb-4 transition-transform group-hover:scale-110">
                                     {step.icon}
                                 </div>
 
