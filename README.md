@@ -1,4 +1,4 @@
-# 🧠 NeuroSanSolana
+# NeuroSanSolana
 
 > **Privacy-First AI Agents for Solana** — The first AI agent framework that keeps your wallet private from the AI itself.
 
@@ -8,18 +8,18 @@
 
 ---
 
-## 🔒 The Privacy Problem
+## The Privacy Problem
 
 Traditional AI blockchain assistants require your wallet address in the prompt — meaning:
-- ❌ AI providers see (and log) your addresses
-- ❌ Your holdings are exposed in prompt history  
-- ❌ Fine-tuning could leak your data
+- AI providers see (and log) your addresses
+- Your holdings are exposed in prompt history  
+- Fine-tuning could leak your data
 
 **NeuroSanSolana fixes this** with a zero-knowledge architecture.
 
 ---
 
-## ✨ How It Works
+## How It Works
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -31,17 +31,17 @@ Traditional AI blockchain assistants require your wallet address in the prompt �
     │  {"wallet_pubkey": "YourWallet..."}     │
     └────────────────────┬────────────────────┘
                          │
-                         ▼
+                         |
 ┌─────────────────────────────────────────────────────────────┐
-│  🧠 AI Agent (Claude/GPT-4)                                 │
+│  AI Agent (Claude/GPT-4)                                    │
 │  • Receives request: "What are my token balances?"          │
 │  • NEVER sees the wallet address                            │
 │  • Delegates to tools that read sly_data privately          │
 └─────────────────────────────────────────────────────────────┘
                          │
-                         ▼
+                         |
 ┌─────────────────────────────────────────────────────────────┐
-│  ⚡ Solana RPC                                               │
+│  Solana RPC                                                  │
 │  • Tools query blockchain with private wallet               │
 │  • Results flow back through agent                          │
 └─────────────────────────────────────────────────────────────┘
@@ -51,7 +51,7 @@ Your wallet address travels through the **sly_data channel**, completely bypassi
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ### 1. Clone & Setup
 
@@ -87,20 +87,20 @@ python -m neuro_san.client.agent_cli \
 
 ---
 
-## 🛠️ Available Tools
+## Available Tools
 
 | Tool | Description | Privacy |
 |------|-------------|---------|
-| **GetBalance** | Query SOL balance | ✅ Wallet via sly_data |
-| **GetTokenBalances** | All SPL token holdings | ✅ Wallet via sly_data |
-| **GetTransactions** | Recent transaction history | ✅ Wallet via sly_data |
-| **GetNFTs** | Discover owned NFTs | ✅ Wallet via sly_data |
+| **GetBalance** | Query SOL balance | Wallet via sly_data |
+| **GetTokenBalances** | All SPL token holdings | Wallet via sly_data |
+| **GetTransactions** | Recent transaction history | Wallet via sly_data |
+| **GetNFTs** | Discover owned NFTs | Wallet via sly_data |
 
 All tools automatically read `wallet_pubkey` from the private sly_data channel.
 
 ---
 
-## 📝 Example Queries
+## Example Queries
 
 ```bash
 # Check token holdings
@@ -115,7 +115,7 @@ All tools automatically read `wallet_pubkey` from the private sly_data channel.
 
 ---
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 NeuroSanSolana/
@@ -137,7 +137,7 @@ NeuroSanSolana/
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 The agent is defined in `neuro_san/registries/solana_agent.hocon`:
 
@@ -167,7 +167,7 @@ The agent is defined in `neuro_san/registries/solana_agent.hocon`:
 
 ---
 
-## 🌐 RPC Configuration
+## RPC Configuration
 
 By default, tools connect to **mainnet**. Override with:
 
@@ -180,7 +180,7 @@ By default, tools connect to **mainnet**. Override with:
 
 ---
 
-## 🏆 Solana Privacy Hack
+## Solana Privacy Hack
 
 This project is a submission for the [**Solana Privacy Hack**](https://solana.com/privacyhack) hackathon.
 
@@ -190,19 +190,19 @@ This project is a submission for the [**Solana Privacy Hack**](https://solana.co
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
-## 📜 License
+## License
 
 Apache 2.0 — See [LICENSE.txt](LICENSE.txt)
 
 ---
 
-## ⭐ Star This Repo
+## Star This Repo
 
 If you find this useful, please star the repo!
 
@@ -212,4 +212,4 @@ gh repo star NeuroSolanaAgents/neurosan
 
 ---
 
-**Built with 💜 for the Solana Privacy Hack by [NeuroSolanaAgents](https://github.com/NeuroSolanaAgents)**
+**Built for the Solana Privacy Hack by [NeuroSolanaAgents](https://github.com/NeuroSolanaAgents)**

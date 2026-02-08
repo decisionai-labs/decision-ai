@@ -64,7 +64,7 @@ class GetTransactions(CodedTool):
                     time_str = "Unknown time"
                 
                 # Status
-                status = "✅ Success" if err is None else "❌ Failed"
+                status = "Success" if err is None else "Failed"
                 
                 # Shortened signature for display
                 short_sig = f"{signature[:8]}...{signature[-8:]}"
@@ -132,7 +132,7 @@ class GetTransactionDetails(CodedTool):
             
             # Check if successful
             meta = tx.transaction.meta
-            status = "✅ Success" if meta and meta.err is None else "❌ Failed"
+            status = "Success" if meta and meta.err is None else "Failed"
             
             # Get fee
             fee = meta.fee if meta else 0

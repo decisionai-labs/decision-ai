@@ -70,7 +70,7 @@ class RegistryChangeHandler(FileSystemEventHandler):
             return
         with self.lock:
             self.event_counters[event_name] += 1
-        self.logger.info("🔔 File %s: %s", event_name, src_path)
+        self.logger.info("File %s: %s", event_name, src_path)
 
     def reset_event_counters(self) -> Tuple[int, int, int]:
         """

@@ -44,4 +44,4 @@ Feel free to open an issue for any questions about contributing.
 
 ---
 
-Thank you for contributing! 🎉
+Thank you for contributing!

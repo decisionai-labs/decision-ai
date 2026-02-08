@@ -459,11 +459,14 @@
         }
 
         .comparison-card.bad .comparison-list li::before {
-            content: '❌';
+            content: '—';
+            color: #ef4444;
         }
 
         .comparison-card.good .comparison-list li::before {
-            content: '✅';
+            content: '+';
+            color: var(--solana-green);
+            font-weight: 700;
         }
 
         /* Tools Section */
@@ -633,7 +636,7 @@
     <!-- Navigation -->
     <nav class="container">
         <div class="logo">
-            <div class="logo-icon">🧠</div>
+            <div class="logo-icon" style="font-family:monospace;font-weight:700;color:var(--solana-green)">N</div>
             <span>NeuroSanSolana</span>
         </div>
         <div class="nav-links">
@@ -642,14 +645,14 @@
             <a href="https://github.com/NeuroSolanaAgents/neurosan">Docs</a>
         </div>
         <a href="https://github.com/NeuroSolanaAgents/neurosan" class="btn btn-secondary">
-            ⭐ Star on GitHub
+            Star on GitHub
         </a>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero container">
         <div class="badge">
-            🏆 Solana Privacy Hack Submission
+            Solana Privacy Hack Submission
         </div>
         <h1>
             AI Agents That<br>
@@ -661,10 +664,10 @@
         </p>
         <div class="hero-buttons">
             <a href="https://github.com/NeuroSolanaAgents/neurosan" class="btn btn-primary">
-                🚀 Get Started
+                Get Started
             </a>
             <a href="#demo" class="btn btn-secondary">
-                ▶️ Watch Demo
+                Watch Demo
             </a>
         </div>
 
@@ -691,10 +694,10 @@
                 </div>
                 <div class="terminal-line"><br></div>
                 <div class="terminal-line">
-                    <span class="comment"># 🔒 Wallet address transmitted via sly_data</span>
+                    <span class="comment"># Wallet address transmitted via sly_data</span>
                 </div>
                 <div class="terminal-line">
-                    <span class="comment"># ✅ AI never sees your address in its context</span>
+                    <span class="comment"># AI never sees your address in its context</span>
                 </div>
             </div>
         </div>
@@ -708,7 +711,7 @@
         <div class="comparison-grid">
             <div class="comparison-card bad">
                 <div class="comparison-header">
-                    <div class="comparison-icon">🤖</div>
+                    <div class="comparison-icon" style="font-family:monospace;font-size:1.5rem">AI</div>
                     <h3>Traditional AI Assistants</h3>
                 </div>
                 <ul class="comparison-list">
@@ -720,7 +723,7 @@
             </div>
             <div class="comparison-card good">
                 <div class="comparison-header">
-                    <div class="comparison-icon">🧠</div>
+                    <div class="comparison-icon" style="font-family:monospace;font-weight:700;color:var(--solana-green)">NS</div>
                     <h3>NeuroSanSolana</h3>
                 </div>
                 <ul class="comparison-list">
@@ -740,32 +743,32 @@
         
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">🔒</div>
+                <div class="feature-icon" style="font-family:monospace;color:var(--solana-green)">[ ]</div>
                 <h3>sly_data Channel</h3>
                 <p>Sensitive data flows through a private channel that bypasses the LLM context entirely. Your wallet address never touches AI memory.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🤖</div>
+                <div class="feature-icon" style="font-family:monospace;color:var(--solana-purple)">LLM</div>
                 <h3>Any LLM Provider</h3>
                 <p>Works with Claude, GPT-4, Llama, and any OpenAI-compatible endpoint. Switch models without changing your agent logic.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">⚡</div>
+                <div class="feature-icon" style="font-family:monospace;color:var(--solana-green)">SOL</div>
                 <h3>Full Solana Support</h3>
                 <p>Query balances, tokens, transactions, and NFTs. Connect to devnet, mainnet, or any custom RPC endpoint.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🧩</div>
+                <div class="feature-icon" style="font-family:monospace;color:#60a5fa">>_</div>
                 <h3>Modular Tools</h3>
                 <p>Extend with custom CodedTools. Build DeFi assistants, portfolio trackers, or any blockchain-aware agent.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🌐</div>
+                <div class="feature-icon" style="font-family:monospace;color:#a78bfa">NET</div>
                 <h3>Multi-Agent Networks</h3>
                 <p>Compose complex agent hierarchies. Frontend agents delegate to specialized tools while maintaining privacy boundaries.</p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">📜</div>
+                <div class="feature-icon" style="font-family:monospace;color:#34d399">OSS</div>
                 <h3>Open Source</h3>
                 <p>Apache 2.0 licensed. Audit the code, contribute improvements, and build with confidence.</p>
             </div>
@@ -779,22 +782,22 @@
         
         <div class="tools-grid">
             <div class="tool-card">
-                <div class="tool-icon">💰</div>
+                <div class="tool-icon" style="font-family:monospace;color:var(--solana-green)">SOL</div>
                 <h4>GetBalance</h4>
                 <p>Query SOL balance without exposing wallet</p>
             </div>
             <div class="tool-card">
-                <div class="tool-icon">🪙</div>
+                <div class="tool-icon" style="font-family:monospace;color:#60a5fa">SPL</div>
                 <h4>GetTokenBalances</h4>
                 <p>Fetch all SPL token holdings privately</p>
             </div>
             <div class="tool-card">
-                <div class="tool-icon">📜</div>
+                <div class="tool-icon" style="font-family:monospace;color:#a78bfa">TXN</div>
                 <h4>GetTransactions</h4>
                 <p>View transaction history securely</p>
             </div>
             <div class="tool-card">
-                <div class="tool-icon">🖼️</div>
+                <div class="tool-icon" style="font-family:monospace;color:#f472b6">NFT</div>
                 <h4>GetNFTs</h4>
                 <p>Discover NFTs without revealing ownership</p>
             </div>
@@ -809,10 +812,10 @@
                 <p>Get started in minutes with NeuroSanSolana. Clone the repo and run your first privacy-preserving Solana query.</p>
                 <div class="hero-buttons">
                     <a href="https://github.com/NeuroSolanaAgents/neurosan" class="btn btn-primary">
-                        📦 Clone Repository
+                        Clone Repository
                     </a>
                     <a href="https://github.com/NeuroSolanaAgents/neurosan/blob/main/README.md" class="btn btn-secondary">
-                        📖 Read the Docs
+                        Read the Docs
                     </a>
                 </div>
             </div>
@@ -827,7 +830,7 @@
             <a href="https://solana.com/privacyhack">Privacy Hack</a>
         </div>
         <p class="footer-text">
-            Built with 💜 for the <a href="https://solana.com/privacyhack">Solana Privacy Hack</a><br>
+            Built for the <a href="https://solana.com/privacyhack">Solana Privacy Hack</a><br>
             Fork of <a href="https://github.com/cognizant-ai-lab/neuro-san">neuro-san</a> by Cognizant AI Lab
         </p>
     </footer>
