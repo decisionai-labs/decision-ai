@@ -57,7 +57,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-See the [documentation](https://neurosan.vercel.app/docs) for setup and usage instructions.
+See the [README](https://github.com/NeuroSolanaAgents/neurosan) for more details.
 
 ---
 
