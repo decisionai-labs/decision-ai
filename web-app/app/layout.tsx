@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
+  variable: "--font-jetbrains",
   subsets: ["latin"],
   display: "swap",
 });
@@ -70,10 +70,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable}`}>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
-        style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
+        className={`${inter.className} antialiased`}
       >
         {/* Scroll progress indicator */}
         <ScrollProgress />

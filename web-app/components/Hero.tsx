@@ -14,12 +14,7 @@ const Spline = dynamic(() => import('@splinetool/react-spline'), {
 
 function SplineLoader() {
     return (
-        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#14B8A6]/10 via-[#FAFAF8] to-[#14B8A6]/5">
-            <div className="flex flex-col items-center gap-4">
-                <div className="w-12 h-12 border-4 border-[#14B8A6]/30 border-t-[#14B8A6] rounded-full animate-spin" />
-                <span className="text-sm text-[#6B7280]">Loading 3D scene...</span>
-            </div>
-        </div>
+        <div className="w-full h-full bg-[#FFFEF9]" />
     );
 }
 

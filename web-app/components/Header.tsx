@@ -35,10 +35,10 @@ export function Header() {
                 {/* Nav Links - Desktop */}
                 <div className="hidden md:flex items-center gap-8">
                     {[
-                        { href: '#features', label: 'Features' },
-                        { href: '#how-it-works', label: 'How It Works' },
-                        { href: '/demo', label: 'Tools' },
-                        { href: 'https://github.com/NeuroSolanaAgents/neurosan', label: 'Docs', external: true },
+                        { href: '#features', label: 'Features', external: false },
+                        { href: '#how-it-works', label: 'How It Works', external: false },
+                        { href: '/demo', label: 'Tools', external: false },
+                        { href: '/docs', label: 'Docs', external: false },
                     ].map((link) => (
                         <Link
                             key={link.href}
@@ -92,10 +92,10 @@ export function Header() {
                 <div className="px-6 py-4 border-t border-[#E5E7EB]/50 bg-white/80 backdrop-blur-lg">
                     <div className="flex flex-col gap-4">
                         {[
-                            { href: '#features', label: 'Features' },
-                            { href: '#how-it-works', label: 'How It Works' },
-                            { href: '/demo', label: 'Tools' },
-                            { href: 'https://github.com/NeuroSolanaAgents/neurosan', label: 'Documentation', external: true },
+                            { href: '#features', label: 'Features', external: false },
+                            { href: '#how-it-works', label: 'How It Works', external: false },
+                            { href: '/demo', label: 'Tools', external: false },
+                            { href: '/docs', label: 'Documentation', external: false },
                         ].map((link) => (
                             <Link
                                 key={link.href}
