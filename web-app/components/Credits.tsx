@@ -22,6 +22,18 @@ const team = [
         avatar: <FaBolt />,
         github: 'https://github.com/solana-labs',
     },
+    {
+        name: 'Toly',
+        role: 'Solana Creator',
+        avatar: <FaBolt />,
+        github: 'https://github.com/aeyakovenko',
+    },
+    {
+        name: 'Raj',
+        role: 'Solana Co-Founder',
+        avatar: <FaBolt />,
+        github: 'https://github.com/rajgokal',
+    },
 ];
 
 export function Credits() {

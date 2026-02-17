@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { BackToTop } from "@/components/BackToTop";
+import { WalletProvider } from "@/components/WalletProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -74,13 +75,15 @@ export default function RootLayout({
       <body
         className={`${inter.className} antialiased`}
       >
-        {/* Scroll progress indicator */}
-        <ScrollProgress />
+        <WalletProvider>
+          {/* Scroll progress indicator */}
+          <ScrollProgress />
 
-        {children}
+          {children}
 
-        {/* Back to top button */}
-        <BackToTop />
+          {/* Back to top button */}
+          <BackToTop />
+        </WalletProvider>
       </body>
     </html>
   );

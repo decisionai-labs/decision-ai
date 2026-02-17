@@ -38,7 +38,7 @@ export default function DemoPage() {
                             Try the <span className="text-gradient">Agent</span>
                         </h1>
                         <p className="text-lg text-[#6B7280] max-w-xl mx-auto leading-relaxed">
-                            Connect your wallet and query your Solana data. Your address stays private
+                            Connect your wallet and prove ownership through signature verification. Your address stays private
                             through our{' '}
                             <code className="px-2 py-0.5 bg-[#14B8A6]/10 text-[#0D9488] rounded text-sm font-mono">
                                 sly_data
@@ -62,8 +62,8 @@ export default function DemoPage() {
                                 <h3 className="font-semibold text-[#1A1A1A] text-lg">Privacy Protected</h3>
                             </div>
                             <p className="text-[#6B7280] leading-relaxed">
-                                Your wallet address is stored in sly_data and never exposed to the AI language model.
-                                The AI only sees the data, not the source.
+                                You prove wallet ownership through signature verification. Your address is stored in sly_data
+                                and never exposed to the AI language model.
                             </p>
                         </div>
 

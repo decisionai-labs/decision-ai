@@ -8,6 +8,8 @@ import {
     PublicKey,
     LAMPORTS_PER_SOL
 } from '@solana/web3.js';
+import bs58 from 'bs58';
+import { verifySignature, isSignatureExpired } from '@/lib/signature';
 
 // RPC endpoints - server-side doesn't have CORS issues
 const MAINNET_RPCS = [
@@ -137,10 +139,40 @@ async function getTransactions(wallet: string, useDevnet: boolean): Promise<stri
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { query, wallet, useDevnet = false } = body;
+        const { query, wallet, signature, message, useDevnet = false } = body;
 
         if (!wallet || wallet.length < 32) {
             return NextResponse.json({ error: 'Invalid wallet address' }, { status: 400 });
+        }
+
+        // Verify signature to prove wallet ownership
+        if (!signature || !message) {
+            return NextResponse.json({
+                error: 'Authentication required. Please sign a message to prove wallet ownership.'
+            }, { status: 401 });
+        }
+
+        // Check if signature is expired (5 minute window)
+        if (isSignatureExpired(message)) {
+            return NextResponse.json({
+                error: 'Signature expired. Please reconnect and sign a new message.'
+            }, { status: 401 });
+        }
+
+        // Decode signature from base58
+        let signatureBytes: Uint8Array;
+        try {
+            signatureBytes = bs58.decode(signature);
+        } catch {
+            return NextResponse.json({ error: 'Invalid signature format' }, { status: 400 });
+        }
+
+        // Verify the signature
+        const verification = verifySignature(wallet, signatureBytes, message);
+        if (!verification.isValid) {
+            return NextResponse.json({
+                error: `Signature verification failed: ${verification.error}`
+            }, { status: 403 });
         }
 
         const lower = query.toLowerCase();
