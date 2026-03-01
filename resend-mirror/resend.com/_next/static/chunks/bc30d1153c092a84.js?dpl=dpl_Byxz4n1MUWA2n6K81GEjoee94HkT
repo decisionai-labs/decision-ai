@@ -1,0 +1,412 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,212381,e=>{"use strict";var t=e.i(287022),a=e.i(674008),s=e.i(887652);function i(e,i){let n=(0,s.useMotionValue)(i()),r=()=>n.set(i());return r(),(0,a.useIsomorphicLayoutEffect)(()=>{let a=()=>t.frame.preRender(r,!1,!0),s=e.map(e=>e.on("change",a));return()=>{s.forEach(e=>e()),(0,t.cancelFrame)(r)}}),n}e.s(["useCombineMotionValues",()=>i])},895420,e=>{"use strict";var t=e.i(958866),a=e.i(947414),s=e.i(212381),i=e.i(486427);function n(e,a,n,o){if("function"==typeof e){let t;return i.collectMotionValues.current=[],e(),t=(0,s.useCombineMotionValues)(i.collectMotionValues.current,e),i.collectMotionValues.current=void 0,t}let c="function"==typeof a?a:(0,t.transform)(a,n,o);return Array.isArray(e)?r(e,c):r([e],([e])=>c(e))}function r(e,t){let i=(0,a.useConstant)(()=>[]);return(0,s.useCombineMotionValues)(e,()=>{i.length=0;let a=e.length;for(let t=0;t<a;t++)i[t]=e[t].get();return t(i)})}e.s(["useTransform",()=>n],895420)},447412,e=>{"use strict";var t=e.i(843476);e.i(522016);var a=e.i(271645),s=e.i(945060);e.i(887408);let i=({children:e,className:i})=>{let n="md:grid-cols-3",r=a.Children.toArray(e),o=2===r.length,c=r.every(e=>a.isValidElement(e)&&"props"in e&&"width"in e.props),l=r.reduce((e,t)=>a.isValidElement(t)&&"width"in t.props?e+(Number.parseFloat(String(t.props.width))||1):e+1,0);return o?c&&2!==l?3===l?n="md:grid-cols-3":4===l&&(n="md:grid-cols-4"):n="md:grid-cols-2":c&&(n=l<=3?"md:grid-cols-3":4===l?"md:grid-cols-4":"md:grid-cols-6"),(0,t.jsx)("div",{className:(0,s.cn)("grid w-full grid-cols-1 gap-8 overflow-hidden",n,i),children:a.Children.map(e,e=>{if(a.isValidElement(e)&&"width"in e.props){let t=e.props,i=t.width||1,n=`md:col-span-${i}`;return a.cloneElement(e,{...t,className:(0,s.cn)(t.className,n)})}return e})})},n=({width:e,children:a,className:i})=>(0,t.jsx)("div",{className:(0,s.cn)("p-8 rounded-2xl border-[0.75px] border-slate-5 overflow-hidden",{"md:col-span-2":"2"===e,"md:col-span-1":"1"===e||!e},i),style:{background:"radial-gradient(29.48% 34.97% at 0% 58.67%, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.00) 100%), linear-gradient(180deg, #111 0%, rgba(0, 0, 0, 0.50) 100%)"},children:a}),r=({children:e,className:a})=>(0,t.jsx)("div",{className:(0,s.cn)("relative -ml-8 -mt-8 flex aspect-video h-auto w-[calc(100%+64px)] items-center overflow-hidden md:aspect-auto md:h-80",a),children:e}),o=({children:e,className:a})=>(0,t.jsx)("div",{className:(0,s.cn)("border-slate-5 relative mb-6 mt-1.5 flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg border text-lg md:mt-0 [&>svg]:w-5 [&>svg]:stroke-[1.5px]",a),style:{background:"radial-gradient(141.42% 141.42% at 100% 0%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.00) 66.84%)"},children:e}),c=({children:e,className:a})=>(0,t.jsx)("h3",{className:(0,s.cn)("mb-4 text-xl",a),children:e}),l=({children:e,className:a})=>(0,t.jsx)("p",{className:(0,s.cn)("text-sm text-slate-11 text-pretty max-w-96",a),children:e});e.s(["Description",()=>l,"Icon",()=>o,"Illustration",()=>r,"Item",()=>n,"Root",()=>i,"Title",()=>c])},237968,e=>{"use strict";var t=e.i(843476),a=e.i(846932);e.i(486427);var s=e.i(266943),i=e.i(83411),n=e.i(287022);function r(e){return"number"==typeof e?e:parseFloat(e)}var o=e.i(271645),c=e.i(737806),l=e.i(887652),d=e.i(895420);function x({value:e}){let x=function(e,t={}){let{isStatic:a}=(0,o.useContext)(c.MotionConfigContext),x=()=>(0,i.isMotionValue)(e)?e.get():e;if(a)return(0,d.useTransform)(x);let m=(0,l.useMotionValue)(x());return(0,o.useInsertionEffect)(()=>(function(e,t,a){let o,c=e.get(),l=null,d=c,x="string"==typeof c?c.replace(/[\d.-]/g,""):void 0,m=()=>{l&&(l.stop(),l=null)},p=()=>{m(),l=new s.JSAnimation({keyframes:[r(e.get()),r(d)],velocity:e.getVelocity(),type:"spring",restDelta:.001,restSpeed:.01,...a,onUpdate:o})};if(e.attach((e,t)=>{d=e,o=e=>{var a,s;return t((a=e,(s=x)?a+s:a))},n.frame.postRender(p)},m),(0,i.isMotionValue)(t)){let a=t.on("change",t=>{var a,s;return e.set((a=t,(s=x)?a+s:a))}),s=e.on("destroy",a);return()=>{a(),s()}}return m})(m,e,t),[m,JSON.stringify(t)]),m}(e,{mass:.8,stiffness:75,damping:15}),m=(0,d.useTransform)(x,e=>Math.round(e).toLocaleString());return(0,o.useEffect)(()=>{x.set(e)},[x,e]),(0,t.jsx)(a.motion.span,{children:m})}e.s(["AnimatedNumber",()=>x],237968)},827330,808554,e=>{"use strict";var t=e.i(475254);let a=(0,t.default)("user-plus",[["path",{d:"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2",key:"1yyitq"}],["circle",{cx:"9",cy:"7",r:"4",key:"nufk8"}],["line",{x1:"19",x2:"19",y1:"8",y2:"14",key:"1bvyxn"}],["line",{x1:"22",x2:"16",y1:"11",y2:"11",key:"1shjgl"}]]);e.s(["default",()=>a],827330);let s=(0,t.default)("workflow",[["rect",{width:"8",height:"8",x:"3",y:"3",rx:"2",key:"by2w9f"}],["path",{d:"M7 11v4a2 2 0 0 0 2 2h4",key:"xkn7yn"}],["rect",{width:"8",height:"8",x:"13",y:"13",rx:"2",key:"1cgmvn"}]]);e.s(["default",()=>s],808554)},706399,e=>{"use strict";let t=(0,e.i(475254).default)("toggle-right",[["circle",{cx:"15",cy:"12",r:"3",key:"1afu0r"}],["rect",{width:"20",height:"14",x:"2",y:"5",rx:"7",key:"g7kal2"}]]);e.s(["ToggleRight",()=>t],706399)},376711,e=>{"use strict";var t=e.i(843476),a=e.i(88653);let s=(0,e.i(475254).default)("user-cog",[["path",{d:"M10 15H6a4 4 0 0 0-4 4v2",key:"1nfge6"}],["path",{d:"m14.305 16.53.923-.382",key:"1itpsq"}],["path",{d:"m15.228 13.852-.923-.383",key:"eplpkm"}],["path",{d:"m16.852 12.228-.383-.923",key:"13v3q0"}],["path",{d:"m16.852 17.772-.383.924",key:"1i8mnm"}],["path",{d:"m19.148 12.228.383-.923",key:"1q8j1v"}],["path",{d:"m19.53 18.696-.382-.924",key:"vk1qj3"}],["path",{d:"m20.772 13.852.924-.383",key:"n880s0"}],["path",{d:"m20.772 16.148.924.383",key:"1g6xey"}],["circle",{cx:"18",cy:"15",r:"3",key:"gjjjvw"}],["circle",{cx:"9",cy:"7",r:"4",key:"nufk8"}]]);var i=e.i(117801),n=e.i(827330),n=n,r=e.i(808554),r=r,o=e.i(522016),c=e.i(21584),l=e.i(648926),d=e.i(497800),x=e.i(887408),m=e.i(31587),p=e.i(84078);let u="520784e2-887d-4c25-b53c-4ad46ad38100",h=[{value:"01",icon:n.default,httpMethod:"POST",title:"Create contact",description:"Add a new contact to your audience with the properties you need.",snippets:[{label:"Node.js",value:"nodejs",syntax:"javascript",code:`import { Resend } from 'resend';
+
+const resend = new Resend('re_xxxxxxxxx');
+
+await resend.contacts.create({
+  email: 'steve.wozniak@gmail.com',
+  firstName: 'Steve',
+  lastName: 'Wozniak',
+  unsubscribed: false,
+  properties: {
+    company_name: 'Acme Corp',
+  },
+});`},{label:"Ruby",value:"ruby",syntax:"ruby",code:`require "resend"
+
+Resend.api_key = "re_xxxxxxxxx"
+
+params = {
+  "email": "steve.wozniak@gmail.com",
+  "first_name": "Steve",
+  "last_name": "Wozniak",
+  "unsubscribed": false,
+  "properties": {
+    "company_name": "Acme Corp"
+  }
+}
+
+Resend::Contacts.create(params)`},{label:"PHP",value:"php",syntax:"php",code:`$resend = Resend::client('re_xxxxxxxxx');
+
+$resend->contacts->create([
+  'email' => 'steve.wozniak@gmail.com',
+  'first_name' => 'Steve',
+  'last_name' => 'Wozniak',
+  'unsubscribed' => false,
+  'properties' => [
+    'company_name' => 'Acme Corp'
+  ]
+]);`},{label:"Python",value:"python",syntax:"python",code:`import resend
+
+resend.api_key = "re_xxxxxxxxx"
+
+params: resend.Contacts.CreateParams = {
+  "email": "steve.wozniak@gmail.com",
+  "first_name": "Steve",
+  "last_name": "Wozniak",
+  "unsubscribed": False,
+  "properties": {
+    "company_name": "Acme Corp"
+  }
+}
+
+resend.Contacts.create(params)`},{label:"Go",value:"go",syntax:"go",code:`import 	"github.com/resend/resend-go/v3"
+
+client := resend.NewClient("re_xxxxxxxxx")
+
+params := &resend.CreateContactRequest{
+  Email:        "steve.wozniak@gmail.com",
+  FirstName:    "Steve",
+  LastName:     "Wozniak",
+  Unsubscribed: false,
+  Properties: map[string]interface{}{
+    "company_name": "Acme Corp",
+  },
+}
+
+contact, err := client.Contacts.Create(params)`},{label:"Rust",value:"rust",syntax:"rust",code:`use resend_rs::{types::CreateContactOptions, Resend, Result};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+  let resend = Resend::new("re_xxxxxxxxx");
+
+  let contact = CreateContactOptions::new("steve.wozniak@gmail.com")
+    .with_first_name("Steve")
+    .with_last_name("Wozniak")
+    .with_unsubscribed(false)
+    .with_properties(vec![("company_name".to_string(), "Acme Corp".to_string())]);
+
+  let _contact = resend
+    .contacts
+    .create(contact)
+    .await?;
+
+  Ok(())
+}`},{label:"Java",value:"java",syntax:"java",code:`import com.resend.*;
+import java.util.Map;
+
+public class Main {
+    public static void main(String[] args) {
+        Resend resend = new Resend("re_xxxxxxxxx");
+
+        CreateContactOptions params = CreateContactOptions.builder()
+                .email("steve.wozniak@gmail.com")
+                .firstName("Steve")
+                .lastName("Wozniak")
+                .unsubscribed(false)
+                .properties(Map.of("company_name", "Acme Corp"))
+                .build();
+
+        CreateContactResponseSuccess data = resend.contacts().create(params);
+    }
+}`},{label:".NET",value:"csharp",syntax:"csharp",code:`using Resend;
+
+IResend resend = ResendClient.Create( "re_xxxxxxxxx" );
+
+var resp = await resend.ContactAddAsync(
+    new ContactData()
+    {
+        Email = "steve.wozniak@gmail.com",
+        FirstName = "Steve",
+        LastName = "Wozniak",
+        IsUnsubscribed = false,
+        Properties = new Dictionary<string, object>
+        {
+            { "company_name", "Acme Corp" }
+        }
+    }
+);
+Console.WriteLine( "Contact Id={0}", resp.Content );
+`},{label:"REST",value:"rest",syntax:"bash",code:`curl -X POST 'https://api.resend.com/contacts' \\
+ -H 'Authorization: Bearer re_xxxxxxxxx' \\
+ -H 'Content-Type: application/json' \\
+ -d $'{
+  "email": "steve.wozniak@gmail.com",
+  "first_name": "Steve",
+  "last_name": "Wozniak",
+  "unsubscribed": false,
+  "properties": {
+    "company_name": "Acme Corp"
+  }
+}'`}]},{value:"02",icon:s,httpMethod:"PATCH",title:"Unsubscribe contact",description:"Change a property of an existing contact, such as the subscription status.",snippets:[{label:"Node.js",value:"nodejs",syntax:"javascript",code:`import { Resend } from 'resend';
+
+const resend = new Resend('re_xxxxxxxxx');
+
+// Update by contact id
+await resend.contacts.update({
+  id: '${u}',
+  unsubscribed: true,
+});
+
+// Update by contact email
+await resend.contacts.update({
+  email: 'acme@example.com',
+  unsubscribed: true,
+});`},{label:"Ruby",value:"ruby",syntax:"ruby",code:`require "resend"
+
+Resend.api_key = "re_xxxxxxxxx"
+
+# Update by contact id
+params = {
+  "id": "${u}",
+  "unsubscribed": true,
+}
+
+Resend::Contacts.update(params)
+
+# Update by contact email
+params = {
+  "email": "acme@example.com",
+  "unsubscribed": true,
+}
+
+Resend::Contacts.update(params)
+`},{label:"PHP",value:"php",syntax:"php",code:`$resend = Resend::client('re_xxxxxxxxx');
+
+// Update by contact id
+$resend->contacts->update(
+  id: '${u}',
+  parameters: [
+      'unsubscribed' => true
+  ]
+);
+
+// Update by contact email
+$resend->contacts->update(
+  email: 'acme@example.com',
+  parameters: [
+      'unsubscribed' => true
+  ]
+);`},{label:"Python",value:"python",syntax:"python",code:`import resend
+
+resend.api_key = "re_xxxxxxxxx"
+
+# Update by contact id
+params: resend.Contacts.UpdateParams = {
+  "id": "${u}",
+  "unsubscribed": True,
+}
+
+resend.Contacts.update(params)
+
+# Update by contact email
+params: resend.Contacts.UpdateParams = {
+  "email": "acme@example.com",
+  "unsubscribed": True,
+}
+
+resend.Contacts.update(params)
+`},{label:"Go",value:"go",syntax:"go",code:`import 	"github.com/resend/resend-go/v3"
+
+client := resend.NewClient("re_xxxxxxxxx")
+
+// Update by contact id
+params := &resend.UpdateContactRequest{
+  Id:           "${u}",
+  Unsubscribed: true,
+}
+
+contact, err := client.Contacts.Update(params)
+
+// Update by contact email
+params = &resend.UpdateContactRequest{
+  Email:        "acme@example.com",
+  Unsubscribed: true,
+}
+
+contact, err := client.Contacts.Update(params)
+`},{label:"Rust",value:"rust",syntax:"rust",code:`use resend_rs::{types::ContactChanges, Resend, Result};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+  let resend = Resend::new("re_xxxxxxxxx");
+
+  let changes = ContactChanges::new().with_unsubscribed(true);
+
+  // Update by contact id
+  let _contact = resend
+    .contacts
+    .update_by_id(
+      "${u}",
+      changes.clone(),
+    )
+    .await?;
+
+  // Update by contact email
+  let _contact = resend
+    .contacts
+    .update_by_email(
+      "acme@example.com",
+      changes,
+    )
+    .await?;
+
+  Ok(())
+}`},{label:"Java",value:"java",syntax:"java",code:`import com.resend.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Resend resend = new Resend("re_xxxxxxxxx");
+
+        // Update by contact id
+        UpdateContactOptions params = UpdateContactOptions.builder()
+                .id("${u}")
+                .unsubscribed(true)
+                .build();
+
+        // Update by contact email
+        UpdateContactOptions params = UpdateContactOptions.builder()
+                .email("acme@example.com")
+                .unsubscribed(true)
+                .build();
+
+        UpdateContactResponseSuccess data = resend.contacts().update(params);
+    }
+}`},{label:".NET",value:"csharp",syntax:"csharp",code:`using Resend;
+
+IResend resend = ResendClient.Create( "re_xxxxxxxxx" );
+
+// By Id
+await resend.ContactUpdateAsync(
+    contactId: new Guid( "${u}" ),
+    new ContactData()
+    {
+        FirstName = "Stevie",
+        LastName = "Wozniaks",
+        IsUnsubscribed = true,
+    }
+);
+
+// By Email
+await resend.ContactUpdateByEmailAsync(
+    "acme@example.com",
+    new ContactData()
+    {
+        FirstName = "Stevie",
+        LastName = "Wozniaks",
+        IsUnsubscribed = true,
+    }
+);
+`},{label:"REST",value:"rest",syntax:"bash",code:`# Update by contact id
+curl -X PATCH 'https://api.resend.com/contacts/${u}' \\
+ -H 'Authorization: Bearer re_xxxxxxxxx' \\
+ -H 'Content-Type: application/json' \\
+ -d $'{
+  "unsubscribed": true
+}'
+
+# Update by contact email
+curl -X PATCH 'https://api.resend.com/contacts/acme@example.com' \\
+ -H 'Authorization: Bearer re_xxxxxxxxx' \\
+ -H 'Content-Type: application/json' \\
+ -d $'{
+  "unsubscribed": true
+}'`}]},{value:"03",icon:i.UserMinus,httpMethod:"DEL",title:"Delete contact",description:"Remove a contact from your audience. This action is irreversible.",snippets:[{label:"Node.js",value:"nodejs",syntax:"javascript",code:`import { Resend } from 'resend';
+
+const resend = new Resend('re_xxxxxxxxx');
+
+// Delete by contact id
+await resend.contacts.remove({
+  id: '${u}',
+});
+
+// Delete by contact email
+await resend.contacts.remove({
+  email: 'acme@example.com',
+});`},{label:"Ruby",value:"ruby",syntax:"ruby",code:`require "resend"
+
+Resend.api_key = "re_xxxxxxxxx"
+
+# Delete by contact id
+Resend::Contacts.remove(
+  "${u}"
+)
+
+# Delete by contact email
+Resend::Contacts.remove(
+  "acme@example.com"
+)`},{label:"PHP",value:"php",syntax:"php",code:`$resend = Resend::client('re_xxxxxxxxx');
+
+// Delete by contact id
+$resend->contacts->remove(
+  id: '${u}'
+);
+
+// Delete by contact email
+$resend->contacts->remove(
+  email: 'acme@example.com'
+);`},{label:"Python",value:"python",syntax:"python",code:`import resend
+
+resend.api_key = "re_xxxxxxxxx"
+
+# Delete by contact id
+resend.Contacts.remove(
+  id="${u}"
+)
+
+# Delete by contact email
+resend.Contacts.remove(
+  email="acme@example.com"
+)`},{label:"Go",value:"go",syntax:"go",code:`import 	"github.com/resend/resend-go/v3"
+
+client := resend.NewClient("re_xxxxxxxxx")
+
+// Delete by contact id
+removed, err := client.Contacts.Remove(
+  "${u}"
+)
+
+// Delete by contact email
+removed, err := client.Contacts.Remove(
+  "acme@example.com"
+)`},{label:"Rust",value:"rust",syntax:"rust",code:`use resend_rs::{Resend, Result};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+  let resend = Resend::new("re_xxxxxxxxx");
+
+  // Delete by contact id
+  let _deleted = resend
+    .contacts
+    .delete_by_contact_id(
+      "${u}"
+    )
+    .await?;
+
+  // Delete by contact email
+  let _deleted = resend
+    .contacts
+    .delete_by_email("acme@example.com")
+    .await?;
+
+  Ok(())
+}`},{label:"Java",value:"java",syntax:"java",code:`import com.resend.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Resend resend = new Resend("re_xxxxxxxxx");
+
+        ContactRequestOptions params = ContactRequestOptions.builder()
+                .id("${u}").build();
+
+        RemoveContactResponseSuccess data = resend.contacts().remove(params);
+    }
+}`},{label:".NET",value:"csharp",syntax:"csharp",code:`using Resend;
+
+IResend resend = ResendClient.Create( "re_xxxxxxxxx" );
+
+// By Id
+await resend.ContactDeleteAsync(
+    contactId: new Guid( "${u}" )
+);
+
+// By Email
+await resend.ContactDeleteByEmailAsync(
+    "acme@example.com"
+);`},{label:"REST",value:"rest",syntax:"bash",code:`# Delete by contact id
+curl -X DELETE 'https://api.resend.com/contacts/${u}' \\
+ -H 'Authorization: Bearer re_xxxxxxxxx' \\
+ -H 'Content-Type: application/json'
+
+# Deleted by contact email
+curl -X DELETE 'https://api.resend.com/contacts/acme@example.com' \\
+ -H 'Authorization: Bearer re_xxxxxxxxx' \\
+ -H 'Content-Type: application/json'`}]}];e.s(["AudiencesEndpoints",0,()=>(0,t.jsx)(a.AnimatePresence,{mode:"wait",children:(0,t.jsxs)(p.Section,{className:"relative mt-[calc(10vh-2rem)] flex w-full flex-col items-center justify-center overflow-hidden px-0 py-10",children:[(0,t.jsx)(d.PatternDots,{}),(0,t.jsxs)(l.Root,{align:"center",className:"z-10",children:[(0,t.jsxs)(l.Pill,{align:"center",children:[(0,t.jsx)(r.default,{}),"Code Integration"]}),(0,t.jsxs)(l.Title,{children:["Integrate your ",(0,t.jsx)("br",{className:"hidden sm:block"})," audience with code"]}),(0,t.jsxs)(l.Description,{children:["Add the logic to create, update, unsubscribe,"," ",(0,t.jsx)("br",{className:"hidden sm:block"})," and remove contacts directly into your application."]}),(0,t.jsxs)("div",{className:"mx-auto mt-8 flex flex-col justify-center gap-4 sm:flex-row",children:[(0,t.jsx)(m.PublicButton,{asChild:!0,iconRight:(0,t.jsx)(x.IconChevronRight,{}),size:"3",children:(0,t.jsx)(o.default,{href:"https://resend.com/docs/api-reference/contacts/create-contact",children:"See API Docs"})}),(0,t.jsx)(m.PublicButton,{asChild:!0,appearance:"fade",iconRight:(0,t.jsx)(x.IconChevronRight,{}),size:"3",children:(0,t.jsx)(o.default,{href:"/api-keys",children:"Get API Key"})})]})]}),(0,t.jsx)("div",{className:"md:px-32 w-full pb-24",children:(0,t.jsx)(c.CodeTabs,{tabs:h,orientation:"vertical"})})]})})],376711)},786436,e=>{"use strict";var t=e.i(843476),a=e.i(88653),s=e.i(846932),i=e.i(387652),n=e.i(730267),r=e.i(706399);let o=(0,e.i(475254).default)("user",[["path",{d:"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2",key:"975kel"}],["circle",{cx:"12",cy:"7",r:"4",key:"17ys0d"}]]);var c=e.i(657688),l=e.i(271645),d=e.i(447412),x=e.i(648926),m=e.i(237968),p=e.i(84078);let u=(e,t)=>{try{let a=document.createElementNS("http://www.w3.org/2000/svg","path");a.setAttribute("d",e);let s=a.getTotalLength(),i=0,n=s;for(;i<=n;){let e=(i+n)/2,s=a.getPointAtLength(e);if(.1>Math.abs(s.x-t))return s.y;s.x<t?i=e+1:n=e-1}return a.getPointAtLength(i).y}catch{return}},h=({delay:e=.2,duration:n=1.5,dotSize:r=4,strokeWidth:o=3,greenColor:c="#62FFB3",greenData:d="M0 132C46.4106 132 108.775 75.0172 138.748 65.0603C168.722 55.1034 223.834 56.431 265.894 41.1638C307.954 25.8966 303.119 8.63793 365 2",orangeColor:x="#FF7C62",orangeData:p="M0 165C46.4106 165 141.877 141.8621 171.85 139.0172C201.824 136.1724 224.187 140.9138 266.247 136.5517C308.306 132.1897 303.119 122.8966 365 121"})=>{let h=l.useRef(null),y=(0,i.useInView)(h,{once:!1,amount:.5}),[b,f]=l.useState({x:0}),[g,v]=l.useState(!1),[j,w]=l.useState(!1);return l.useEffect(()=>{y&&!j&&w(!0)},[y,j]),(0,t.jsx)("div",{className:"absolute inset-0 flex cursor-crosshair items-end overflow-visible rounded-xl px-3 pt-6",ref:h,onMouseEnter:()=>v(!0),onMouseLeave:()=>v(!1),onMouseMove:e=>{let t=e.currentTarget.getBoundingClientRect(),a=Math.max(0,Math.min(365,(e.clientX-t.left)/t.width*365)),s=u(d,a),i=u(p,a);f({x:a,greenY:s,orangeY:i})},children:(0,t.jsxs)(a.AnimatePresence,{children:[(0,t.jsxs)(s.motion.svg,{className:"absolute inset-0 z-[1]",fill:"none",height:"240",viewBox:"0 0 421 240",width:"421",initial:{opacity:0},animate:{opacity:+!!j},transition:{duration:.5,ease:"easeOut"},"aria-hidden":!0,children:[(0,t.jsxs)("g",{filter:"url(#filter0_f_664_1362)",children:[(0,t.jsx)("circle",{cx:"202.5",cy:"21.5",fill:"#62FFB3",fillOpacity:"0.3",r:"84.5"}),(0,t.jsx)("circle",{cx:"202.5",cy:"21.5",r:"81.5",stroke:"#FFFFFF",strokeWidth:"6"})]}),(0,t.jsx)("defs",{children:(0,t.jsxs)("filter",{colorInterpolationFilters:"sRGB",filterUnits:"userSpaceOnUse",height:"437",id:"filter0_f_664_1362",width:"437",x:"-16",y:"-197",children:[(0,t.jsx)("feFlood",{floodOpacity:"0",result:"BackgroundImageFix"}),(0,t.jsx)("feBlend",{in:"SourceGraphic",in2:"BackgroundImageFix",mode:"normal",result:"shape"}),(0,t.jsx)("feGaussianBlur",{result:"effect1_foregroundBlur_664_1362",stdDeviation:"67"})]})})]}),(0,t.jsxs)(s.motion.svg,{className:"w-full overflow-visible relative z-[2]",preserveAspectRatio:"xMidYMid meet",viewBox:"-10 -10 385 220",children:[g&&void 0!==b.greenY&&void 0!==b.orangeY&&(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(s.motion.line,{x1:b.x,y1:"0",x2:b.x,y2:"200",stroke:"#ffffff",strokeWidth:"2",strokeDasharray:"6 6",strokeLinecap:"round",initial:{opacity:0},animate:{opacity:.18},exit:{opacity:0},transition:{duration:.2},className:"pointer-events-none","aria-hidden":!0}),(0,t.jsx)(s.motion.circle,{cx:b.x,cy:b.greenY,r:r,fill:c,initial:{opacity:0},animate:{opacity:.6},exit:{opacity:0},"aria-hidden":!0,className:"pointer-events-none rounded-full"}),(0,t.jsx)(s.motion.circle,{cx:b.x,cy:b.orangeY,r:r,fill:x,initial:{opacity:0},animate:{opacity:.6},exit:{opacity:0},"aria-hidden":!0,className:"pointer-events-none rounded-full"}),(0,t.jsx)(s.motion.foreignObject,{x:b.x,y:"-100",width:"200",height:"80","aria-hidden":!0,className:"pointer-events-none",children:(0,t.jsxs)("div",{className:"pointer-events-none w-[165px] rounded-md border border-slate-6 bg-background p-4 pr-4 text-sm font-medium",children:[(0,t.jsxs)("div",{className:"flex items-center mb-2",children:[(0,t.jsx)("div",{className:"w-1 h-5 rounded-md",style:{backgroundColor:c}}),(0,t.jsxs)("span",{className:"ml-3 text-white font-display",children:["Subscribed:"," ",(0,t.jsx)(m.AnimatedNumber,{value:Math.round(200-b.greenY)})]})]}),(0,t.jsxs)("div",{className:"flex items-center",children:[(0,t.jsx)("div",{className:"w-1 h-5 rounded-md",style:{backgroundColor:x}}),(0,t.jsxs)("span",{className:"ml-3 text-white font-display",children:["Unsubscribed:"," ",(0,t.jsx)(m.AnimatedNumber,{value:Math.round(200-b.orangeY)})]})]})]})})]}),(0,t.jsxs)("defs",{children:[(0,t.jsxs)("linearGradient",{id:"green_gradient",x1:"182.5",x2:"182.5",y1:"0",y2:"183",gradientUnits:"userSpaceOnUse",children:[(0,t.jsx)(s.motion.stop,{initial:{stopOpacity:0},animate:{stopOpacity:.2*!!j},stopColor:c,transition:{duration:1,ease:"easeOut"}}),(0,t.jsx)(s.motion.stop,{initial:{stopOpacity:0},animate:{stopOpacity:.1*!!j},offset:"0.5",stopColor:c,transition:{duration:1,ease:"easeOut"}}),(0,t.jsx)(s.motion.stop,{initial:{stopOpacity:0},animate:{stopOpacity:0},offset:"1",stopColor:c,transition:{duration:1,ease:"easeOut"}})]}),(0,t.jsxs)("linearGradient",{id:"orange_gradient",x1:"182.5",x2:"182.5",y1:"0",y2:"183",gradientUnits:"userSpaceOnUse",children:[(0,t.jsx)(s.motion.stop,{initial:{stopOpacity:0},animate:{stopOpacity:.2*!!j},stopColor:x,transition:{duration:1,ease:"easeOut",delay:e}}),(0,t.jsx)(s.motion.stop,{initial:{stopOpacity:0},animate:{stopOpacity:.1*!!j},offset:"0.5",stopColor:x,transition:{duration:1,ease:"easeOut",delay:e}}),(0,t.jsx)(s.motion.stop,{initial:{stopOpacity:0},animate:{stopOpacity:0},offset:"1",stopColor:x,transition:{duration:1,ease:"easeOut",delay:e}})]})]}),(0,t.jsx)(s.motion.path,{initial:{opacity:0},animate:{opacity:+!!j},d:`${d} V200 H0 Z`,fill:"url(#green_gradient)",transition:{duration:1.5,ease:"easeOut"}}),(0,t.jsx)(s.motion.path,{initial:{opacity:0},animate:{opacity:+!!j},d:`${p} V200 H0 Z`,fill:"url(#orange_gradient)",transition:{duration:1,ease:"easeOut",delay:e}}),(0,t.jsx)(s.motion.path,{initial:{pathLength:0,opacity:0},animate:{pathLength:+!!j,opacity:+!!j},d:d,fill:"none",stroke:c,strokeWidth:o,strokeLinecap:"round",transition:{pathLength:{duration:n,ease:"easeInOut"},opacity:{duration:.5,ease:"easeOut"}}}),(0,t.jsx)(s.motion.path,{initial:{pathLength:0,opacity:0},animate:{pathLength:+!!j,opacity:+!!j},d:p,fill:"none",stroke:x,strokeWidth:o,strokeLinecap:"round",transition:{pathLength:{duration:n,ease:"easeInOut",delay:e},opacity:{duration:.5,ease:"easeOut",delay:e}}}),(0,t.jsx)(s.motion.circle,{initial:{scale:0,opacity:0},animate:{scale:+!!j,opacity:+!!j},cx:"365",cy:"2",r:r,fill:c,transition:{delay:j?n:0,duration:.5,ease:"easeOut"}}),(0,t.jsx)(s.motion.circle,{initial:{scale:0,opacity:0},animate:{scale:+!!j,opacity:+!!j},cx:"365",cy:"121",r:r,fill:x,transition:{delay:j?n+e:e,duration:.5,ease:"easeOut"}})]})]})})},y=Array.from({length:31},(e,t)=>35+20*t),b={hidden:{opacity:0,scaleY:0},visible:{opacity:.1,scaleY:1,transition:{duration:1.5,ease:"easeOut",repeat:1/0,repeatType:"reverse",repeatDelay:1}}},f={hidden:{opacity:0},visible:{opacity:1,transition:{duration:.3,when:"beforeChildren"}}},g={hidden:{opacity:0,y:20},visible:{opacity:1,y:0,transition:{duration:.8,ease:"easeOut",delay:.2}}},v={hidden:{opacity:0,y:20},visible:{opacity:1,y:-8,transition:{duration:.8,ease:"easeOut",delay:.6}}},j=()=>{let e=l.useRef(null),n=(0,i.useInView)(e,{once:!0,amount:.5});return(0,t.jsx)(a.AnimatePresence,{children:(0,t.jsxs)(s.motion.div,{ref:e,className:"text-slate-11 absolute inset-0 flex flex-col items-center justify-start px-3 py-4 text-sm md:justify-center md:p-10 md:text-base",variants:f,initial:"hidden",animate:n?"visible":"hidden",children:[(0,t.jsx)("div",{className:"absolute inset-0",children:(0,t.jsxs)("svg",{width:"650",height:"253",viewBox:"0 0 650 253",fill:"none",xmlns:"http://www.w3.org/2000/svg",className:"w-full h-full",children:[(0,t.jsxs)("g",{opacity:"0.6",children:[(0,t.jsx)("mask",{id:"mask0_664_3342",style:{maskType:"alpha"},maskUnits:"userSpaceOnUse",x:"0",y:"0",width:"650",height:"253",children:(0,t.jsx)("rect",{width:"650",height:"253",fill:"url(#paint0_radial_664_3342)"})}),(0,t.jsx)("g",{mask:"url(#mask0_664_3342)",children:y.map((e,a)=>(0,t.jsx)(s.motion.line,{x1:e,y1:"6",x2:e,y2:"257",stroke:"white",variants:b,custom:n,initial:"hidden",animate:n?"visible":"hidden",transition:{delay:.5+.02*a,duration:1.5,ease:"easeOut",repeat:1/0,repeatType:"reverse",repeatDelay:1}},a))})]}),(0,t.jsx)("defs",{children:(0,t.jsxs)("radialGradient",{id:"paint0_radial_664_3342",cx:"0",cy:"0",r:"1",gradientUnits:"userSpaceOnUse",gradientTransform:"translate(325 126.5) rotate(90) scale(176.5 453.458)",children:[(0,t.jsx)("stop",{stopColor:"#D9D9D9"}),(0,t.jsx)("stop",{offset:"1",stopColor:"#737373",stopOpacity:"0"})]})})]})}),(0,t.jsxs)(s.motion.div,{variants:g,className:"text-slate-12 relative flex min-w-[70%] max-w-[90%] flex-col items-center justify-center gap-2 overflow-hidden text-balance rounded-xl border border-white/10 bg-[rgba(255,255,255,.024)] px-4 pb-6 pt-8 text-center backdrop-blur-2xl backdrop-filter [box-shadow:0_0_4rem_.5rem_rgba(255,255,255,0.042),0_0_1rem_.375rem_rgba(255,255,255,0.012)] md:gap-0 md:px-11 md:pb-20 md:pt-14",children:[(0,t.jsx)("div",{className:"pointer-events-none absolute inset-0 bg-gradient-to-b from-white/5 mix-blend-soft-light"}),(0,t.jsxs)(s.motion.svg,{className:"absolute inset-0 z-[1] -mt-16 -translate-x-2 mix-blend-soft-light opacity-40",fill:"none",height:"240",viewBox:"0 0 421 240",width:"460",initial:{opacity:0},animate:{opacity:+!!n},transition:{duration:1.5,ease:"easeOut",delay:.3},"aria-hidden":!0,children:[(0,t.jsxs)("g",{filter:"url(#filter0_f_664_1362)",children:[(0,t.jsx)("circle",{cx:"202.5",cy:"21.5",fill:"#E53232",fillOpacity:"0.42",r:"84.5"}),(0,t.jsx)("circle",{cx:"202.5",cy:"21.5",r:"81.5",stroke:"#E53232",strokeWidth:"6"})]}),(0,t.jsx)("defs",{children:(0,t.jsxs)("filter",{colorInterpolationFilters:"sRGB",filterUnits:"userSpaceOnUse",height:"437",id:"filter0_f_664_1362",width:"437",x:"-16",y:"-197",children:[(0,t.jsx)("feFlood",{floodOpacity:"0",result:"BackgroundImageFix"}),(0,t.jsx)("feBlend",{in:"SourceGraphic",in2:"BackgroundImageFix",mode:"normal",result:"shape"}),(0,t.jsx)("feGaussianBlur",{result:"effect1_foregroundBlur_664_1362",stdDeviation:"67"})]})})]}),(0,t.jsx)("span",{className:"relative z-[2] text-lg font-medium",children:"You have unsubscribed"}),(0,t.jsx)("span",{className:"relative z-[3] text-sm opacity-70",children:"alan.turing@example.com will no longer receive updates"})]}),(0,t.jsxs)(s.motion.div,{variants:v,className:"relative flex w-full min-w-[90%] max-w-full flex-col items-center justify-between gap-2 overflow-hidden rounded-xl border border-white/10 bg-[rgba(255,255,255,.03)] px-4 pb-4 pt-3.5 backdrop-blur-[1.875rem] backdrop-filter md:-mt-12 md:w-fit md:flex-row md:px-8 md:py-4",children:[(0,t.jsx)("div",{className:"pointer-events-none absolute inset-0 bg-gradient-to-b from-white/5 mix-blend-soft-light"}),(0,t.jsxs)("div",{className:"flex relative w-full justify-start md:w-fit items-center gap-4",children:[(0,t.jsx)("div",{className:"h-8 w-8 shrink-0 rounded-full bg-white/50 md:h-9 md:w-9",children:(0,t.jsx)(c.default,{src:"/static/product-pages/avatar.png",width:36,height:36,alt:"Avatar",quality:100,className:"w-full h-full object-cover object-center"})}),(0,t.jsx)("span",{children:"alan.turing@example.com"})]}),(0,t.jsxs)("div",{className:"relative -mt-1 flex w-full items-center justify-start gap-2.5 pl-11 md:mt-0 md:w-[unset] md:shrink md:grow md:basis-0 md:justify-end md:p-0",children:[(0,t.jsx)("span",{className:"rounded-[.2813rem] bg-[#2B0000] px-2 py-1.5 text-xs font-medium leading-none text-[#FF7C62]",children:"Unsubscribed"}),(0,t.jsx)("span",{className:"text-slate-8 text-xs",children:"19 minutes ago"})]})]})]})})};e.s(["AudiencesUnsubscribe",0,()=>(0,t.jsxs)(p.Section,{className:"mt-0 flex w-full flex-col px-0 !pt-0 md:mt-[10vh]",children:[(0,t.jsxs)(x.Root,{className:"pl-0 md:pl-24",children:[(0,t.jsxs)(x.Pill,{children:[(0,t.jsx)(o,{}),"Unsubscribe Handling"]}),(0,t.jsxs)(x.Title,{children:["View and control ",(0,t.jsx)("br",{className:"hidden md:block"})," unsubscribe status"]}),(0,t.jsxs)(x.Description,{children:["It is important to give your contacts the ability to unsubscribe from emails. ",(0,t.jsx)("br",{className:"hidden md:block"})," Resend gives you the ability to include unsubscribe links and manages that flow for you."]})]}),(0,t.jsxs)(d.Root,{children:[(0,t.jsxs)(d.Item,{width:"1",className:"overflow-visible",children:[(0,t.jsx)(d.Illustration,{className:"overflow-visible",children:(0,t.jsx)(h,{})}),(0,t.jsx)(d.Icon,{children:(0,t.jsx)(n.LineChart,{})}),(0,t.jsx)(d.Title,{children:"Audience metrics"}),(0,t.jsx)(d.Description,{children:"Visualize the growth of your contacts and track unsubscribes over time. Use these insights to improve your email strategy."})]}),(0,t.jsxs)(d.Item,{width:"2",children:[(0,t.jsx)(d.Illustration,{className:"min-h-[17rem]",children:(0,t.jsx)(j,{})}),(0,t.jsx)(d.Icon,{children:(0,t.jsx)(r.ToggleRight,{})}),(0,t.jsx)(d.Title,{children:"Automatic Unsubscribes"}),(0,t.jsx)(d.Description,{children:"When a contact unsubscribes, Resend will automatically handle the unsubscribe flow for you, and they will be skipped when sending the next Broadcast."})]})]})]})],786436)}]);

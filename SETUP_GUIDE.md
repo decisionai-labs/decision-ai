@@ -1,6 +1,6 @@
 # Project Setup Guide
 
-Follow these steps to set up the NeuroSan project on a new machine.
+Follow these steps to set up the Decision AI project on a new machine.
 
 ## Prerequisites
 

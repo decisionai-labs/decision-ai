@@ -13,7 +13,7 @@ const sections = [
 
 export default function DocsPage() {
     return (
-        <div className="min-h-screen bg-[#FAFAF8]">
+        <div className="min-h-screen bg-black">
             <Header />
 
             <div className="max-w-7xl mx-auto px-6 pt-28 pb-20">
@@ -22,7 +22,7 @@ export default function DocsPage() {
                     {/* Sidebar / Table of Contents */}
                     <aside className="hidden lg:block w-56 shrink-0">
                         <div className="sticky top-28">
-                            <p className="text-xs font-semibold text-[#9CA3AF] uppercase tracking-wider mb-4">
+                            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-4">
                                 On this page
                             </p>
                             <nav className="space-y-1">
@@ -30,8 +30,8 @@ export default function DocsPage() {
                                     <a
                                         key={section.id}
                                         href={`#${section.id}`}
-                                        className="block px-3 py-2 rounded-lg text-sm text-[#6B7280]
-                                                   hover:text-[#1A1A1A] hover:bg-[#F3F4F6]
+                                        className="block px-3 py-2 rounded-lg text-sm text-zinc-400
+                                                   hover:text-white hover:bg-white/5
                                                    transition-colors duration-150"
                                     >
                                         {section.label}
@@ -39,11 +39,11 @@ export default function DocsPage() {
                                 ))}
                             </nav>
 
-                            <div className="mt-8 pt-6 border-t border-[#E5E7EB]">
+                            <div className="mt-8 pt-6 border-t border-white/10">
                                 <Link
                                     href="https://github.com/NeuroSolanaAgents/neurosan"
                                     target="_blank"
-                                    className="flex items-center gap-2 text-sm text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+                                    className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors"
                                 >
                                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                         <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
@@ -65,25 +65,25 @@ export default function DocsPage() {
                                 </svg>
                                 Documentation
                             </div>
-                            <h1 className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-4 leading-tight">
+                            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
                                 Privacy-Preserving AI on Solana
                             </h1>
-                            <p className="text-lg text-[#6B7280] leading-relaxed max-w-2xl">
-                                An educational overview of why privacy matters for blockchain AI agents, and how NeuroSan takes a fundamentally different approach.
+                            <p className="text-lg text-zinc-400 leading-relaxed max-w-2xl">
+                                An educational overview of why privacy matters for blockchain AI agents, and how Decision AI takes a fundamentally different approach.
                             </p>
                         </div>
 
 
                         {/* Section 1: The Problem */}
                         <section id="the-problem" className="mb-16 scroll-mt-28">
-                            <h2 className="text-2xl font-bold text-[#1A1A1A] mb-6 flex items-center gap-3">
+                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                                 <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#14B8A6]/10 text-[#14B8A6] text-sm font-bold">
                                     1
                                 </span>
                                 The Problem
                             </h2>
 
-                            <div className="rounded-xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
+                            <div className="rounded-xl border border-white/10 bg-[#111111] p-6 shadow-sm">
                                 <p className="text-[#4B5563] leading-relaxed mb-4">
                                     Most AI-powered blockchain tools today ask you to paste your wallet address directly into a chat prompt. This creates a fundamental privacy issue:
                                 </p>
@@ -102,7 +102,7 @@ export default function DocsPage() {
                                         </li>
                                     ))}
                                 </ul>
-                                <p className="text-sm text-[#6B7280] italic">
+                                <p className="text-sm text-zinc-400 italic">
                                     In Web2, you wouldn&apos;t paste your bank account number into ChatGPT. So why is it acceptable in Web3?
                                 </p>
                             </div>
@@ -111,7 +111,7 @@ export default function DocsPage() {
 
                         {/* Section 2: Why Privacy Matters */}
                         <section id="why-privacy" className="mb-16 scroll-mt-28">
-                            <h2 className="text-2xl font-bold text-[#1A1A1A] mb-6 flex items-center gap-3">
+                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                                 <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#14B8A6]/10 text-[#14B8A6] text-sm font-bold">
                                     2
                                 </span>
@@ -148,12 +148,12 @@ export default function DocsPage() {
                                         ),
                                     },
                                 ].map((card) => (
-                                    <div key={card.title} className="rounded-xl border border-[#E5E7EB] bg-white p-6 shadow-sm">
+                                    <div key={card.title} className="rounded-xl border border-white/10 bg-[#111111] p-6 shadow-sm">
                                         <div className="flex items-center gap-3 mb-3">
-                                            <div className="w-9 h-9 rounded-lg bg-[#FAFAF8] border border-[#E5E7EB] flex items-center justify-center">
+                                            <div className="w-9 h-9 rounded-lg bg-black border border-white/10 flex items-center justify-center">
                                                 {card.icon}
                                             </div>
-                                            <h3 className="font-semibold text-[#1A1A1A]">{card.title}</h3>
+                                            <h3 className="font-semibold text-white">{card.title}</h3>
                                         </div>
                                         <p className="text-[#4B5563] leading-relaxed text-sm">
                                             {card.description}
@@ -166,17 +166,17 @@ export default function DocsPage() {
 
                         {/* Section 3: Our Approach */}
                         <section id="our-approach" className="mb-16 scroll-mt-28">
-                            <h2 className="text-2xl font-bold text-[#1A1A1A] mb-6 flex items-center gap-3">
+                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                                 <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#14B8A6]/10 text-[#14B8A6] text-sm font-bold">
                                     3
                                 </span>
                                 Our Approach
                             </h2>
 
-                            <div className="rounded-xl border border-[#E5E7EB] bg-white p-6 md:p-8 shadow-sm">
+                            <div className="rounded-xl border border-white/10 bg-[#111111] p-6 md:p-8 shadow-sm">
                                 <p className="text-[#4B5563] leading-relaxed mb-6">
-                                    NeuroSan is built on a simple but powerful principle:{' '}
-                                    <strong className="text-[#1A1A1A]">the AI should never need to see your sensitive data to help you.</strong>
+                                    Decision AI is built on a simple but powerful principle:{' '}
+                                    <strong className="text-white">the AI should never need to see your sensitive data to help you.</strong>
                                 </p>
 
                                 <div className="space-y-4 mb-6">
@@ -190,14 +190,14 @@ export default function DocsPage() {
                                         },
                                         {
                                             label: 'On-Chain, Not In-Context',
-                                            detail: 'Unlike tools that embed your wallet in an AI prompt, NeuroSan keeps sensitive data out of the language model\'s context window entirely. The AI reasons about your request, not your identity.',
+                                            detail: 'Unlike tools that embed your wallet in an AI prompt, Decision AI keeps sensitive data out of the language model\'s context window entirely. The AI reasons about your request, not your identity.',
                                             color: 'text-[#8B5CF6]',
                                             bg: 'bg-[#F5F3FF]',
                                             border: 'border-[#8B5CF6]/20',
                                         },
                                         {
                                             label: 'Open Source & Auditable',
-                                            detail: 'Every component of NeuroSan is open source. You don\'t have to trust our claims — you can verify the privacy guarantees yourself by reading the code.',
+                                            detail: 'Every component of Decision AI is open source. You don\'t have to trust our claims — you can verify the privacy guarantees yourself by reading the code.',
                                             color: 'text-[#F59E0B]',
                                             bg: 'bg-[#FFFBEB]',
                                             border: 'border-[#F59E0B]/20',
@@ -215,14 +215,14 @@ export default function DocsPage() {
 
                         {/* Section 4: What You Can Do */}
                         <section id="what-you-can-do" className="mb-16 scroll-mt-28">
-                            <h2 className="text-2xl font-bold text-[#1A1A1A] mb-6 flex items-center gap-3">
+                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                                 <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#14B8A6]/10 text-[#14B8A6] text-sm font-bold">
                                     4
                                 </span>
                                 What You Can Do
                             </h2>
 
-                            <div className="rounded-xl border border-[#E5E7EB] bg-white shadow-sm overflow-hidden">
+                            <div className="rounded-xl border border-white/10 bg-[#111111] shadow-sm overflow-hidden">
                                 <div className="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-[#E5E7EB]">
                                     {[
                                         {
@@ -266,8 +266,8 @@ export default function DocsPage() {
                                             <div className="w-10 h-10 rounded-lg bg-[#14B8A6]/10 text-[#14B8A6] flex items-center justify-center mb-3">
                                                 {item.icon}
                                             </div>
-                                            <h3 className="font-semibold text-[#1A1A1A] mb-1">{item.title}</h3>
-                                            <p className="text-sm text-[#6B7280] leading-relaxed">{item.description}</p>
+                                            <h3 className="font-semibold text-white mb-1">{item.title}</h3>
+                                            <p className="text-sm text-zinc-400 leading-relaxed">{item.description}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -277,14 +277,14 @@ export default function DocsPage() {
 
                         {/* Section 5: Get Started */}
                         <section id="get-started" className="mb-16 scroll-mt-28">
-                            <h2 className="text-2xl font-bold text-[#1A1A1A] mb-6 flex items-center gap-3">
+                            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                                 <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#14B8A6]/10 text-[#14B8A6] text-sm font-bold">
                                     5
                                 </span>
                                 Get Started
                             </h2>
 
-                            <div className="rounded-xl border border-[#E5E7EB] bg-white p-6 md:p-8 shadow-sm">
+                            <div className="rounded-xl border border-white/10 bg-[#111111] p-6 md:p-8 shadow-sm">
                                 <p className="text-[#4B5563] leading-relaxed mb-6">
                                     Experience the difference a privacy-first AI agent makes. No signup, no API keys, no data collection — just connect your wallet and start querying.
                                 </p>
@@ -305,8 +305,8 @@ export default function DocsPage() {
                                         href="https://github.com/NeuroSolanaAgents/neurosan"
                                         target="_blank"
                                         className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl
-                                                   bg-white text-[#1A1A1A] font-medium text-sm border border-[#E5E7EB]
-                                                   hover:bg-[#F3F4F6] transition-colors"
+                                                   bg-[#111111] text-white font-medium text-sm border border-white/10
+                                                   hover:bg-white/5 transition-colors"
                                     >
                                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                             <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
@@ -319,10 +319,10 @@ export default function DocsPage() {
 
 
                         {/* Bottom Navigation */}
-                        <div className="mt-16 pt-8 border-t border-[#E5E7EB] flex items-center justify-between">
+                        <div className="mt-16 pt-8 border-t border-white/10 flex items-center justify-between">
                             <Link
                                 href="/"
-                                className="flex items-center gap-2 text-sm text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+                                className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors"
                             >
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />

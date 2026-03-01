@@ -116,7 +116,7 @@ export function TechStack() {
         <section ref={sectionRef} className="py-16 px-6">
             <div className="max-w-6xl mx-auto">
                 <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                    <span className="text-sm text-[#9CA3AF] uppercase tracking-widest">Built With</span>
+                    <span className="text-sm text-zinc-500 uppercase tracking-widest">Built With</span>
                 </div>
 
                 {/* Tech logos */}
@@ -127,12 +127,12 @@ export function TechStack() {
                             className={`flex flex-col items-center gap-2 group transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
                             style={{ transitionDelay: `${200 + index * 100}ms` }}
                         >
-                            <div className="p-4 rounded-xl bg-white border border-[#E5E7EB] group-hover:border-[#14B8A6]/30 group-hover:shadow-lg transition-all duration-300 card-lift">
+                            <div className="p-4 rounded-xl bg-[#111111] border border-white/10 group-hover:border-[#14B8A6]/30 group-hover:shadow-lg transition-all duration-300 card-lift">
                                 <div className="grayscale group-hover:grayscale-0 transition-all duration-300">
                                     {tech.logo}
                                 </div>
                             </div>
-                            <span className="text-xs text-[#9CA3AF] group-hover:text-[#6B7280] transition-colors">
+                            <span className="text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors">
                                 {tech.name}
                             </span>
                         </div>

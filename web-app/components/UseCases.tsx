@@ -88,11 +88,11 @@ export function UseCases() {
                     <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#CCFBF1] rounded-full mb-6">
                         Use Cases
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A1A1A] mb-4">
+                    <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
                         What Can You <span className="text-gradient">Build?</span>
                     </h2>
-                    <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
-                        From portfolio tracking to DeFi analytics, NeuroSan enables powerful blockchain insights without compromising privacy.
+                    <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
+                        From portfolio tracking to DeFi analytics, Decision AI enables powerful blockchain insights without compromising privacy.
                     </p>
                 </div>
 
@@ -104,21 +104,21 @@ export function UseCases() {
                                 key={index}
                                 onClick={() => setActiveIndex(index)}
                                 className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 ${activeIndex === index
-                                        ? 'bg-white border-[#14B8A6]/30 shadow-lg shadow-[#14B8A6]/5'
-                                        : 'bg-white/50 border-[#E5E7EB] hover:border-[#D1D5DB]'
+                                    ? 'bg-[#111111] border-[#14B8A6]/30 shadow-lg shadow-[#14B8A6]/5'
+                                    : 'bg-[#111111]/50 border-white/10 hover:border-[#D1D5DB]'
                                     }`}
                             >
                                 <div className="flex items-start gap-4">
                                     <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${activeIndex === index
-                                            ? 'bg-gradient-to-br from-[#14B8A6] to-[#0D9488] text-white'
-                                            : 'bg-[#F3F4F6] text-[#6B7280]'
+                                        ? 'bg-gradient-to-br from-[#14B8A6] to-[#0D9488] text-white'
+                                        : 'bg-[#F3F4F6] text-zinc-400'
                                         }`}>
                                         {useCase.icon}
                                     </div>
                                     <div className="flex-1">
-                                        <h3 className={`font-semibold mb-1 transition-colors ${activeIndex === index ? 'text-[#1A1A1A]' : 'text-[#4B5563]'
+                                        <h3 className={`font-semibold mb-1 transition-colors ${activeIndex === index ? 'text-white' : 'text-[#4B5563]'
                                             }`}>{useCase.title}</h3>
-                                        <p className={`text-sm transition-colors ${activeIndex === index ? 'text-[#6B7280]' : 'text-[#9CA3AF]'
+                                        <p className={`text-sm transition-colors ${activeIndex === index ? 'text-zinc-400' : 'text-zinc-500'
                                             }`}>{useCase.description}</p>
                                     </div>
                                 </div>
@@ -133,29 +133,29 @@ export function UseCases() {
                             <div className="absolute inset-0 bg-gradient-to-br from-[#14B8A6]/20 to-[#8B5CF6]/20 rounded-3xl blur-2xl" />
 
                             {/* Card */}
-                            <div className="relative bg-white rounded-2xl border border-[#E5E7EB] p-8 shadow-xl">
+                            <div className="relative bg-[#111111] rounded-2xl border border-white/10 p-8 shadow-xl">
                                 {/* Terminal header */}
                                 <div className="flex items-center gap-2 mb-6">
                                     <div className="w-3 h-3 rounded-full bg-[#EF4444]" />
                                     <div className="w-3 h-3 rounded-full bg-[#F59E0B]" />
                                     <div className="w-3 h-3 rounded-full bg-[#22C55E]" />
-                                    <span className="ml-4 text-xs text-[#9CA3AF]">NeuroSan Terminal</span>
+                                    <span className="ml-4 text-xs text-zinc-500">Decision AI Terminal</span>
                                 </div>
 
                                 {/* Query */}
                                 <div className="space-y-4">
                                     <div className="flex items-start gap-3">
                                         <span className="text-[#14B8A6] font-mono text-sm">→</span>
-                                        <p className="text-[#1A1A1A] font-medium text-lg">
+                                        <p className="text-white font-medium text-lg">
                                             {useCases[activeIndex].query}
                                         </p>
                                     </div>
 
                                     {/* Simulated response */}
-                                    <div className="mt-4 p-4 bg-[#F9FAFB] rounded-xl border border-[#E5E7EB]">
+                                    <div className="mt-4 p-4 bg-[#F9FAFB] rounded-xl border border-white/10">
                                         <div className="flex items-center gap-2 mb-2">
                                             <div className="w-2 h-2 rounded-full bg-[#14B8A6] animate-pulse" />
-                                            <span className="text-xs text-[#6B7280]">Processing with sly_data...</span>
+                                            <span className="text-xs text-zinc-400">Processing with sly_data...</span>
                                         </div>
                                         <div className="h-4 bg-gradient-to-r from-[#E5E7EB] to-[#F3F4F6] rounded animate-pulse" />
                                     </div>

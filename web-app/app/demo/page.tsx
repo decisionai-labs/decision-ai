@@ -5,13 +5,13 @@ import { Badge } from '@/components/ui/Badge';
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Demo | NeuroSan',
+    title: 'Demo | Decision AI',
     description: 'Try the privacy-preserving Solana agent demo. Query your wallet without exposing your address to AI.',
 };
 
 export default function DemoPage() {
     return (
-        <main className="min-h-screen bg-gradient-to-b from-[#FAFAF8] via-white to-[#FAFAF8]">
+        <main className="min-h-screen bg-black text-white">
             <Header />
 
             <section className="pt-28 pb-20 px-6 relative">
@@ -24,7 +24,7 @@ export default function DemoPage() {
                     <div className="text-center mb-12">
                         <Link
                             href="/"
-                            className="inline-flex items-center gap-2 text-sm text-[#6B7280] hover:text-[#14B8A6] mb-6 transition-colors group"
+                            className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-[#14B8A6] mb-6 transition-colors group"
                         >
                             <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -34,11 +34,16 @@ export default function DemoPage() {
 
                         <Badge variant="accent" className="mb-4 glow-teal">Interactive Demo</Badge>
 
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-[#1A1A1A] mb-4">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-4">
                             Try the <span className="text-gradient">Agent</span>
                         </h1>
+<<<<<<< Updated upstream
                         <p className="text-lg text-[#6B7280] max-w-xl mx-auto leading-relaxed">
                             Connect your wallet and prove ownership through signature verification. Your address stays private
+=======
+                        <p className="text-lg text-zinc-400 max-w-xl mx-auto leading-relaxed">
+                            Connect your wallet and query your Solana data. Your address stays private
+>>>>>>> Stashed changes
                             through our{' '}
                             <code className="px-2 py-0.5 bg-[#14B8A6]/10 text-[#0D9488] rounded text-sm font-mono">
                                 sly_data
@@ -52,31 +57,37 @@ export default function DemoPage() {
 
                     {/* Info cards */}
                     <div className="grid md:grid-cols-2 gap-6 mt-12">
-                        <div className="p-6 bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#14B8A6]/30 hover:shadow-lg transition-all duration-300 card-shine group">
+                        <div className="p-6 bg-[#111111] rounded-2xl border border-white/10 hover:border-[#14B8A6]/30 hover:shadow-lg transition-all duration-300 card-shine group">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#CCFBF1] to-[#F0FDFA] flex items-center justify-center text-[#0D9488] group-hover:scale-110 transition-transform">
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                     </svg>
                                 </div>
-                                <h3 className="font-semibold text-[#1A1A1A] text-lg">Privacy Protected</h3>
+                                <h3 className="font-semibold text-white text-lg">Privacy Protected</h3>
                             </div>
+<<<<<<< Updated upstream
                             <p className="text-[#6B7280] leading-relaxed">
                                 You prove wallet ownership through signature verification. Your address is stored in sly_data
                                 and never exposed to the AI language model.
+=======
+                            <p className="text-zinc-400 leading-relaxed">
+                                Your wallet address is stored in sly_data and never exposed to the AI language model.
+                                The AI only sees the data, not the source.
+>>>>>>> Stashed changes
                             </p>
                         </div>
 
-                        <div className="p-6 bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#14B8A6]/30 hover:shadow-lg transition-all duration-300 card-shine group">
+                        <div className="p-6 bg-[#111111] rounded-2xl border border-white/10 hover:border-[#14B8A6]/30 hover:shadow-lg transition-all duration-300 card-shine group">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#CCFBF1] to-[#F0FDFA] flex items-center justify-center text-[#0D9488] group-hover:scale-110 transition-transform">
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                     </svg>
                                 </div>
-                                <h3 className="font-semibold text-[#1A1A1A] text-lg">Live Data</h3>
+                                <h3 className="font-semibold text-white text-lg">Live Data</h3>
                             </div>
-                            <p className="text-[#6B7280] leading-relaxed">
+                            <p className="text-zinc-400 leading-relaxed">
                                 Queries real Solana blockchain data via RPC. Get up-to-date balances, tokens,
                                 and transaction history in real-time.
                             </p>
@@ -84,8 +95,8 @@ export default function DemoPage() {
                     </div>
 
                     {/* Supported queries */}
-                    <div className="mt-12 p-6 bg-gradient-to-r from-[#F3F4F6] to-[#FAFAF8] rounded-2xl border border-[#E5E7EB]">
-                        <h3 className="font-semibold text-[#1A1A1A] mb-4 text-center">Example Queries</h3>
+                    <div className="mt-12 p-6 bg-[#111111] rounded-2xl border border-white/10">
+                        <h3 className="font-semibold text-white mb-4 text-center">Example Queries</h3>
                         <div className="flex flex-wrap justify-center gap-3">
                             {[
                                 'What is my SOL balance?',
@@ -96,7 +107,7 @@ export default function DemoPage() {
                             ].map((query) => (
                                 <span
                                     key={query}
-                                    className="px-4 py-2 bg-white rounded-full text-sm text-[#6B7280] border border-[#E5E7EB] hover:border-[#14B8A6]/30 hover:text-[#14B8A6] transition-colors cursor-default"
+                                    className="px-4 py-2 bg-[#111111] rounded-full text-sm text-zinc-400 border border-white/10 hover:border-[#14B8A6]/30 hover:text-[#14B8A6] transition-colors cursor-default"
                                 >
                                     {query}
                                 </span>

@@ -1,5 +1,5 @@
 """
-NeuroSanSolana - Solana blockchain tools for neuro-san.
+Decision AI - Solana blockchain tools for neuro-san.
 Privacy Hack hackathon submission - solana.com/privacyhack
 
 All tools use sly_data for privacy-preserving wallet address handling.

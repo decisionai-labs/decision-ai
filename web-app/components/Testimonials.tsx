@@ -25,7 +25,7 @@ const testimonials = [
         gradient: "from-pink-400 to-rose-500",
     },
     {
-        quote: "Open source, privacy-first, and actually works. NeuroSan sets the standard for blockchain AI tools.",
+        quote: "Open source, privacy-first, and actually works. Decision AI sets the standard for blockchain AI tools.",
         author: "Open Source Contributor",
         role: "Cognizant AI Lab",
         avatar: "OS",
@@ -71,8 +71,8 @@ export function Testimonials() {
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
                 <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <span className="text-sm text-[#9CA3AF] uppercase tracking-widest">What Developers Say</span>
-                    <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A1A1A] mt-4">
+                    <span className="text-sm text-zinc-500 uppercase tracking-widest">What Developers Say</span>
+                    <h2 className="text-3xl sm:text-4xl font-semibold text-white mt-4">
                         Trusted by the <span className="text-gradient">Community</span>
                     </h2>
                 </div>
@@ -89,10 +89,10 @@ export function Testimonials() {
                             <div
                                 key={index}
                                 className={`absolute inset-0 flex flex-col items-center text-center transition-all duration-500 ${index === currentIndex
-                                        ? 'opacity-100 translate-x-0'
-                                        : index < currentIndex
-                                            ? 'opacity-0 -translate-x-full'
-                                            : 'opacity-0 translate-x-full'
+                                    ? 'opacity-100 translate-x-0'
+                                    : index < currentIndex
+                                        ? 'opacity-0 -translate-x-full'
+                                        : 'opacity-0 translate-x-full'
                                     }`}
                             >
                                 <p className="text-xl sm:text-2xl text-[#4B5563] leading-relaxed mb-8 max-w-2xl">
@@ -103,8 +103,8 @@ export function Testimonials() {
                                         {testimonial.avatar}
                                     </div>
                                     <div className="text-left">
-                                        <p className="font-semibold text-[#1A1A1A]">{testimonial.author}</p>
-                                        <p className="text-sm text-[#6B7280]">{testimonial.role}</p>
+                                        <p className="font-semibold text-white">{testimonial.author}</p>
+                                        <p className="text-sm text-zinc-400">{testimonial.role}</p>
                                     </div>
                                 </div>
                             </div>
@@ -118,8 +118,8 @@ export function Testimonials() {
                                 key={index}
                                 onClick={() => setCurrentIndex(index)}
                                 className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                                        ? 'bg-[#14B8A6] w-8'
-                                        : 'bg-[#E5E7EB] hover:bg-[#D1D5DB]'
+                                    ? 'bg-[#14B8A6] w-8'
+                                    : 'bg-[#E5E7EB] hover:bg-[#D1D5DB]'
                                     }`}
                                 aria-label={`Go to testimonial ${index + 1}`}
                             />

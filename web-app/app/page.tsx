@@ -1,5 +1,5 @@
 import { Header } from '@/components/Header';
-import { Hero } from '@/components/Hero';
+import { ResendHero } from '@/components/ResendHero';
 import { AnimatedStats } from '@/components/AnimatedStats';
 import { HowItWorks } from '@/components/HowItWorks';
 import { Features } from '@/components/Features';
@@ -22,9 +22,9 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#FAFAF8]">
+    <main className="min-h-screen bg-black text-white">
       <Header />
-      <Hero />
+      <ResendHero />
       <AnimatedStats />
       <FeaturesCardSwap />
       <SecurityShowcase />
@@ -41,7 +41,7 @@ export default function Home() {
       <Newsletter />
 
       {/* Enhanced CTA Section */}
-      <section className="relative py-24 px-6 bg-white border-t border-[#E5E7EB] overflow-hidden">
+      <section className="relative py-24 px-6 bg-black border-t border-white/10 overflow-hidden">
         {/* Floating decorative elements */}
         <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-gradient-to-br from-[#14B8A6]/10 to-transparent blur-3xl animate-float-slow" />
         <div className="absolute bottom-10 right-10 w-40 h-40 rounded-full bg-gradient-to-br from-[#8B5CF6]/10 to-transparent blur-3xl animate-float-delayed" />
@@ -50,10 +50,10 @@ export default function Home() {
           {/* Glowing accent line */}
           <div className="w-24 h-1 bg-gradient-to-r from-[#14B8A6] to-[#0D9488] rounded-full mx-auto mb-8 glow-teal" />
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-[#1A1A1A] mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-4">
             Ready to <span className="text-gradient">Try It?</span>
           </h2>
-          <p className="text-lg sm:text-xl text-[#6B7280] mb-10 leading-relaxed">
+          <p className="text-lg sm:text-xl text-zinc-400 mb-10 leading-relaxed">
             Experience privacy-preserving AI firsthand. No signup required.<br className="hidden sm:block" />
             Just connect your wallet and start querying.
           </p>
@@ -91,7 +91,7 @@ export default function Home() {
           </div>
 
           {/* Trust indicators */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-[#6B7280]">
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-zinc-400">
             <div className="flex items-center gap-2">
               <svg className="w-4 h-4 text-[#14B8A6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

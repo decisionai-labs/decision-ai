@@ -24,8 +24,8 @@ export function CopyButton({ text, className = '' }: CopyButtonProps) {
         <button
             onClick={handleCopy}
             className={`inline-flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-300 ${copied
-                    ? 'bg-[#14B8A6] text-white'
-                    : 'bg-[#F3F4F6] text-[#6B7280] hover:bg-[#E5E7EB] hover:text-[#4B5563]'
+                ? 'bg-[#14B8A6] text-white'
+                : 'bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white'
                 } ${className}`}
         >
             {copied ? (

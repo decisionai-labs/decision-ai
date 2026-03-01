@@ -60,15 +60,15 @@ export function FeaturesCardSwap() {
                     {/* Text Content */}
                     <div>
                         <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#CCFBF1] rounded-full mb-6 shadow-sm">
-                            Why NeuroSan
+                            Why Decision AI
                         </span>
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#1A1A1A] mb-6 leading-tight">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-6 leading-tight">
                             AI That Respects<br />
                             Your <span className="text-gradient">Privacy</span>
                         </h2>
-                        <p className="text-lg text-[#6B7280] mb-8 leading-relaxed">
+                        <p className="text-lg text-zinc-400 mb-8 leading-relaxed">
                             Traditional blockchain AI tools require you to share your wallet address with language models.
-                            NeuroSan changes that with a revolutionary architecture that keeps your data separate.
+                            Decision AI changes that with a revolutionary architecture that keeps your data separate.
                         </p>
                         <ul className="space-y-4">
                             {[
@@ -116,9 +116,9 @@ export function FeaturesCardSwap() {
                                             <span className="text-white/80 text-sm font-medium">{feature.label}</span>
                                         </div>
                                         <div className="flex items-center gap-1.5">
-                                            <div className="w-3 h-3 rounded-full bg-white/20" />
-                                            <div className="w-3 h-3 rounded-full bg-white/20" />
-                                            <div className="w-3 h-3 rounded-full bg-white/20" />
+                                            <div className="w-3 h-3 rounded-full bg-[#111111]/20" />
+                                            <div className="w-3 h-3 rounded-full bg-[#111111]/20" />
+                                            <div className="w-3 h-3 rounded-full bg-[#111111]/20" />
                                         </div>
                                     </div>
                                     {/* Card content */}

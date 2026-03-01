@@ -38,12 +38,7 @@ export function Newsletter() {
     return (
         <section ref={sectionRef} className="py-20 px-6 relative overflow-hidden">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A] via-[#1F2937] to-[#1A1A1A]" />
-
-            {/* Animated gradient overlay */}
-            <div className="absolute inset-0 opacity-30">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#14B8A6]/20 via-transparent to-[#8B5CF6]/20" />
-            </div>
+            <div className="absolute inset-0 bg-[#111111]" />
 
             {/* Grid pattern */}
             <div
@@ -57,11 +52,6 @@ export function Newsletter() {
                 }}
             />
 
-            {/* Floating particles */}
-            <div className="absolute top-10 left-10 w-2 h-2 rounded-full bg-[#14B8A6] animate-float opacity-60" />
-            <div className="absolute top-20 right-20 w-3 h-3 rounded-full bg-[#8B5CF6] animate-float-slow opacity-40" />
-            <div className="absolute bottom-10 left-1/4 w-2 h-2 rounded-full bg-[#F59E0B] animate-float-delayed opacity-50" />
-
             <div className="max-w-xl mx-auto relative z-10">
                 <div className={`text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     {/* Icon */}
@@ -74,7 +64,7 @@ export function Newsletter() {
                     <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-3">
                         Stay Updated
                     </h3>
-                    <p className="text-[#9CA3AF] mb-8">
+                    <p className="text-zinc-500 mb-8">
                         Get notified about new features, chain integrations, and privacy updates.
                     </p>
 
@@ -85,7 +75,7 @@ export function Newsletter() {
                                 placeholder="Enter your email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-[#14B8A6] focus:ring-[#14B8A6]/30"
+                                className="flex-1 bg-[#111111]/10 border-white/20 text-white placeholder:text-white/50 focus:border-[#14B8A6] focus:ring-[#14B8A6]/30"
                                 required
                             />
                             <Button type="submit" className="btn-glow whitespace-nowrap">
@@ -106,7 +96,7 @@ export function Newsletter() {
                         </div>
                     )}
 
-                    <p className="mt-4 text-xs text-[#6B7280]">
+                    <p className="mt-4 text-xs text-zinc-400">
                         No spam, ever. Unsubscribe anytime.
                     </p>
                 </div>

@@ -50,7 +50,7 @@ COPYRIGHT_FILE="${TOP_LEVEL}/build_scripts/source_available_copyright.txt"
 PYTHON_OUT=${TOP_LEVEL}
 
 # Configuration values for OpenAPI specification document
-SERVICE_TITLE=NeuroSan
+SERVICE_TITLE=DecisionAI
 SERVICE_VERSION=0.0.1
 
 # Requirements:

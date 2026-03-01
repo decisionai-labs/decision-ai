@@ -5,7 +5,7 @@
 #
 # This needs to be run from the top-level directory
 
-export SERVICE_NAME="NeuroSan"
+export SERVICE_NAME="DecisionAI"
 export SERVICE_DIR=neuro-san
 export SERVICE_TAG=neuro-san
 export SERVICE_VERSION=0.0.1

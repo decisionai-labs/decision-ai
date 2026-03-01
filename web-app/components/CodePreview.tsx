@@ -39,10 +39,10 @@ response = agent.ask("What is my SOL balance?")
 print(response)
 # Output: "Your balance is 5.24 SOL"`;
 
-    const typescriptCode = `import { NeuroSanClient } from '@neurosan/sdk';
+    const typescriptCode = `import { DecisionAIClient } from '@decision-ai/sdk';
 
 // Initialize the client
-const client = new NeuroSanClient();
+const client = new DecisionAIClient();
 
 // Connect wallet - stored in sly_data
 // The AI model NEVER accesses this directly
@@ -62,7 +62,7 @@ console.log(response);`;
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     {/* Code block */}
                     <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
-                        <div className="rounded-2xl overflow-hidden shadow-2xl shadow-[#000]/10 border border-[#E5E7EB]">
+                        <div className="rounded-2xl overflow-hidden shadow-2xl shadow-[#000]/10 border border-white/10">
                             {/* Code header */}
                             <div className="flex items-center justify-between px-4 py-3 bg-[#1F2937] border-b border-[#374151]">
                                 <div className="flex items-center gap-2">
@@ -77,7 +77,7 @@ console.log(response);`;
                                         onClick={() => setActiveTab('python')}
                                         className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${activeTab === 'python'
                                             ? 'bg-[#1F2937] text-white'
-                                            : 'text-[#9CA3AF] hover:text-white'
+                                            : 'text-zinc-500 hover:text-white'
                                             }`}
                                     >
                                         Python
@@ -86,13 +86,13 @@ console.log(response);`;
                                         onClick={() => setActiveTab('typescript')}
                                         className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${activeTab === 'typescript'
                                             ? 'bg-[#1F2937] text-white'
-                                            : 'text-[#9CA3AF] hover:text-white'
+                                            : 'text-zinc-500 hover:text-white'
                                             }`}
                                     >
                                         TypeScript
                                     </button>
                                 </div>
-                                <div className="text-xs text-[#6B7280]">example.{activeTab === 'python' ? 'py' : 'ts'}</div>
+                                <div className="text-xs text-zinc-400">example.{activeTab === 'python' ? 'py' : 'ts'}</div>
                             </div>
 
                             {/* Code content */}
@@ -106,15 +106,15 @@ console.log(response);`;
                                                 <span className="text-[#C084FC]">import</span>{' '}
                                                 <span className="text-[#67E8F9]">SolanaAgent</span>
                                                 {'\n\n'}
-                                                <span className="text-[#6B7280]"># Initialize the agent with sly_data</span>
+                                                <span className="text-zinc-400"># Initialize the agent with sly_data</span>
                                                 {'\n'}
                                                 <span className="text-[#E5E7EB]">agent = </span>
                                                 <span className="text-[#67E8F9]">SolanaAgent</span>
                                                 <span className="text-[#FDE047]">()</span>
                                                 {'\n\n'}
-                                                <span className="text-[#6B7280]"># Wallet address is stored securely in sly_data</span>
+                                                <span className="text-zinc-400"># Wallet address is stored securely in sly_data</span>
                                                 {'\n'}
-                                                <span className="text-[#6B7280]"># The AI model NEVER sees this value</span>
+                                                <span className="text-zinc-400"># The AI model NEVER sees this value</span>
                                                 {'\n'}
                                                 <span className="text-[#E5E7EB]">agent.</span>
                                                 <span className="text-[#86EFAC]">set_wallet</span>
@@ -122,7 +122,7 @@ console.log(response);`;
                                                 <span className="text-[#FCA5A5]">"7xKXtg...AsU"</span>
                                                 <span className="text-[#FDE047]">)</span>
                                                 {'\n\n'}
-                                                <span className="text-[#6B7280]"># Query blockchain data naturally</span>
+                                                <span className="text-zinc-400"># Query blockchain data naturally</span>
                                                 {'\n'}
                                                 <span className="text-[#E5E7EB]">response = agent.</span>
                                                 <span className="text-[#86EFAC]">ask</span>
@@ -135,30 +135,30 @@ console.log(response);`;
                                                 <span className="text-[#E5E7EB]">response</span>
                                                 <span className="text-[#FDE047]">)</span>
                                                 {'\n'}
-                                                <span className="text-[#6B7280]"># Output: "Your balance is 5.24 SOL"</span>
+                                                <span className="text-zinc-400"># Output: "Your balance is 5.24 SOL"</span>
                                             </>
                                         ) : (
                                             <>
                                                 <span className="text-[#C084FC]">import</span>{' '}
                                                 <span className="text-[#FDE047]">{'{ '}</span>
-                                                <span className="text-[#67E8F9]">NeuroSanClient</span>
+                                                <span className="text-[#67E8F9]">DecisionAIClient</span>
                                                 <span className="text-[#FDE047]">{' }'}</span>{' '}
                                                 <span className="text-[#C084FC]">from</span>{' '}
-                                                <span className="text-[#FCA5A5]">'@neurosan/sdk'</span>
+                                                <span className="text-[#FCA5A5]">'@decision-ai/sdk'</span>
                                                 <span className="text-[#E5E7EB]">;</span>
                                                 {'\n\n'}
-                                                <span className="text-[#6B7280]">// Initialize the client</span>
+                                                <span className="text-zinc-400">// Initialize the client</span>
                                                 {'\n'}
                                                 <span className="text-[#C084FC]">const</span>{' '}
                                                 <span className="text-[#E5E7EB]">client = </span>
                                                 <span className="text-[#C084FC]">new</span>{' '}
-                                                <span className="text-[#67E8F9]">NeuroSanClient</span>
+                                                <span className="text-[#67E8F9]">DecisionAIClient</span>
                                                 <span className="text-[#FDE047]">()</span>
                                                 <span className="text-[#E5E7EB]">;</span>
                                                 {'\n\n'}
-                                                <span className="text-[#6B7280]">// Connect wallet - stored in sly_data</span>
+                                                <span className="text-zinc-400">// Connect wallet - stored in sly_data</span>
                                                 {'\n'}
-                                                <span className="text-[#6B7280]">// The AI model NEVER accesses this directly</span>
+                                                <span className="text-zinc-400">// The AI model NEVER accesses this directly</span>
                                                 {'\n'}
                                                 <span className="text-[#C084FC]">await</span>{' '}
                                                 <span className="text-[#E5E7EB]">client.</span>
@@ -168,7 +168,7 @@ console.log(response);`;
                                                 <span className="text-[#FDE047]">)</span>
                                                 <span className="text-[#E5E7EB]">;</span>
                                                 {'\n\n'}
-                                                <span className="text-[#6B7280]">// Natural language queries</span>
+                                                <span className="text-zinc-400">// Natural language queries</span>
                                                 {'\n'}
                                                 <span className="text-[#C084FC]">const</span>{' '}
                                                 <span className="text-[#E5E7EB]">response = </span>
@@ -201,24 +201,24 @@ console.log(response);`;
                         <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#CCFBF1] rounded-full mb-6">
                             Developer Experience
                         </span>
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-[#1A1A1A] mb-6 leading-tight">
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-6 leading-tight">
                             Simple API.<br />
                             <span className="text-gradient">Powerful Privacy.</span>
                         </h2>
-                        <p className="text-lg text-[#6B7280] mb-8 leading-relaxed">
+                        <p className="text-lg text-zinc-400 mb-8 leading-relaxed">
                             Get started with just a few lines of code. Our SDK handles all the complexity of
                             secure data isolation, RPC connections, and multi-agent orchestration.
                         </p>
 
                         <div className="space-y-4">
                             {[
-                                { icon: <FaBolt />, text: 'Quick Start: npm install @neurosan/sdk' },
+                                { icon: <FaBolt />, text: 'Quick Start: npm install @decision-ai/sdk' },
                                 { icon: <FaLock />, text: 'Automatic sly_data isolation' },
                                 { icon: <FaBook />, text: 'Comprehensive documentation and examples' },
                             ].map((item, index) => (
                                 <div
                                     key={index}
-                                    className={`flex items-center gap-3 p-4 bg-white rounded-xl border border-[#E5E7EB] hover:border-[#14B8A6]/30 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                                    className={`flex items-center gap-3 p-4 bg-[#111111] rounded-xl border border-white/10 hover:border-[#14B8A6]/30 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
                                     style={{ transitionDelay: `${400 + index * 100}ms` }}
                                 >
                                     <span className="text-xl">{item.icon}</span>

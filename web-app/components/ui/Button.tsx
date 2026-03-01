@@ -24,13 +24,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         focus-visible:ring-[#14B8A6]
       `,
       secondary: `
-        bg-white text-[#1A1A1A] border border-[#E5E7EB]
-        hover:bg-[#F3F4F6] hover:border-[#D1D5DB]
+        bg-[#111111] text-white border border-white/10
+        hover:bg-white/5 hover:border-white/20
         focus-visible:ring-[#14B8A6]
       `,
       ghost: `
-        text-[#6B7280]
-        hover:text-[#1A1A1A] hover:bg-[#F3F4F6]
+        text-zinc-400
+        hover:text-white hover:bg-white/5
         focus-visible:ring-[#14B8A6]
       `,
     };

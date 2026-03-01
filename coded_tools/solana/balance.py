@@ -1,5 +1,5 @@
 """
-Solana balance checking coded tool for NeuroSanSolana.
+Solana balance checking coded tool for Decision AI.
 Privacy Hack hackathon submission - solana.com/privacyhack
 """
 from typing import Any, Dict

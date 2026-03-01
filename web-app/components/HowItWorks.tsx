@@ -58,17 +58,17 @@ export function HowItWorks() {
     }, []);
 
     return (
-        <section id="how-it-works" ref={sectionRef} className="py-24 px-6 bg-white relative overflow-hidden">
+        <section id="how-it-works" ref={sectionRef} className="py-24 px-6 bg-[#111111] relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute inset-0 bg-gradient-mesh opacity-50" />
 
             <div className="max-w-6xl mx-auto relative z-10">
                 {/* Header */}
                 <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A1A1A] mb-4">
+                    <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
                         How It <span className="text-gradient">Works</span>
                     </h2>
-                    <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
+                    <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
                         Three simple steps to interact with Solana while keeping your wallet private.
                     </p>
                 </div>
@@ -101,10 +101,10 @@ export function HowItWorks() {
                                 </div>
 
                                 {/* Content */}
-                                <h3 className="text-xl font-semibold text-[#1A1A1A] mb-3">
+                                <h3 className="text-xl font-semibold text-white mb-3">
                                     {step.title}
                                 </h3>
-                                <p className="text-[#6B7280] leading-relaxed">
+                                <p className="text-zinc-400 leading-relaxed">
                                     {step.description}
                                 </p>
                             </Card>

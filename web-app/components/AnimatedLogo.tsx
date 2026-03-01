@@ -30,7 +30,7 @@ export function AnimatedLogo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
                 </svg>
 
                 {/* Pulse effect */}
-                <div className="absolute inset-0 rounded-xl bg-white/20 animate-ping opacity-20" />
+                <div className="absolute inset-0 rounded-xl bg-[#111111]/20 animate-ping opacity-20" />
             </div>
         </div>
     );

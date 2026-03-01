@@ -41,7 +41,7 @@ function DockItem({ children, className = '', onClick, mouseX, spring, distance,
             onFocus={() => isHovered.set(1)}
             onBlur={() => isHovered.set(0)}
             onClick={onClick}
-            className={`relative inline-flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm border border-[#E5E7EB] shadow-lg hover:shadow-xl transition-shadow ${className}`}
+            className={`relative inline-flex items-center justify-center rounded-full bg-[#111111]/90 backdrop-blur-sm border border-white/10 shadow-lg hover:shadow-xl transition-shadow ${className}`}
             tabIndex={0}
             role="button"
             aria-haspopup="true"
@@ -76,7 +76,7 @@ function DockLabel({ children, className = '', isHovered }: DockLabelProps) {
                     animate={{ opacity: 1, y: -10 }}
                     exit={{ opacity: 0, y: 0 }}
                     transition={{ duration: 0.2 }}
-                    className={`${className} absolute -top-8 left-1/2 w-fit whitespace-pre rounded-lg border border-[#E5E7EB] bg-white px-3 py-1 text-xs font-medium text-[#1A1A1A] shadow-md`}
+                    className={`${className} absolute -top-8 left-1/2 w-fit whitespace-pre rounded-lg border border-white/10 bg-[#111111] px-3 py-1 text-xs font-medium text-white shadow-md`}
                     role="tooltip"
                     style={{ x: '-50%' }}
                 >
@@ -146,7 +146,7 @@ export function Dock({
                     isHovered.set(0);
                     mouseX.set(Infinity);
                 }}
-                className={`${className} absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-end w-fit gap-3 rounded-2xl border border-[#E5E7EB] bg-white/80 backdrop-blur-md pb-3 px-4 shadow-xl`}
+                className={`${className} absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-end w-fit gap-3 rounded-2xl border border-white/10 bg-[#111111]/80 backdrop-blur-md pb-3 px-4 shadow-xl`}
                 style={{ height: panelHeight }}
                 role="toolbar"
                 aria-label="Application dock"

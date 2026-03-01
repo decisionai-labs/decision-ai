@@ -1,5 +1,5 @@
 """
-Solana transaction history tool for NeuroSanSolana.
+Solana transaction history tool for Decision AI.
 Privacy Hack hackathon submission - solana.com/privacyhack
 """
 from datetime import datetime

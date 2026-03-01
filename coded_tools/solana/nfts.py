@@ -1,5 +1,5 @@
 """
-Solana NFT discovery tool for NeuroSanSolana.
+Solana NFT discovery tool for Decision AI.
 Privacy Hack hackathon submission - solana.com/privacyhack
 """
 from typing import Any, Dict

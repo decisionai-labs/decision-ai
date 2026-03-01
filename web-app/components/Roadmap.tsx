@@ -91,20 +91,20 @@ export function Roadmap() {
                     badge: 'bg-[#F59E0B]/10 text-[#F59E0B] border-[#F59E0B]/20',
                     dot: 'bg-[#F59E0B]',
                     line: 'bg-[#E5E7EB]',
-                    card: 'border-[#E5E7EB]',
+                    card: 'border-white/10',
                 };
             default:
                 return {
-                    badge: 'bg-[#6B7280]/10 text-[#6B7280] border-[#6B7280]/20',
+                    badge: 'bg-[#6B7280]/10 text-zinc-400 border-[#6B7280]/20',
                     dot: 'bg-[#9CA3AF]',
                     line: 'bg-[#E5E7EB]',
-                    card: 'border-[#E5E7EB]',
+                    card: 'border-white/10',
                 };
         }
     };
 
     return (
-        <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden bg-white">
+        <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden bg-[#111111]">
             {/* Background decoration */}
             <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#FAFAF8] to-transparent" />
 
@@ -114,10 +114,10 @@ export function Roadmap() {
                     <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#CCFBF1] rounded-full mb-6">
                         What's Next
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A1A1A] mb-4">
+                    <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
                         Product <span className="text-gradient">Roadmap</span>
                     </h2>
-                    <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
+                    <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
                         Our vision for the future of privacy-preserving blockchain AI.
                     </p>
                 </div>
@@ -145,7 +145,7 @@ export function Roadmap() {
                                 </div>
 
                                 {/* Card */}
-                                <div className={`bg-white rounded-2xl border p-6 h-full ${styles.card}`}>
+                                <div className={`bg-[#111111] rounded-2xl border p-6 h-full ${styles.card}`}>
                                     {/* Quarter badge */}
                                     <div className="flex items-center justify-between mb-4">
                                         <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${styles.badge}`}>
@@ -161,15 +161,15 @@ export function Roadmap() {
                                         )}
                                     </div>
 
-                                    <h3 className="text-lg font-semibold text-[#1A1A1A] mb-4">{item.title}</h3>
+                                    <h3 className="text-lg font-semibold text-white mb-4">{item.title}</h3>
 
                                     <ul className="space-y-2">
                                         {item.items.map((feature, featureIndex) => (
-                                            <li key={featureIndex} className="flex items-start gap-2 text-sm text-[#6B7280]">
+                                            <li key={featureIndex} className="flex items-start gap-2 text-sm text-zinc-400">
                                                 <svg className={`w-4 h-4 mt-0.5 flex-shrink-0 ${item.status === 'completed' ? 'text-[#14B8A6]' : 'text-[#D1D5DB]'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
-                                                <span className={item.status === 'completed' ? 'line-through text-[#9CA3AF]' : ''}>
+                                                <span className={item.status === 'completed' ? 'line-through text-zinc-500' : ''}>
                                                     {feature}
                                                 </span>
                                             </li>

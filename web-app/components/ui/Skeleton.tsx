@@ -11,7 +11,7 @@ export function Skeleton({ className = '' }: { className?: string }) {
 
 export function CardSkeleton() {
     return (
-        <div className="bg-white rounded-2xl border border-[#E5E7EB] p-6 space-y-4">
+        <div className="bg-[#111111] rounded-2xl border border-white/10 p-6 space-y-4">
             <Skeleton className="h-12 w-12 rounded-xl" />
             <Skeleton className="h-6 w-3/4" />
             <Skeleton className="h-4 w-full" />
@@ -24,7 +24,7 @@ export function ChatMessageSkeleton({ isAgent = true }: { isAgent?: boolean }) {
     return (
         <div className={`flex ${isAgent ? 'justify-start' : 'justify-end'}`}>
             <div className={`max-w-[80%] rounded-2xl px-5 py-4 ${isAgent
-                    ? 'bg-white border border-[#E5E7EB]'
+                    ? 'bg-[#111111] border border-white/10'
                     : 'bg-gradient-to-br from-[#14B8A6]/20 to-[#0D9488]/20'
                 }`}>
                 <div className="space-y-2">

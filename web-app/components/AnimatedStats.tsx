@@ -38,7 +38,7 @@ export function AnimatedStats() {
     }, []);
 
     return (
-        <section ref={sectionRef} className="py-16 px-6 border-y border-[#E5E7EB] bg-white/50">
+        <section ref={sectionRef} className="py-16 px-6 border-y border-white/10 bg-[#111111]/50">
             <div className="max-w-6xl mx-auto">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                     {stats.map((stat, index) => (
@@ -48,7 +48,7 @@ export function AnimatedStats() {
                                 }`}
                             style={{ transitionDelay: `${index * 100}ms` }}
                         >
-                            <div className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-2">
+                            <div className="text-4xl md:text-5xl font-bold text-white mb-2">
                                 <AnimatedNumber
                                     value={stat.value}
                                     suffix={stat.suffix}
@@ -56,7 +56,7 @@ export function AnimatedStats() {
                                     delay={index * 100}
                                 />
                             </div>
-                            <div className="text-sm text-[#6B7280]">{stat.label}</div>
+                            <div className="text-sm text-zinc-400">{stat.label}</div>
                         </div>
                     ))}
                 </div>

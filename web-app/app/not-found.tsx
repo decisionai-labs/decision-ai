@@ -2,13 +2,13 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 
 export const metadata = {
-    title: '404 - Page Not Found | NeuroSan',
+    title: '404 - Page Not Found | Decision AI',
     description: 'The page you are looking for does not exist.',
 };
 
 export default function NotFound() {
     return (
-        <main className="min-h-screen bg-[#FAFAF8] flex items-center justify-center px-6 relative overflow-hidden">
+        <main className="min-h-screen bg-black flex items-center justify-center px-6 relative overflow-hidden">
             {/* Background decorations */}
             <div className="absolute inset-0">
                 <div
@@ -41,10 +41,10 @@ export default function NotFound() {
                 </div>
 
                 {/* Message */}
-                <h1 className="text-2xl sm:text-3xl font-semibold text-[#1A1A1A] mb-4">
+                <h1 className="text-2xl sm:text-3xl font-semibold text-white mb-4">
                     Page Not Found
                 </h1>
-                <p className="text-lg text-[#6B7280] mb-8 leading-relaxed">
+                <p className="text-lg text-zinc-400 mb-8 leading-relaxed">
                     The page you're looking for doesn't exist or has been moved.
                     Let's get you back on track.
                 </p>
@@ -67,8 +67,8 @@ export default function NotFound() {
                 </div>
 
                 {/* Fun fact */}
-                <div className="mt-12 p-4 bg-white/80 backdrop-blur-sm rounded-xl border border-[#E5E7EB] inline-block">
-                    <p className="text-sm text-[#6B7280]">
+                <div className="mt-12 p-4 bg-[#111111]/80 backdrop-blur-sm rounded-xl border border-white/10 inline-block">
+                    <p className="text-sm text-zinc-400">
                         <span className="text-[#14B8A6]">Fun fact:</span> Even our 404 page protects your privacy
                     </p>
                 </div>

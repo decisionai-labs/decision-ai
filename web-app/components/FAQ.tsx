@@ -8,24 +8,24 @@ const faqs = [
         answer: 'sly_data is our proprietary privacy architecture that creates a secure, encrypted channel for sensitive data like wallet addresses. The AI language model can never access or see this data directly - only authorized tools can read from sly_data to fetch blockchain information. This means your wallet address never appears in AI prompts or responses.',
     },
     {
-        question: 'Do I need to install anything to use NeuroSan?',
-        answer: 'No installation required! You can use our web demo instantly by just connecting your wallet. For developers who want to integrate NeuroSan into their own applications, we provide SDKs for Python and TypeScript that can be installed via pip or npm.',
+        question: 'Do I need to install anything to use Decision AI?',
+        answer: 'No installation required! You can use our web demo instantly by just connecting your wallet. For developers who want to integrate Decision AI into their own applications, we provide SDKs for Python and TypeScript that can be installed via pip or npm.',
     },
     {
         question: 'Which Solana data can I query?',
-        answer: 'NeuroSan supports querying SOL balances, SPL token holdings with metadata, transaction history, NFT collections, and more. Our tools connect directly to Solana RPC endpoints for real-time data. You can use natural language like "What\'s my balance?" or "Show my recent transactions."',
+        answer: 'Decision AI supports querying SOL balances, SPL token holdings with metadata, transaction history, NFT collections, and more. Our tools connect directly to Solana RPC endpoints for real-time data. You can use natural language like "What\'s my balance?" or "Show my recent transactions."',
     },
     {
-        question: 'Is NeuroSan open source?',
-        answer: 'Yes! NeuroSan is fully open source under the MIT license. You can view the source code, contribute improvements, or fork it for your own projects on GitHub. We believe in transparency, especially when it comes to privacy-sensitive applications.',
+        question: 'Is Decision AI open source?',
+        answer: 'Yes! Decision AI is fully open source under the MIT license. You can view the source code, contribute improvements, or fork it for your own projects on GitHub. We believe in transparency, especially when it comes to privacy-sensitive applications.',
     },
     {
         question: 'How is this different from other blockchain AI tools?',
-        answer: 'Most blockchain AI tools require you to share your wallet address directly with the AI model. NeuroSan is built from the ground up with privacy as a core principle. The sly_data architecture ensures complete separation between your sensitive data and the AI, while still enabling powerful natural language queries.',
+        answer: 'Most blockchain AI tools require you to share your wallet address directly with the AI model. Decision AI is built from the ground up with privacy as a core principle. The sly_data architecture ensures complete separation between your sensitive data and the AI, while still enabling powerful natural language queries.',
     },
     {
-        question: 'Can I use NeuroSan with other blockchains?',
-        answer: 'Currently, NeuroSan is optimized for Solana. However, the underlying NeuroSAN multi-agent framework from Cognizant is chain-agnostic. We\'re exploring support for other blockchains in future releases. Join our community to stay updated on new chain integrations.',
+        question: 'Can I use Decision AI with other blockchains?',
+        answer: 'Currently, Decision AI is optimized for Solana. However, the underlying multi-agent framework is chain-agnostic. We\'re exploring support for other blockchains in future releases. Join our community to stay updated on new chain integrations.',
     },
 ];
 
@@ -64,11 +64,11 @@ export function FAQ() {
                     <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#CCFBF1] rounded-full mb-6">
                         Got Questions?
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A1A1A] mb-4">
+                    <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
                         Frequently Asked <span className="text-gradient">Questions</span>
                     </h2>
-                    <p className="text-lg text-[#6B7280]">
-                        Everything you need to know about NeuroSan and privacy-preserving AI.
+                    <p className="text-lg text-zinc-400">
+                        Everything you need to know about Decision AI and privacy-preserving AI.
                     </p>
                 </div>
 
@@ -81,22 +81,22 @@ export function FAQ() {
                             style={{ transitionDelay: `${100 + index * 75}ms` }}
                         >
                             <div
-                                className={`bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${openIndex === index
-                                        ? 'border-[#14B8A6]/30 shadow-lg shadow-[#14B8A6]/5'
-                                        : 'border-[#E5E7EB] hover:border-[#D1D5DB]'
+                                className={`bg-[#111111] rounded-2xl border transition-all duration-300 overflow-hidden ${openIndex === index
+                                    ? 'border-[#14B8A6]/30 shadow-lg shadow-[#14B8A6]/5'
+                                    : 'border-white/10 hover:border-[#D1D5DB]'
                                     }`}
                             >
                                 <button
                                     onClick={() => setOpenIndex(openIndex === index ? null : index)}
                                     className="w-full px-6 py-5 flex items-center justify-between text-left"
                                 >
-                                    <span className={`font-semibold transition-colors ${openIndex === index ? 'text-[#14B8A6]' : 'text-[#1A1A1A]'
+                                    <span className={`font-semibold transition-colors ${openIndex === index ? 'text-[#14B8A6]' : 'text-white'
                                         }`}>
                                         {faq.question}
                                     </span>
                                     <div className={`flex-shrink-0 ml-4 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${openIndex === index
-                                            ? 'bg-[#14B8A6] text-white rotate-180'
-                                            : 'bg-[#F3F4F6] text-[#6B7280]'
+                                        ? 'bg-[#14B8A6] text-white rotate-180'
+                                        : 'bg-[#F3F4F6] text-zinc-400'
                                         }`}>
                                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -105,7 +105,7 @@ export function FAQ() {
                                 </button>
                                 <div className={`overflow-hidden transition-all duration-300 ${openIndex === index ? 'max-h-96' : 'max-h-0'
                                     }`}>
-                                    <div className="px-6 pb-5 text-[#6B7280] leading-relaxed border-t border-[#F3F4F6] pt-4">
+                                    <div className="px-6 pb-5 text-zinc-400 leading-relaxed border-t border-[#F3F4F6] pt-4">
                                         {faq.answer}
                                     </div>
                                 </div>

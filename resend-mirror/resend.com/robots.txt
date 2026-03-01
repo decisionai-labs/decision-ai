@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://resend.com/sitemap_index.xml
+Host: https://resend.com

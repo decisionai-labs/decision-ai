@@ -29,7 +29,7 @@ export function GradientBorder({
             />
 
             {/* Content container */}
-            <div className="relative bg-white rounded-[14px] overflow-hidden">
+            <div className="relative bg-[#111111] rounded-[14px] overflow-hidden">
                 {children}
             </div>
         </div>

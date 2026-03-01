@@ -9,7 +9,7 @@ export function HomeDock() {
 
     const items: DockItemConfig[] = [
         {
-            icon: <VscHome size={22} className="text-[#1A1A1A]" />,
+            icon: <VscHome size={22} className="text-white" />,
             label: 'Home',
             onClick: () => router.push('/')
         },
@@ -24,7 +24,7 @@ export function HomeDock() {
             onClick: () => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
         },
         {
-            icon: <VscGithubInverted size={22} className="text-[#1A1A1A]" />,
+            icon: <VscGithubInverted size={22} className="text-white" />,
             label: 'GitHub',
             onClick: () => window.open('https://github.com/NeuroSolanaAgents/neurosan', '_blank')
         },

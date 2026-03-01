@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export function Footer() {
     return (
-        <footer className="relative py-16 px-6 border-t border-[#E5E7EB] overflow-hidden">
+        <footer className="relative py-16 px-6 border-t border-white/10 overflow-hidden">
             {/* Gradient top border */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#14B8A6] to-transparent" />
 
@@ -31,11 +31,11 @@ export function Footer() {
                                         />
                                     </svg>
                                 </div>
-                                <span className="font-semibold text-lg text-[#1A1A1A] group-hover:text-[#14B8A6] transition-colors">
-                                    NeuroSan
+                                <span className="font-semibold text-lg text-white group-hover:text-[#14B8A6] transition-colors">
+                                    Decision AI
                                 </span>
                             </Link>
-                            <p className="text-sm text-[#6B7280] text-center md:text-left max-w-xs">
+                            <p className="text-sm text-zinc-400 text-center md:text-left max-w-xs">
                                 Privacy-preserving AI for Solana blockchain
                             </p>
                         </div>
@@ -51,7 +51,7 @@ export function Footer() {
                                     key={link.href}
                                     href={link.href}
                                     target="_blank"
-                                    className="relative text-sm text-[#6B7280] hover:text-[#1A1A1A] transition-colors group"
+                                    className="relative text-sm text-zinc-400 hover:text-white transition-colors group"
                                 >
                                     {link.label}
                                     <span className="absolute -bottom-1 left-0 w-full h-px bg-[#14B8A6] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
@@ -66,12 +66,12 @@ export function Footer() {
                     {/* Bottom Row - Copyright and social */}
                     <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                         {/* Copyright */}
-                        <div className="flex items-center gap-2 text-sm text-[#9CA3AF]">
+                        <div className="flex items-center gap-2 text-sm text-zinc-500">
                             <span>© 2025</span>
                             <Link
                                 href="https://github.com/NeuroSolanaAgents"
                                 target="_blank"
-                                className="hover:text-[#6B7280] transition-colors"
+                                className="hover:text-zinc-400 transition-colors"
                             >
                                 NeuroSolanaAgents
                             </Link>
@@ -79,11 +79,11 @@ export function Footer() {
 
                         {/* Team & Social */}
                         <div className="flex items-center gap-4 text-sm">
-                            <span className="text-[#9CA3AF]">From</span>
+                            <span className="text-zinc-500">From</span>
                             <Link
                                 href="https://github.com/cognizant-ai-lab"
                                 target="_blank"
-                                className="text-[#6B7280] hover:text-[#1A1A1A] transition-colors font-medium"
+                                className="text-zinc-400 hover:text-white transition-colors font-medium"
                             >
                                 cognizant-ai-lab
                             </Link>
@@ -91,7 +91,7 @@ export function Footer() {
                             <Link
                                 href="https://twitter.com/decision__ai"
                                 target="_blank"
-                                className="text-[#6B7280] hover:text-[#1A1A1A] transition-colors flex items-center gap-1.5 group"
+                                className="text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 group"
                             >
                                 <svg className="w-4 h-4 transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />

@@ -12,7 +12,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         return (
             <div className="relative w-full">
                 {icon && (
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none">
                         {icon}
                     </div>
                 )}
@@ -21,8 +21,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     className={`
                         w-full px-4 py-3 
                         ${icon ? 'pl-10' : ''}
-                        bg-white border border-[#E5E7EB] rounded-xl
-                        text-[#1A1A1A] placeholder:text-[#9CA3AF]
+                        bg-[#111111] border border-white/10 rounded-xl
+                        text-white placeholder:text-zinc-500
                         transition-all duration-200
                         focus:outline-none focus:ring-2 focus:ring-[#14B8A6]/30 focus:border-[#14B8A6]
                         hover:border-[#D1D5DB]

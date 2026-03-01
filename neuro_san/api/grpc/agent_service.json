@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "NeuroSan",
+    "title": "Decision AI",
     "version": "0.0.1"
   },
   "paths": {

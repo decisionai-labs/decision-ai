@@ -98,10 +98,10 @@ export function Integrations() {
                     <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#CCFBF1] rounded-full mb-6">
                         Ecosystem Ready
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A1A1A] mb-4">
+                    <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
                         Works With Your Favorite <span className="text-gradient">Protocols</span>
                     </h2>
-                    <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
+                    <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
                         Query data from the top Solana protocols without exposing your wallet address.
                     </p>
                 </div>
@@ -111,7 +111,7 @@ export function Integrations() {
                     {integrations.map((integration, index) => (
                         <div
                             key={integration.name}
-                            className={`group relative bg-white rounded-2xl border border-[#E5E7EB] p-6 text-center hover:border-[#14B8A6]/30 hover:shadow-lg hover:shadow-[#14B8A6]/5 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                            className={`group relative bg-[#111111] rounded-2xl border border-white/10 p-6 text-center hover:border-[#14B8A6]/30 hover:shadow-lg hover:shadow-[#14B8A6]/5 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
                             style={{ transitionDelay: `${100 + index * 75}ms` }}
                         >
                             {/* Logo */}
@@ -120,10 +120,10 @@ export function Integrations() {
                             </div>
 
                             {/* Name */}
-                            <h3 className="font-semibold text-[#1A1A1A] mb-2">{integration.name}</h3>
+                            <h3 className="font-semibold text-white mb-2">{integration.name}</h3>
 
                             {/* Description */}
-                            <p className="text-sm text-[#6B7280]">{integration.description}</p>
+                            <p className="text-sm text-zinc-400">{integration.description}</p>
 
                             {/* Hover glow */}
                             <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-[#14B8A6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -132,7 +132,7 @@ export function Integrations() {
                 </div>
 
                 {/* More coming */}
-                <p className={`text-center mt-10 text-[#9CA3AF] transition-all duration-700 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                <p className={`text-center mt-10 text-zinc-500 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
                     ...and many more coming soon. <Link href="https://github.com/NeuroSolanaAgents/neurosan" className="text-[#14B8A6] hover:underline" target="_blank">Request an integration →</Link>
                 </p>
             </div>

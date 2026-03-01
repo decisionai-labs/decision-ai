@@ -78,13 +78,13 @@ export function Hero() {
                 </div>
 
                 {/* Headline with animated gradient text */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#1A1A1A] mb-6 animate-fade-in-up stagger-2">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-white mb-6 animate-fade-in-up stagger-2">
                     AI That Respects Your{' '}
                     <span className="text-gradient inline-block">Privacy</span>
                 </h1>
 
                 {/* Subtitle with enhanced styling */}
-                <p className="text-lg sm:text-xl text-[#6B7280] max-w-2xl mx-auto mb-10 animate-fade-in-up stagger-3 leading-relaxed">
+                <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 animate-fade-in-up stagger-3 leading-relaxed">
                     Build intelligent Solana agents that never see your wallet address.
                     Your data stays private through our{' '}
                     <code className="px-2 py-1 bg-[#14B8A6]/10 text-[#0D9488] rounded-md text-sm font-mono">
@@ -128,9 +128,9 @@ export function Hero() {
 
                 {/* Enhanced scroll indicator */}
                 <div className="mt-20 flex flex-col items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.6s', opacity: 0 }}>
-                    <span className="text-xs text-[#9CA3AF] uppercase tracking-widest">Scroll to explore</span>
+                    <span className="text-xs text-zinc-500 uppercase tracking-widest">Scroll to explore</span>
                     <div className="relative">
-                        <div className="w-6 h-10 rounded-full border-2 border-[#E5E7EB] flex items-start justify-center p-1">
+                        <div className="w-6 h-10 rounded-full border-2 border-white/10 flex items-start justify-center p-1">
                             <div className="w-1.5 h-3 rounded-full bg-[#14B8A6] animate-bounce-subtle" />
                         </div>
                     </div>

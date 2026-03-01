@@ -1,0 +1,930 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Resend RSS Feed</title>
+        <link>https://resend.com/blog/index.xml</link>
+        <description>Stay up to date with the latest news and insights from the Resend team.</description>
+        <lastBuildDate>Tue, 24 Feb 2026 20:48:14 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <copyright>All rights reserved 2026, Resend</copyright>
+        <item>
+            <title><![CDATA[Welcoming Mateusz Wos, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-mateusz-wos</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-mateusz-wos</guid>
+            <pubDate>Wed, 18 Feb 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Mateusz Wos is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Incident report for February 15, 2026]]></title>
+            <link>https://resend.com/blog/incident-report-for-february-15-2026</link>
+            <guid isPermaLink="false">https://resend.com/blog/incident-report-for-february-15-2026</guid>
+            <pubDate>Mon, 16 Feb 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Detailed postmortem of the outage on February 15, 2026.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Email automation for OpenClaw]]></title>
+            <link>https://resend.com/blog/email-automation-for-openclaw-using-resend</link>
+            <guid isPermaLink="false">https://resend.com/blog/email-automation-for-openclaw-using-resend</guid>
+            <pubDate>Sun, 15 Feb 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Automate email workflows for your OpenClaw account using Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How to Create a DevTools Agent Skill]]></title>
+            <link>https://resend.com/blog/how-to-create-a-devtools-agent-skill</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-to-create-a-devtools-agent-skill</guid>
+            <pubDate>Thu, 05 Feb 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[A practical engineering guide to creating an Agent Skill for a DevTool product.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing Email Skills]]></title>
+            <link>https://resend.com/blog/introducing-email-skills</link>
+            <guid isPermaLink="false">https://resend.com/blog/introducing-email-skills</guid>
+            <pubDate>Wed, 28 Jan 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Empower your AI Agents to create, send, and manage emails.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Why You Should Embrace the Promotions Tab]]></title>
+            <link>https://resend.com/blog/why-you-should-embrace-promotions-tab-gmail</link>
+            <guid isPermaLink="false">https://resend.com/blog/why-you-should-embrace-promotions-tab-gmail</guid>
+            <pubDate>Fri, 16 Jan 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Gmail’s Promotions tab is not a penalty. It can improve engagement, protect sender reputation, and optimize long-term email performance.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Slater Smith, our new Customer Success Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-slater-smith</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-slater-smith</guid>
+            <pubDate>Wed, 14 Jan 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Slater Smith is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Do You Need a Warmup Service?]]></title>
+            <link>https://resend.com/blog/do-you-need-a-warmup-service</link>
+            <guid isPermaLink="false">https://resend.com/blog/do-you-need-a-warmup-service</guid>
+            <pubDate>Fri, 09 Jan 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Outsourcing warmup rarely works as advertised. Here's why you're better off managing it on your own.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Zá Scalon, our new Brand Designer]]></title>
+            <link>https://resend.com/blog/welcoming-za-scalon</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-za-scalon</guid>
+            <pubDate>Wed, 07 Jan 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Zá Scalon is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How Replit Built Effortless Email Sending Features]]></title>
+            <link>https://resend.com/blog/how-replit-built-effortless-email-sending-features</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-replit-built-effortless-email-sending-features</guid>
+            <pubDate>Tue, 23 Dec 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Replit built straightforward email sending features using Resend, allowing builders to focus on creating without worrying about email infrastructure.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[1,000,000 users]]></title>
+            <link>https://resend.com/blog/1-million-users</link>
+            <guid isPermaLink="false">https://resend.com/blog/1-million-users</guid>
+            <pubDate>Thu, 18 Dec 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[The journey so far and the road ahead.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Top 10 new features in 2025]]></title>
+            <link>https://resend.com/blog/new-features-in-2025</link>
+            <guid isPermaLink="false">https://resend.com/blog/new-features-in-2025</guid>
+            <pubDate>Thu, 18 Dec 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[A recap of some of the best features Resend launched this year.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Danilo Campos, our new Design Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-danilo-campos</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-danilo-campos</guid>
+            <pubDate>Mon, 08 Dec 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Danilo Campos is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How Dub Uses Webhooks to Power Features]]></title>
+            <link>https://resend.com/blog/how-dub-uses-webhooks-to-power-features</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-dub-uses-webhooks-to-power-features</guid>
+            <pubDate>Wed, 19 Nov 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Dub transforms Webhooks from simple notifications into powerful product features that drive in-app messaging and growth, sending 5 million emails each month.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Incident report for November 18, 2025]]></title>
+            <link>https://resend.com/blog/incident-report-for-november-18-2025</link>
+            <guid isPermaLink="false">https://resend.com/blog/incident-report-for-november-18-2025</guid>
+            <pubDate>Tue, 18 Nov 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Detailed postmortem of the outage on November 18, 2025.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend Forward 5: Wrap Up]]></title>
+            <link>https://resend.com/blog/resend-forward-5-wrap-up</link>
+            <guid isPermaLink="false">https://resend.com/blog/resend-forward-5-wrap-up</guid>
+            <pubDate>Mon, 10 Nov 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Everything we launched during the fifth launch week.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[One More (AI) Thing]]></title>
+            <link>https://resend.com/blog/one-more-ai-thing</link>
+            <guid isPermaLink="false">https://resend.com/blog/one-more-ai-thing</guid>
+            <pubDate>Sat, 08 Nov 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Use AI to generate subjects, preview texts, and alt texts in multiple languages.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[React Email 5.0]]></title>
+            <link>https://resend.com/blog/react-email-5</link>
+            <guid isPermaLink="false">https://resend.com/blog/react-email-5</guid>
+            <pubDate>Fri, 07 Nov 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[New updates to React Email for improved UX and DX.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Unsubscribe Topics]]></title>
+            <link>https://resend.com/blog/unsubscribe-topics</link>
+            <guid isPermaLink="false">https://resend.com/blog/unsubscribe-topics</guid>
+            <pubDate>Thu, 06 Nov 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Give your users more control over their subscription preferences.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[New Contacts Experience]]></title>
+            <link>https://resend.com/blog/new-contacts-experience</link>
+            <guid isPermaLink="false">https://resend.com/blog/new-contacts-experience</guid>
+            <pubDate>Wed, 05 Nov 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Store custom properties on your contacts, track their activity, and segment them as you need.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing Templates]]></title>
+            <link>https://resend.com/blog/introducing-templates</link>
+            <guid isPermaLink="false">https://resend.com/blog/introducing-templates</guid>
+            <pubDate>Tue, 04 Nov 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Create, edit, and send emails with Templates.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Inbound Emails]]></title>
+            <link>https://resend.com/blog/inbound-emails</link>
+            <guid isPermaLink="false">https://resend.com/blog/inbound-emails</guid>
+            <pubDate>Mon, 03 Nov 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Receive emails using webhooks. Parse content and attachments. Reply to your users.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[$3M to Make Email Safer]]></title>
+            <link>https://resend.com/blog/3-million-to-make-email-safer</link>
+            <guid isPermaLink="false">https://resend.com/blog/3-million-to-make-email-safer</guid>
+            <pubDate>Fri, 03 Oct 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Resend is committing to investing $3M to build the safest and most accessible email platform.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Hacktoberfest 2025]]></title>
+            <link>https://resend.com/blog/hacktoberfest-2025</link>
+            <guid isPermaLink="false">https://resend.com/blog/hacktoberfest-2025</guid>
+            <pubDate>Wed, 01 Oct 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Join us in celebrating open source this Hacktoberfest.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Four Ways to Hurt Your Sender Reputation]]></title>
+            <link>https://resend.com/blog/four-ways-to-hurt-your-sender-reputation</link>
+            <guid isPermaLink="false">https://resend.com/blog/four-ways-to-hurt-your-sender-reputation</guid>
+            <pubDate>Wed, 24 Sep 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Common mistakes that can hurt your email deliverability.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend MCP Hackathon]]></title>
+            <link>https://resend.com/blog/resend-mcp-hackathon</link>
+            <guid isPermaLink="false">https://resend.com/blog/resend-mcp-hackathon</guid>
+            <pubDate>Wed, 17 Sep 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Explore the creative limits of using the Resend MCP to send emails]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Christina Martinez, our new Developer Experience Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-christina-martinez</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-christina-martinez</guid>
+            <pubDate>Mon, 15 Sep 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Christina Martinez is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How to read a DMARC report]]></title>
+            <link>https://resend.com/blog/how-to-read-a-dmarc-report</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-to-read-a-dmarc-report</guid>
+            <pubDate>Thu, 11 Sep 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Learn how to read DMARC reports (RUA and RUF), interpret key XML fields, and use insights to protect your domain and improve email deliverability.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Erin Levine, our new Chief of Staff]]></title>
+            <link>https://resend.com/blog/welcoming-erin-levine</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-erin-levine</guid>
+            <pubDate>Wed, 10 Sep 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Erin Levine is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How to Validate Form Inputs]]></title>
+            <link>https://resend.com/blog/how-to-validate-form-inputs</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-to-validate-form-inputs</guid>
+            <pubDate>Fri, 29 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[How to engineer secure, user-friendly, bot-resistant form inputs]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Engineering an AI App]]></title>
+            <link>https://resend.com/blog/engineering-an-ai-app</link>
+            <guid isPermaLink="false">https://resend.com/blog/engineering-an-ai-app</guid>
+            <pubDate>Wed, 20 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Key principles to guide engineers building AI-first applications]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Lucas da Costa, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-lucas-da-costa</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-lucas-da-costa</guid>
+            <pubDate>Tue, 19 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Lucas da Costa is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Lucas Vieira, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-lucas-vieira</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-lucas-vieira</guid>
+            <pubDate>Tue, 19 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Lucas Vieira is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend acquires Briefer]]></title>
+            <link>https://resend.com/blog/resend-acquires-briefer</link>
+            <guid isPermaLink="false">https://resend.com/blog/resend-acquires-briefer</guid>
+            <pubDate>Tue, 05 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[An important step in evolving how Resend processes terabytes of data at scale.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How Raycast Modernized their Email Sending]]></title>
+            <link>https://resend.com/blog/how-raycast-modernized-their-email-sending</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-raycast-modernized-their-email-sending</guid>
+            <pubDate>Wed, 23 Jul 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Raycast shares their real-world story of migrating to Resend, highlighting a smoother DX, clean UI, and newfound confidence in email sending.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How to Get Email Consent]]></title>
+            <link>https://resend.com/blog/how-to-properly-get-email-consent</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-to-properly-get-email-consent</guid>
+            <pubDate>Thu, 17 Jul 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[What it means to get email consent and how to ask for it properly.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[DMARC Policy Modes]]></title>
+            <link>https://resend.com/blog/dmarc-policy-modes</link>
+            <guid isPermaLink="false">https://resend.com/blog/dmarc-policy-modes</guid>
+            <pubDate>Thu, 10 Jul 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[A practical guide to DMARC policy modes—none, quarantine, and reject—and what to expect when enforcing them.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Gabriel Miranda, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-gabriel-miranda</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-gabriel-miranda</guid>
+            <pubDate>Wed, 09 Jul 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Gabriel Miranda is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Rebranding Resend]]></title>
+            <link>https://resend.com/blog/rebranding-resend</link>
+            <guid isPermaLink="false">https://resend.com/blog/rebranding-resend</guid>
+            <pubDate>Tue, 01 Jul 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[The unveil of Resend's new visual identity.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The 7 Best Email Verification APIs for Developers]]></title>
+            <link>https://resend.com/blog/best-email-verification-apis</link>
+            <guid isPermaLink="false">https://resend.com/blog/best-email-verification-apis</guid>
+            <pubDate>Fri, 20 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[A detailed analysis of the top email verification APIs for developers.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How DMARC Applies to Subdomains]]></title>
+            <link>https://resend.com/blog/how-dmarc-applies-to-subdomains</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-dmarc-applies-to-subdomains</guid>
+            <pubDate>Wed, 18 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Learn how the sp tag works, and when subdomain policies inherit or override the organizational domain.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Pedro Gomes, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-pedro-gomes</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-pedro-gomes</guid>
+            <pubDate>Fri, 13 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Pedro Gomes is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Do You Need a Dedicated IP?]]></title>
+            <link>https://resend.com/blog/do-you-need-a-dedicated-ip</link>
+            <guid isPermaLink="false">https://resend.com/blog/do-you-need-a-dedicated-ip</guid>
+            <pubDate>Wed, 04 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[When it makes sense, when it backfires, and why domain reputation is most important.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The 6 best notification infrastructure services]]></title>
+            <link>https://resend.com/blog/best-notification-infrastructure-services</link>
+            <guid isPermaLink="false">https://resend.com/blog/best-notification-infrastructure-services</guid>
+            <pubDate>Fri, 30 May 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[An in-depth analysis of the top notification infrastructure solutions for developers.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The Fixer]]></title>
+            <link>https://resend.com/blog/the-fixer</link>
+            <guid isPermaLink="false">https://resend.com/blog/the-fixer</guid>
+            <pubDate>Thu, 29 May 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[How we leverage our success and engineering relationship to improve customer experience.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Why Your Emails are Going to Spam]]></title>
+            <link>https://resend.com/blog/why-your-emails-are-going-to-spam</link>
+            <guid isPermaLink="false">https://resend.com/blog/why-your-emails-are-going-to-spam</guid>
+            <pubDate>Wed, 21 May 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Why emails are landing in the spam folder and what you can do about it.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Engineering Idempotency Keys]]></title>
+            <link>https://resend.com/blog/engineering-idempotency-keys</link>
+            <guid isPermaLink="false">https://resend.com/blog/engineering-idempotency-keys</guid>
+            <pubDate>Wed, 07 May 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[How we implemented idempotency keys in our email API.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Microsoft’s bulk sending requirements for 2025]]></title>
+            <link>https://resend.com/blog/microsoft-bulk-sending-requirements-2025</link>
+            <guid isPermaLink="false">https://resend.com/blog/microsoft-bulk-sending-requirements-2025</guid>
+            <pubDate>Tue, 06 May 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Starting May 2025, Microsoft will be enforcing new bulk sending requirements.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Rehan van der Merwe, our new Devops Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-rehan-van-der-merwe</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-rehan-van-der-merwe</guid>
+            <pubDate>Wed, 30 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Rehan van der Merwe is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[400,000 users and beyond]]></title>
+            <link>https://resend.com/blog/400-000-users-and-beyond</link>
+            <guid isPermaLink="false">https://resend.com/blog/400-000-users-and-beyond</guid>
+            <pubDate>Tue, 29 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[The path that brought us here and where we're headed next.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Cassio Zen, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-cassio-zen</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-cassio-zen</guid>
+            <pubDate>Fri, 25 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Cassio Zen is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend acquires Mergent]]></title>
+            <link>https://resend.com/blog/resend-acquires-mergent</link>
+            <guid isPermaLink="false">https://resend.com/blog/resend-acquires-mergent</guid>
+            <pubDate>Wed, 23 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[A major step in becoming the best communication platform for developers.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How to warm up a new domain]]></title>
+            <link>https://resend.com/blog/how-to-warm-up-a-new-domain</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-to-warm-up-a-new-domain</guid>
+            <pubDate>Fri, 18 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Our recent experience preparing a new domain to send thousands of emails to inboxes.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Carolina Josephik, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-carolina-josephik</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-carolina-josephik</guid>
+            <pubDate>Tue, 15 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Carolina Josephik is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Launch Week: Behind the Scenes]]></title>
+            <link>https://resend.com/blog/launch-week-behind-the-scenes</link>
+            <guid isPermaLink="false">https://resend.com/blog/launch-week-behind-the-scenes</guid>
+            <pubDate>Fri, 11 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[A behind-the-scenes look at how we run our launch weeks.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Isabella Aquino, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-isabella-aquino</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-isabella-aquino</guid>
+            <pubDate>Wed, 02 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Isabella Aquino is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend Forward 4: Wrap Up]]></title>
+            <link>https://resend.com/blog/resend-forward-4-wrap-up</link>
+            <guid isPermaLink="false">https://resend.com/blog/resend-forward-4-wrap-up</guid>
+            <pubDate>Tue, 01 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Everything we launched during the fourth launch week.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[React Email 4.0]]></title>
+            <link>https://resend.com/blog/react-email-4</link>
+            <guid isPermaLink="false">https://resend.com/blog/react-email-4</guid>
+            <pubDate>Fri, 28 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[A completely new set of tools to help you build better emails.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Multiplayer Editor]]></title>
+            <link>https://resend.com/blog/multiplayer-editor</link>
+            <guid isPermaLink="false">https://resend.com/blog/multiplayer-editor</guid>
+            <pubDate>Thu, 27 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Collaborate, write, and edit broadcasts in real-time with your team.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Broadcast API]]></title>
+            <link>https://resend.com/blog/broadcast-api</link>
+            <guid isPermaLink="false">https://resend.com/blog/broadcast-api</guid>
+            <pubDate>Wed, 26 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Create, edit, and send broadcasts from the API.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Multiple Teams]]></title>
+            <link>https://resend.com/blog/multiple-teams</link>
+            <guid isPermaLink="false">https://resend.com/blog/multiple-teams</guid>
+            <pubDate>Tue, 25 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Create and join multiple workspaces using the same email address.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[new.email Public Launch]]></title>
+            <link>https://resend.com/blog/new-email-public-launch</link>
+            <guid isPermaLink="false">https://resend.com/blog/new-email-public-launch</guid>
+            <pubDate>Mon, 24 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[The new way to build email templates.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Anna Ward, our new Postmaster]]></title>
+            <link>https://resend.com/blog/welcoming-anna-ward</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-anna-ward</guid>
+            <pubDate>Tue, 18 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Anna Ward is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How Gumroad Migrated 100M Emails to Resend]]></title>
+            <link>https://resend.com/blog/how-gumroad-migrated-100m-emails-to-resend</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-gumroad-migrated-100m-emails-to-resend</guid>
+            <pubDate>Fri, 14 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[From critical service disruption to successfully migrating over 100 million emails in record time.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming João Melo, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-joao-melo</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-joao-melo</guid>
+            <pubDate>Wed, 12 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that João Melo is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Jp Valery, our new Customer Success Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-jp-valery</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-jp-valery</guid>
+            <pubDate>Wed, 26 Feb 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Jp Valery is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[What is AX (Agent Experience) and how to improve it]]></title>
+            <link>https://resend.com/blog/agent-experience</link>
+            <guid isPermaLink="false">https://resend.com/blog/agent-experience</guid>
+            <pubDate>Wed, 19 Feb 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Best practices for building AI agent-friendly products.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Pauline Chin, our new Customer Success Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-pauline-chin</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-pauline-chin</guid>
+            <pubDate>Wed, 19 Feb 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Pauline Chin is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing new.email]]></title>
+            <link>https://resend.com/blog/introducing-new-email</link>
+            <guid isPermaLink="false">https://resend.com/blog/introducing-new-email</guid>
+            <pubDate>Tue, 11 Feb 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Why are we doing this? Why now?]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How we use Friction Logs to improve the product]]></title>
+            <link>https://resend.com/blog/how-we-use-friction-logs-to-improve-the-product</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-we-use-friction-logs-to-improve-the-product</guid>
+            <pubDate>Wed, 05 Feb 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[A behind-the-scenes look at how we onboard new hires and quickly ship improvements.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Top 10 Email Deliverability Tips]]></title>
+            <link>https://resend.com/blog/top-10-email-deliverability-tips</link>
+            <guid isPermaLink="false">https://resend.com/blog/top-10-email-deliverability-tips</guid>
+            <pubDate>Wed, 08 Jan 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Our top tips for avoiding the spam folder and reaching the inbox.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Giovana Yahiro, our new Designer Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-giovana-yahiro</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-giovana-yahiro</guid>
+            <pubDate>Tue, 07 Jan 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Giovana Yahiro is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[What BIMI's Changes Mean for Email]]></title>
+            <link>https://resend.com/blog/email-changes-for-bimi</link>
+            <guid isPermaLink="false">https://resend.com/blog/email-changes-for-bimi</guid>
+            <pubDate>Fri, 03 Jan 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Recently, the email standard for displaying your company avatar in email clients, BIMI, underwent some positive changes. Here's how it impacts you.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Top 10 new features in 2024]]></title>
+            <link>https://resend.com/blog/new-features-in-2024</link>
+            <guid isPermaLink="false">https://resend.com/blog/new-features-in-2024</guid>
+            <pubDate>Tue, 31 Dec 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[A recap of some of the best features we launched this year.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Design Engineering an X Component]]></title>
+            <link>https://resend.com/blog/design-engineering-an-x-component</link>
+            <guid isPermaLink="false">https://resend.com/blog/design-engineering-an-x-component</guid>
+            <pubDate>Wed, 11 Dec 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We recently added a new component to Broadcasts. Here's a behind-the-scenes look at the technical process.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Alexandre Cisneiros, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-alexandre-cisneiros</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-alexandre-cisneiros</guid>
+            <pubDate>Thu, 05 Dec 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Alexandre Cisneiros is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend raises $18M Series A]]></title>
+            <link>https://resend.com/blog/series-a</link>
+            <guid isPermaLink="false">https://resend.com/blog/series-a</guid>
+            <pubDate>Wed, 04 Dec 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[How we got here. Where are we going. Why we exist.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Danilo Woznica, our new Designer Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-danilo-woznica</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-danilo-woznica</guid>
+            <pubDate>Wed, 20 Nov 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Danilo Woznica is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Reflections on my first Resend offsite]]></title>
+            <link>https://resend.com/blog/reflections-on-my-first-resend-offsite</link>
+            <guid isPermaLink="false">https://resend.com/blog/reflections-on-my-first-resend-offsite</guid>
+            <pubDate>Tue, 19 Nov 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[A week of connection, strategy, and learning.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Chris Pennington, our new Developer Experience Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-chris-pennington</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-chris-pennington</guid>
+            <pubDate>Tue, 22 Oct 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Chris Pennington is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing the Scale plan]]></title>
+            <link>https://resend.com/blog/introducing-the-scale-plan</link>
+            <guid isPermaLink="false">https://resend.com/blog/introducing-the-scale-plan</guid>
+            <pubDate>Wed, 16 Oct 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[What changes with the new plan that starts at 100,000 emails.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Email changes coming to iOS 18]]></title>
+            <link>https://resend.com/blog/email-changes-coming-to-ios-18</link>
+            <guid isPermaLink="false">https://resend.com/blog/email-changes-coming-to-ios-18</guid>
+            <pubDate>Thu, 19 Sep 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[What happens when Apple Mail starts to use Apple Intelligence to summarize emails.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How Vercel uses React Email for Next.js Conf]]></title>
+            <link>https://resend.com/blog/how-vercel-uses-react-email-for-next-js-conf</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-vercel-uses-react-email-for-next-js-conf</guid>
+            <pubDate>Fri, 06 Sep 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[A sneak peek into how the emails for Next.js Conf and Vercel Ship are built.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend's First Ops Offsite]]></title>
+            <link>https://resend.com/blog/first-ops-offsite</link>
+            <guid isPermaLink="false">https://resend.com/blog/first-ops-offsite</guid>
+            <pubDate>Thu, 05 Sep 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[A week to discuss how to support hundreds of thousands of developers.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend Forward 3: Wrap Up]]></title>
+            <link>https://resend.com/blog/resend-forward-3-wrap-up</link>
+            <guid isPermaLink="false">https://resend.com/blog/resend-forward-3-wrap-up</guid>
+            <pubDate>Mon, 26 Aug 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Everything we launched during the third launch week.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Broadcast Schedule]]></title>
+            <link>https://resend.com/blog/broadcast-schedule</link>
+            <guid isPermaLink="false">https://resend.com/blog/broadcast-schedule</guid>
+            <pubDate>Sun, 25 Aug 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Use natural language to schedule emails to multiple contacts.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[React Email 3.0]]></title>
+            <link>https://resend.com/blog/react-email-3</link>
+            <guid isPermaLink="false">https://resend.com/blog/react-email-3</guid>
+            <pubDate>Fri, 23 Aug 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[An entire collection of pre-built components with a much faster development experience.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Deliverability Insights]]></title>
+            <link>https://resend.com/blog/deliverability-insights</link>
+            <guid isPermaLink="false">https://resend.com/blog/deliverability-insights</guid>
+            <pubDate>Thu, 22 Aug 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Improve email deliverability by identifying issues and applying best practices.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing Marketing Analytics]]></title>
+            <link>https://resend.com/blog/introducing-marketing-analytics</link>
+            <guid isPermaLink="false">https://resend.com/blog/introducing-marketing-analytics</guid>
+            <pubDate>Wed, 21 Aug 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Understand how your emails deliver, who is engaging with them, and where users opt-out.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Vercel Integration]]></title>
+            <link>https://resend.com/blog/vercel-integration</link>
+            <guid isPermaLink="false">https://resend.com/blog/vercel-integration</guid>
+            <pubDate>Tue, 20 Aug 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Connect your Resend API keys with Vercel environment variables in a few clicks.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing the Schedule Email API]]></title>
+            <link>https://resend.com/blog/introducing-the-schedule-email-api</link>
+            <guid isPermaLink="false">https://resend.com/blog/introducing-the-schedule-email-api</guid>
+            <pubDate>Mon, 19 Aug 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Send emails at a specific time without additional complexity.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Brian Kerr, our new Customer Success Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-brian-kerr</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-brian-kerr</guid>
+            <pubDate>Tue, 30 Jul 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Brian Kerr is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend's journey to GDPR compliance]]></title>
+            <link>https://resend.com/blog/gdpr</link>
+            <guid isPermaLink="false">https://resend.com/blog/gdpr</guid>
+            <pubDate>Wed, 24 Jul 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Our path to complying with GDPR and continuing our commitment to protecting your data.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Felipe Volpone, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-felipe-volpone</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-felipe-volpone</guid>
+            <pubDate>Tue, 25 Jun 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Felipe Volpone is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend named to Redpoint's InfraRed 100]]></title>
+            <link>https://resend.com/blog/resend-named-to-redpoint-infra-red-100</link>
+            <guid isPermaLink="false">https://resend.com/blog/resend-named-to-redpoint-infra-red-100</guid>
+            <pubDate>Wed, 19 Jun 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Celebrating the up-and-coming private companies in cloud infrastructure.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Bruno Rubin, our new DevOps Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-bruno-rubin</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-bruno-rubin</guid>
+            <pubDate>Wed, 01 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Bruno Rubin is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[What's next after 100,000 users]]></title>
+            <link>https://resend.com/blog/what-is-next-after-100-000-users</link>
+            <guid isPermaLink="false">https://resend.com/blog/what-is-next-after-100-000-users</guid>
+            <pubDate>Thu, 11 Apr 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[How we got here and where we're going next.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend is SOC 2 Type II compliant]]></title>
+            <link>https://resend.com/blog/soc-2</link>
+            <guid isPermaLink="false">https://resend.com/blog/soc-2</guid>
+            <pubDate>Tue, 26 Mar 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Our journey to becoming compliant and what it means for you.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Incident report for February 21st, 2024]]></title>
+            <link>https://resend.com/blog/incident-report-for-february-21-2024</link>
+            <guid isPermaLink="false">https://resend.com/blog/incident-report-for-february-21-2024</guid>
+            <pubDate>Thu, 22 Feb 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Detailed postmortem of the outage on February 21st.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend Forward: Wrap Up]]></title>
+            <link>https://resend.com/blog/resend-forward-wrap-up</link>
+            <guid isPermaLink="false">https://resend.com/blog/resend-forward-wrap-up</guid>
+            <pubDate>Mon, 22 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[All about the new features we launched last week.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing Light Mode]]></title>
+            <link>https://resend.com/blog/introducing-light-mode</link>
+            <guid isPermaLink="false">https://resend.com/blog/introducing-light-mode</guid>
+            <pubDate>Sat, 20 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Customize your Resend Dashboard experience with a light theme.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[React Email 2.0]]></title>
+            <link>https://resend.com/blog/react-email-2</link>
+            <guid isPermaLink="false">https://resend.com/blog/react-email-2</guid>
+            <pubDate>Fri, 19 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Our mission to create the best developer experience for email continues with a new major version.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing the Batch Emails API]]></title>
+            <link>https://resend.com/blog/introducing-the-batch-emails-api</link>
+            <guid isPermaLink="false">https://resend.com/blog/introducing-the-batch-emails-api</guid>
+            <pubDate>Thu, 18 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Process a high volume of emails at once with the new bulk endpoint.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Improving Time to Inbox in Asia]]></title>
+            <link>https://resend.com/blog/improving-time-to-inbox-in-asia</link>
+            <guid isPermaLink="false">https://resend.com/blog/improving-time-to-inbox-in-asia</guid>
+            <pubDate>Wed, 17 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're excited to announce more efficient sending support for Asia users.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Manage subscribers with Resend Audiences]]></title>
+            <link>https://resend.com/blog/manage-subscribers-using-resend-audiences</link>
+            <guid isPermaLink="false">https://resend.com/blog/manage-subscribers-using-resend-audiences</guid>
+            <pubDate>Tue, 16 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Add, update, retrieve, and remove contacts without having to worry about the entire unsubscribe flow.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Send Marketing Emails with Resend Broadcasts]]></title>
+            <link>https://resend.com/blog/send-marketing-emails-with-resend-broadcasts</link>
+            <guid isPermaLink="false">https://resend.com/blog/send-marketing-emails-with-resend-broadcasts</guid>
+            <pubDate>Mon, 15 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Enabling anyone to send email campaigns without code.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Incident report for January 10, 2024]]></title>
+            <link>https://resend.com/blog/incident-report-for-january-10-2024</link>
+            <guid isPermaLink="false">https://resend.com/blog/incident-report-for-january-10-2024</guid>
+            <pubDate>Wed, 10 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Detailed summary of what went wrong and how the incident was resolved.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Gmail and Yahoo’s bulk sending requirements for 2024]]></title>
+            <link>https://resend.com/blog/gmail-and-yahoo-bulk-sending-requirements-for-2024</link>
+            <guid isPermaLink="false">https://resend.com/blog/gmail-and-yahoo-bulk-sending-requirements-for-2024</guid>
+            <pubDate>Tue, 09 Jan 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Starting February 2024, Gmail and Yahoo will be enforcing new bulk sending requirements.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Improved Performance for Tailwind Emails]]></title>
+            <link>https://resend.com/blog/improved-performance-for-tailwind-emails</link>
+            <guid isPermaLink="false">https://resend.com/blog/improved-performance-for-tailwind-emails</guid>
+            <pubDate>Wed, 06 Dec 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[How we reduced render times for emails using Tailwind to be 23x faster.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Krithika Yetchina, our new Customer Support Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-krithika-yetchina</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-krithika-yetchina</guid>
+            <pubDate>Wed, 22 Nov 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Krithika Yetchina is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How to send emails using Bun]]></title>
+            <link>https://resend.com/blog/how-to-send-emails-using-bun</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-to-send-emails-using-bun</guid>
+            <pubDate>Wed, 20 Sep 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Render emails server-side and send them crazy fast using Bun and React.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Haison Ohara, our new Developer Success Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-haison-ohara</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-haison-ohara</guid>
+            <pubDate>Thu, 14 Sep 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Haison Ohara is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Vitor Capretz, our new Software Engineer]]></title>
+            <link>https://resend.com/blog/welcoming-vitor-capretz</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-vitor-capretz</guid>
+            <pubDate>Thu, 07 Sep 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Vitor Capretz is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Email Authentication: A Developer's Guide]]></title>
+            <link>https://resend.com/blog/email-authentication-a-developers-guide</link>
+            <guid isPermaLink="false">https://resend.com/blog/email-authentication-a-developers-guide</guid>
+            <pubDate>Fri, 25 Aug 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Learn the importance of SPF, DKIM, DMARC, and BIMI in ensuring email delivery.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How to configure Supabase to send emails from your domain]]></title>
+            <link>https://resend.com/blog/how-to-configure-supabase-to-send-emails-from-your-domain</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-to-configure-supabase-to-send-emails-from-your-domain</guid>
+            <pubDate>Thu, 10 Aug 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Send and monitor emails from Supabase Auth using a custom SMTP server.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Why SMTP still matters today]]></title>
+            <link>https://resend.com/blog/why-smtp-still-matters-today</link>
+            <guid isPermaLink="false">https://resend.com/blog/why-smtp-still-matters-today</guid>
+            <pubDate>Tue, 08 Aug 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[The importance of a 40-year-old protocol to the future of email.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend raises $3M]]></title>
+            <link>https://resend.com/blog/resend-raises-3m-seed-round</link>
+            <guid isPermaLink="false">https://resend.com/blog/resend-raises-3m-seed-round</guid>
+            <pubDate>Tue, 18 Jul 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Who invested on us. Where we're going. Why are we doing this.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[New Free Tier]]></title>
+            <link>https://resend.com/blog/new-free-tier</link>
+            <guid isPermaLink="false">https://resend.com/blog/new-free-tier</guid>
+            <pubDate>Mon, 12 Jun 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Now you can send 3,000 emails per month for free.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Welcoming Zeh Fernandes, our new Product Designer]]></title>
+            <link>https://resend.com/blog/welcoming-zeh-fernandes</link>
+            <guid isPermaLink="false">https://resend.com/blog/welcoming-zeh-fernandes</guid>
+            <pubDate>Tue, 16 May 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're thrilled to share the news that Zeh Fernandes is joining Resend.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Launch Week 1: Wrap Up]]></title>
+            <link>https://resend.com/blog/launch-week-1-wrap-up</link>
+            <guid isPermaLink="false">https://resend.com/blog/launch-week-1-wrap-up</guid>
+            <pubDate>Mon, 13 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[All about the seven new features we launched in the last seven days.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Send emails using React and Tailwind CSS]]></title>
+            <link>https://resend.com/blog/tailwind-with-react-email</link>
+            <guid isPermaLink="false">https://resend.com/blog/tailwind-with-react-email</guid>
+            <pubDate>Sun, 12 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Build beautiful emails with Tailwind CSS and React Email.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Open and Click Tracking]]></title>
+            <link>https://resend.com/blog/open-and-click-tracking</link>
+            <guid isPermaLink="false">https://resend.com/blog/open-and-click-tracking</guid>
+            <pubDate>Sat, 11 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Track engagement and tune your sending approach with Resend's open and click tracking.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Supercharge Sending with Integrations]]></title>
+            <link>https://resend.com/blog/new-integrations</link>
+            <guid isPermaLink="false">https://resend.com/blog/new-integrations</guid>
+            <pubDate>Fri, 10 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Announcing the first batch of Resend Integrations, including Novu, Knock, Trigger.dev, and Pipedream.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[New Domain Verification Experience]]></title>
+            <link>https://resend.com/blog/new-domain-verification-experience</link>
+            <guid isPermaLink="false">https://resend.com/blog/new-domain-verification-experience</guid>
+            <pubDate>Thu, 09 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Behind the scenes of our redesigned domains experience with provider-specific instructions.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Capture email events with Webhooks]]></title>
+            <link>https://resend.com/blog/webhooks</link>
+            <guid isPermaLink="false">https://resend.com/blog/webhooks</guid>
+            <pubDate>Wed, 08 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Learn how to receive real-time notifications about your email sending activities directly to your server.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing Managed Dedicated IPs]]></title>
+            <link>https://resend.com/blog/dedicated-ips</link>
+            <guid isPermaLink="false">https://resend.com/blog/dedicated-ips</guid>
+            <pubDate>Tue, 07 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Understand the benefits between dedicated IPs and shared IPs for email deliverability.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Faster Email Delivery with Multi-Region]]></title>
+            <link>https://resend.com/blog/multi-region</link>
+            <guid isPermaLink="false">https://resend.com/blog/multi-region</guid>
+            <pubDate>Mon, 06 Mar 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're excited to announce support for multi-region email sending.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Lessons learned from growing a 6,338 people waitlist in 7 weeks]]></title>
+            <link>https://resend.com/blog/lessons-learned-from-growing-a-waitlist</link>
+            <guid isPermaLink="false">https://resend.com/blog/lessons-learned-from-growing-a-waitlist</guid>
+            <pubDate>Tue, 21 Feb 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[The challenges we faced and actionable tips for founders looking to build their own waitlist.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Why I spent $25,000 on a domain (or how to pick a startup name)]]></title>
+            <link>https://resend.com/blog/how-to-pick-a-startup-name</link>
+            <guid isPermaLink="false">https://resend.com/blog/how-to-pick-a-startup-name</guid>
+            <pubDate>Mon, 06 Feb 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Thoughts on the importance of choosing a strong brand name, challenges of finding an available domain, and tips on how to better negotiate and acquire a domain.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Resend + Y Combinator]]></title>
+            <link>https://resend.com/blog/y-combinator</link>
+            <guid isPermaLink="false">https://resend.com/blog/y-combinator</guid>
+            <pubDate>Wed, 01 Feb 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[We're excited to announce that Resend is now backed by Y Combinator.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Introducing Resend]]></title>
+            <link>https://resend.com/blog/introducing-resend</link>
+            <guid isPermaLink="false">https://resend.com/blog/introducing-resend</guid>
+            <pubDate>Wed, 04 Jan 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[Why are we doing this? What problem are we solving? Why now?]]></description>
+        </item>
+    </channel>
+</rss>

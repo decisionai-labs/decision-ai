@@ -52,7 +52,7 @@ function run() {
     network=${NETWORK:="host"}
     echo "Network is ${network}"
 
-    SERVICE_NAME="NeuroSanAgents"
+    SERVICE_NAME="DecisionAI"
     # Assume the first port EXPOSEd in the Dockerfile is the input port
     DOCKERFILE=$(find . -name Dockerfile | sort | head -1)
     SERVICE_HTTP_PORT=$(grep ^EXPOSE < "${DOCKERFILE}" | head -1 | awk '{ print $2 }')

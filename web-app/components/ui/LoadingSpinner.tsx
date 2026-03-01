@@ -10,7 +10,7 @@ export function LoadingSpinner({ size = 'md', className = '' }: { size?: 'sm' | 
     return (
         <div className={`relative ${sizes[size]} ${className}`}>
             {/* Outer ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-[#E5E7EB]" />
+            <div className="absolute inset-0 rounded-full border-2 border-white/10" />
 
             {/* Spinning gradient arc */}
             <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#14B8A6] animate-spin" />
@@ -33,7 +33,7 @@ export function LoadingDots({ className = '' }: { className?: string }) {
 
 export function FullPageLoader() {
     return (
-        <div className="fixed inset-0 bg-[#FAFAF8] z-50 flex flex-col items-center justify-center">
+        <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
             {/* Logo */}
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#14B8A6] to-[#0D9488] flex items-center justify-center mb-6 shadow-lg shadow-[#14B8A6]/20">
                 <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -45,7 +45,7 @@ export function FullPageLoader() {
             <LoadingSpinner size="lg" />
 
             {/* Text */}
-            <p className="mt-6 text-sm text-[#6B7280]">Loading NeuroSan...</p>
+            <p className="mt-6 text-sm text-zinc-400">Loading Decision AI...</p>
         </div>
     );
 }

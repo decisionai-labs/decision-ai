@@ -58,11 +58,11 @@ export function Credits() {
     }, []);
 
     return (
-        <section ref={sectionRef} className="py-16 px-6 bg-[#FAFAF8]">
+        <section ref={sectionRef} className="py-16 px-6 bg-black">
             <div className="max-w-4xl mx-auto">
                 <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <h3 className="text-xl font-semibold text-[#1A1A1A] mb-2">Built With Care</h3>
-                    <p className="text-sm text-[#6B7280]">Thanks to these amazing projects and people</p>
+                    <h3 className="text-xl font-semibold text-white mb-2">Built With Care</h3>
+                    <p className="text-sm text-zinc-400">Thanks to these amazing projects and people</p>
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-6">
@@ -71,15 +71,15 @@ export function Credits() {
                             key={member.name}
                             href={member.github}
                             target="_blank"
-                            className={`group flex items-center gap-3 px-5 py-3 bg-white rounded-full border border-[#E5E7EB] hover:border-[#14B8A6]/30 hover:shadow-md transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                            className={`group flex items-center gap-3 px-5 py-3 bg-[#111111] rounded-full border border-white/10 hover:border-[#14B8A6]/30 hover:shadow-md transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
                             style={{ transitionDelay: `${index * 100}ms` }}
                         >
                             <span className="text-2xl group-hover:scale-110 transition-transform">{member.avatar}</span>
                             <div>
-                                <div className="font-medium text-sm text-[#1A1A1A] group-hover:text-[#14B8A6] transition-colors">
+                                <div className="font-medium text-sm text-white group-hover:text-[#14B8A6] transition-colors">
                                     {member.name}
                                 </div>
-                                <div className="text-xs text-[#9CA3AF]">{member.role}</div>
+                                <div className="text-xs text-zinc-500">{member.role}</div>
                             </div>
                         </a>
                     ))}

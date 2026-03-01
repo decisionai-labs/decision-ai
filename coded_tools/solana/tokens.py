@@ -1,5 +1,5 @@
 """
-Solana SPL Token balance checking tool for NeuroSanSolana.
+Solana SPL Token balance checking tool for Decision AI.
 Privacy Hack hackathon submission - solana.com/privacyhack
 """
 import json

@@ -78,10 +78,10 @@ export function Features() {
                 {/* Header */}
                 <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     <Badge variant="muted" className="mb-4">Built for Solana</Badge>
-                    <h2 className="text-3xl sm:text-4xl font-semibold text-[#1A1A1A] mb-4">
+                    <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
                         Privacy-Preserving <span className="text-gradient">Tools</span>
                     </h2>
-                    <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
+                    <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
                         Each tool uses sly_data to access blockchain data without exposing wallet addresses to the AI model.
                     </p>
                 </div>
@@ -104,14 +104,14 @@ export function Features() {
                                     {/* Content */}
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <h3 className="text-lg font-semibold text-[#1A1A1A] group-hover:text-[#14B8A6] transition-colors">
+                                            <h3 className="text-lg font-semibold text-white group-hover:text-[#14B8A6] transition-colors">
                                                 {tool.name}
                                             </h3>
-                                            <code className="text-xs text-[#9CA3AF] bg-[#F3F4F6] px-2 py-0.5 rounded font-mono">
+                                            <code className="text-xs text-white/50 bg-white/5 px-2 py-0.5 rounded font-mono">
                                                 {tool.file}
                                             </code>
                                         </div>
-                                        <p className="text-[#6B7280]">
+                                        <p className="text-zinc-400">
                                             {tool.description}
                                         </p>
                                     </div>
@@ -131,7 +131,7 @@ export function Features() {
                         </div>
                         <span className="font-semibold text-lg">Privacy Promise</span>
                     </div>
-                    <p className="text-[#6B7280] text-sm max-w-lg mx-auto">
+                    <p className="text-zinc-400 text-sm max-w-lg mx-auto">
                         The AI language model never sees your wallet address. All sensitive data flows through sly_data,
                         a secure channel that tools can access but the AI cannot read.
                     </p>

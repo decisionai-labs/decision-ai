@@ -1,4 +1,4 @@
-# NeuroSanSolana
+# Decision AI
 
 > **Privacy-First AI Agents for Solana** — The first AI agent framework that keeps your wallet private from the AI itself.
 
@@ -17,13 +17,13 @@ Traditional AI blockchain assistants require your wallet address directly in the
 - Fine-tuning could leak your financial data
 - Third-party integrations may receive your data without consent
 
-**NeuroSanSolana fixes this** with a zero-knowledge architecture where the AI never sees your wallet.
+**Decision AI fixes this** with a zero-knowledge architecture where the AI never sees your wallet.
 
 ---
 
 ## What Makes This Different
 
-| Traditional AI Tools | NeuroSanSolana |
+| Traditional AI Tools | Decision AI |
 |---|---|
 | Wallet address pasted into AI prompt | Wallet never enters the AI context |
 | AI provider logs your financial data | Zero-knowledge by design |
@@ -63,7 +63,7 @@ See the [README](https://github.com/NeuroSolanaAgents/neurosan) for more details
 
 ## How It Works
 
-NeuroSan uses a **privacy-preserving architecture** that separates sensitive data from the AI reasoning layer. When you ask a question about your wallet:
+Decision AI uses a **privacy-preserving architecture** that separates sensitive data from the AI reasoning layer. When you ask a question about your wallet:
 
 1. **Your request** goes to the AI agent in natural language
 2. **Your wallet address** travels through a separate, private channel — never visible to the AI
