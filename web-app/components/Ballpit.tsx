@@ -116,15 +116,19 @@ class ThreeWrapper {
     private setupListeners(size?: string) {
         window.addEventListener('resize', this.handleResize.bind(this));
 
-        if (size === 'parent' && this.canvas.parentNode) {
+        if (size === 'parent' && this.canvas.parentElement) {
             this.resizeObserver = new ResizeObserver(this.handleResize.bind(this));
-            this.resizeObserver.observe(this.canvas.parentNode as Element);
+            this.resizeObserver.observe(this.canvas.parentElement);
         }
 
         this.intersectionObserver = new IntersectionObserver(
             (entries) => {
                 this.isVisible = entries[0].isIntersecting;
-                this.isVisible ? this.start() : this.stop();
+                if (this.isVisible) {
+                    this.start();
+                } else {
+                    this.stop();
+                }
             },
             { threshold: 0 }
         );
@@ -132,7 +136,11 @@ class ThreeWrapper {
 
         document.addEventListener('visibilitychange', () => {
             if (this.isVisible) {
-                document.hidden ? this.stop() : this.start();
+                if (document.hidden) {
+                    this.stop();
+                } else {
+                    this.start();
+                }
             }
         });
     }
@@ -143,7 +151,7 @@ class ThreeWrapper {
     }
 
     resize() {
-        const parent = this.canvas.parentNode as HTMLElement;
+        const parent = this.canvas.parentElement;
         const width = parent?.offsetWidth || window.innerWidth;
         const height = parent?.offsetHeight || window.innerHeight;
 
@@ -196,14 +204,15 @@ class ThreeWrapper {
     }
 
     clear() {
-        this.scene.traverse((obj) => {
-            if ((obj as any).isMesh) {
-                const mesh = obj as any;
+        this.scene.traverse((obj: Object3D) => {
+            const mesh = obj as import('three').Mesh;
+            if (mesh.isMesh) {
                 if (mesh.material) {
-                    Object.values(mesh.material).forEach((val: any) => {
-                        if (val?.dispose) val.dispose();
-                    });
-                    mesh.material.dispose();
+                    if (Array.isArray(mesh.material)) {
+                        mesh.material.forEach((mat) => mat.dispose());
+                    } else {
+                        mesh.material.dispose();
+                    }
                 }
                 if (mesh.geometry) mesh.geometry.dispose();
             }
@@ -370,9 +379,9 @@ class SubsurfaceMaterial extends MeshPhysicalMaterial {
         thicknessScale: { value: 10 }
     };
 
-    constructor(params: any) {
+    constructor(params: import('three').MeshPhysicalMaterialParameters) {
         super(params);
-        (this as any).defines = { ...((this as any).defines || {}), USE_UV: '' };
+        this.defines = { ...(this.defines || {}), USE_UV: '' };
 
         this.onBeforeCompile = (shader) => {
             Object.assign(shader.uniforms, this.uniforms);
@@ -453,7 +462,7 @@ class SpheresInstance extends InstancedMesh {
         const envMap = pmrem.fromScene(new RoomEnvironment()).texture;
         const geometry = new SphereGeometry();
         const material = new SubsurfaceMaterial({ envMap, ...config.materialParams });
-        (material as any).envMapRotation = { x: -Math.PI / 2 };
+        material.envMapRotation.set(-Math.PI / 2, 0, 0);
 
         super(geometry, material, config.count);
 
@@ -620,7 +629,7 @@ function createBallpit(canvas: HTMLCanvasElement, options: Partial<BallpitConfig
     three.cameraMaxAspect = 1.5;
     three.resize();
 
-    let spheres = new SpheresInstance(three.renderer, options);
+    const spheres = new SpheresInstance(three.renderer, options);
     three.scene.add(spheres);
 
     const raycaster = new Raycaster();
@@ -629,7 +638,7 @@ function createBallpit(canvas: HTMLCanvasElement, options: Partial<BallpitConfig
 
     canvas.style.touchAction = 'none';
     canvas.style.userSelect = 'none';
-    (canvas.style as any).webkitUserSelect = 'none';
+    (canvas.style as CSSStyleDeclaration & { webkitUserSelect?: string }).webkitUserSelect = 'none';
 
     const disposePointer = createPointerTracker(
         canvas,
@@ -645,7 +654,7 @@ function createBallpit(canvas: HTMLCanvasElement, options: Partial<BallpitConfig
         }
     );
 
-    let paused = false;
+    const paused = false;
 
     three.onBeforeRender = (time) => {
         if (!paused) spheres.update(time);

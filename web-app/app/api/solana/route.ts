@@ -74,7 +74,8 @@ async function getTokens(wallet: string, useDevnet: boolean): Promise<string> {
     const tokens: { symbol: string; amount: number; mint: string }[] = [];
 
     for (const account of response.value) {
-        const info = (account.account.data as any).parsed?.info;
+        const parsedData = account.account.data as { parsed?: { info?: { mint: string, tokenAmount?: { uiAmount: number } } } };
+        const info = parsedData.parsed?.info;
         if (!info) continue;
 
         const mint = info.mint as string;

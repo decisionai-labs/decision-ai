@@ -25,8 +25,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                         text-white placeholder:text-zinc-500
                         transition-all duration-200
                         focus:outline-none focus:ring-2 focus:ring-[#14B8A6]/30 focus:border-[#14B8A6]
-                        hover:border-[#D1D5DB]
-                        disabled:bg-[#F9FAFB] disabled:cursor-not-allowed
+                        hover:border-zinc-600
+                        disabled:bg-zinc-900 disabled:cursor-not-allowed disabled:text-zinc-500
                         ${error ? 'border-red-400 focus:ring-red-400/30 focus:border-red-400' : ''}
                         ${className}
                     `}

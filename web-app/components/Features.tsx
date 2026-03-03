@@ -3,50 +3,35 @@
 import { useEffect, useRef, useState } from 'react';
 import { Card } from './ui/Card';
 import { Badge } from './ui/Badge';
+import { LuWallet, LuCoins, LuHistory, LuImage } from 'react-icons/lu';
 
 const tools = [
     {
         name: 'GetBalance',
         description: 'Query native SOL balance for any wallet',
         file: 'balance.py',
-        icon: (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        ),
+        icon: <LuWallet className="w-6 h-6" />,
         gradient: 'from-teal-400 to-emerald-500',
     },
     {
         name: 'GetTokenBalances',
         description: 'Retrieve all SPL token holdings with metadata',
         file: 'tokens.py',
-        icon: (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
-        ),
+        icon: <LuCoins className="w-6 h-6" />,
         gradient: 'from-violet-400 to-purple-500',
     },
     {
         name: 'GetTransactions',
         description: 'Fetch recent transaction history with details',
         file: 'transactions.py',
-        icon: (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-            </svg>
-        ),
+        icon: <LuHistory className="w-6 h-6" />,
         gradient: 'from-pink-400 to-rose-500',
     },
     {
         name: 'GetNFTs',
         description: 'Discover NFT collectibles in any wallet',
         file: 'nfts.py',
-        icon: (
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-        ),
+        icon: <LuImage className="w-6 h-6" />,
         gradient: 'from-blue-400 to-cyan-500',
     },
 ];
@@ -122,8 +107,8 @@ export function Features() {
                 </div>
 
                 {/* Privacy highlight */}
-                <div className={`mt-12 p-6 bg-gradient-to-r from-[#CCFBF1]/40 via-[#CCFBF1]/60 to-[#CCFBF1]/40 border border-[#14B8A6]/20 rounded-2xl text-center transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <div className="flex items-center justify-center gap-2 text-[#0D9488] mb-2">
+                <div className={`mt-12 p-6 bg-[#14B8A6]/5 border border-[#14B8A6]/20 rounded-2xl text-center transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                    <div className="flex items-center justify-center gap-2 text-[#14B8A6] mb-2">
                         <div className="w-8 h-8 rounded-full bg-[#14B8A6]/20 flex items-center justify-center animate-pulse-subtle">
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />

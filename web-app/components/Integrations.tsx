@@ -90,12 +90,12 @@ export function Integrations() {
 
     return (
         <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-[#FAFAF8] to-white -z-10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-white/[0.02] -z-10" />
 
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
                 <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#CCFBF1] rounded-full mb-6">
+                    <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#14B8A6]/10 border border-[#14B8A6]/20 rounded-full mb-6">
                         Ecosystem Ready
                     </span>
                     <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">

@@ -1,6 +1,4 @@
-'use client';
-
-import React, { Children, cloneElement, forwardRef, isValidElement, useEffect, useMemo, useRef, ReactNode, RefObject } from 'react';
+import React, { Children, cloneElement, forwardRef, isValidElement, useEffect, useMemo, useRef, ReactNode } from 'react';
 import gsap from 'gsap';
 
 // Card Component
@@ -194,12 +192,13 @@ export function CardSwap({
 
     const rendered = childArr.map((child, i) =>
         isValidElement(child)
-            ? cloneElement(child as React.ReactElement<any>, {
+            ? cloneElement(child as React.ReactElement<{ style?: React.CSSProperties, onClick?: (e: React.MouseEvent<HTMLDivElement>) => void, ref?: React.Ref<HTMLDivElement> }>, {
                 key: i,
-                ref: refs[i],
-                style: { width, height, ...(((child as React.ReactElement<any>).props as any).style ?? {}) },
-                onClick: (e: React.MouseEvent) => {
-                    ((child as React.ReactElement<any>).props as any).onClick?.(e);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                ref: refs[i] as any,
+                style: { width, height, ...(((child as React.ReactElement<{ style?: React.CSSProperties }>).props).style ?? {}) },
+                onClick: (e: React.MouseEvent<HTMLDivElement>) => {
+                    ((child as React.ReactElement<{ onClick?: (e: React.MouseEvent<HTMLDivElement>) => void }>).props).onClick?.(e);
                     onCardClick?.(i);
                 }
             })

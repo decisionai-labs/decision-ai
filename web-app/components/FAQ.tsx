@@ -54,14 +54,14 @@ export function FAQ() {
     return (
         <section ref={sectionRef} id="faq" className="py-24 px-6 relative overflow-hidden">
             {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-[#FAFAF8] to-white -z-10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-transparent to-white/[0.02] -z-10" />
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#14B8A6]/5 to-transparent rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#8B5CF6]/5 to-transparent rounded-full blur-3xl" />
 
             <div className="max-w-3xl mx-auto relative z-10">
                 {/* Header */}
                 <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#CCFBF1] rounded-full mb-6">
+                    <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#14B8A6]/10 border border-[#14B8A6]/20 rounded-full mb-6">
                         Got Questions?
                     </span>
                     <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
@@ -83,7 +83,7 @@ export function FAQ() {
                             <div
                                 className={`bg-[#111111] rounded-2xl border transition-all duration-300 overflow-hidden ${openIndex === index
                                     ? 'border-[#14B8A6]/30 shadow-lg shadow-[#14B8A6]/5'
-                                    : 'border-white/10 hover:border-[#D1D5DB]'
+                                    : 'border-white/10 hover:border-zinc-600'
                                     }`}
                             >
                                 <button
@@ -96,7 +96,7 @@ export function FAQ() {
                                     </span>
                                     <div className={`flex-shrink-0 ml-4 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${openIndex === index
                                         ? 'bg-[#14B8A6] text-white rotate-180'
-                                        : 'bg-[#F3F4F6] text-zinc-400'
+                                        : 'bg-zinc-800 text-zinc-400'
                                         }`}>
                                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -105,7 +105,7 @@ export function FAQ() {
                                 </button>
                                 <div className={`overflow-hidden transition-all duration-300 ${openIndex === index ? 'max-h-96' : 'max-h-0'
                                     }`}>
-                                    <div className="px-6 pb-5 text-zinc-400 leading-relaxed border-t border-[#F3F4F6] pt-4">
+                                    <div className="px-6 pb-5 text-zinc-400 leading-relaxed border-t border-white/10 pt-4">
                                         {faq.answer}
                                     </div>
                                 </div>
@@ -115,8 +115,8 @@ export function FAQ() {
                 </div>
 
                 {/* Still have questions CTA */}
-                <div className={`mt-12 text-center p-8 bg-gradient-to-r from-[#CCFBF1]/50 to-[#F0FDFA]/50 rounded-2xl border border-[#14B8A6]/10 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <p className="text-[#4B5563] mb-4">Still have questions?</p>
+                <div className={`mt-12 text-center p-8 bg-[#14B8A6]/5 rounded-2xl border border-[#14B8A6]/20 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                    <p className="text-zinc-400 mb-4">Still have questions?</p>
                     <a
                         href="https://github.com/NeuroSolanaAgents/neurosan/discussions"
                         target="_blank"

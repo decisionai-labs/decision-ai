@@ -66,7 +66,7 @@ export function Testimonials() {
     return (
         <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden">
             {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-[#F0FDFA]/30 to-white -z-10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] via-[#14B8A6]/[0.03] to-white/[0.02] -z-10" />
 
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
@@ -81,7 +81,7 @@ export function Testimonials() {
                 <div className={`relative transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
                     {/* Quote marks decoration */}
                     <div className="absolute -top-8 left-0 text-[120px] font-serif text-[#14B8A6]/10 leading-none select-none">
-                        "
+                        &quot;
                     </div>
 
                     <div className="relative min-h-[200px]">
@@ -95,8 +95,8 @@ export function Testimonials() {
                                         : 'opacity-0 translate-x-full'
                                     }`}
                             >
-                                <p className="text-xl sm:text-2xl text-[#4B5563] leading-relaxed mb-8 max-w-2xl">
-                                    "{testimonial.quote}"
+                                <p className="text-xl sm:text-2xl text-zinc-300 leading-relaxed mb-8 max-w-2xl">
+                                    &quot;{testimonial.quote}&quot;
                                 </p>
                                 <div className="flex items-center gap-4">
                                     <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${testimonial.gradient} flex items-center justify-center text-white font-semibold shadow-lg`}>
@@ -119,7 +119,7 @@ export function Testimonials() {
                                 onClick={() => setCurrentIndex(index)}
                                 className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
                                     ? 'bg-[#14B8A6] w-8'
-                                    : 'bg-[#E5E7EB] hover:bg-[#D1D5DB]'
+                                    : 'bg-zinc-700 hover:bg-zinc-500'
                                     }`}
                                 aria-label={`Go to testimonial ${index + 1}`}
                             />

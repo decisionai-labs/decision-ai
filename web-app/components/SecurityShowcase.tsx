@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState, useId } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 function CometBeam({ d, color, delay = 0, duration = 3 }: { d: string, color: string, delay?: number, duration?: number }) {
-    const id = useId();
     return (
         <g>
             {/* Faint static background track */}

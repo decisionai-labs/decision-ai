@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
 export default function MarketingAsset() {
     return (
         <div className="min-h-screen bg-[#000000] flex items-center justify-center p-20 font-sans antialiased text-white selection:bg-[#14B8A6]/30">

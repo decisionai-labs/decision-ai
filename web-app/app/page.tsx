@@ -1,15 +1,11 @@
 import { Header } from '@/components/Header';
 import { ResendHero } from '@/components/ResendHero';
-import { AnimatedStats } from '@/components/AnimatedStats';
 import { HowItWorks } from '@/components/HowItWorks';
 import { Features } from '@/components/Features';
-import { FeaturesCardSwap } from '@/components/FeaturesCardSwap';
 import { SecurityShowcase } from '@/components/SecurityShowcase';
 import { CodePreview } from '@/components/CodePreview';
-import { Comparison } from '@/components/Comparison';
 import { UseCases } from '@/components/UseCases';
 import { Integrations } from '@/components/Integrations';
-import { TechStack } from '@/components/TechStack';
 import { Testimonials } from '@/components/Testimonials';
 import { Roadmap } from '@/components/Roadmap';
 import { FAQ } from '@/components/FAQ';
@@ -25,10 +21,7 @@ export default function Home() {
     <main className="min-h-screen bg-black text-white">
       <Header />
       <ResendHero />
-      <AnimatedStats />
-      <FeaturesCardSwap />
       <SecurityShowcase />
-      <Comparison />
       <HowItWorks />
       <CodePreview />
       <UseCases />
@@ -36,7 +29,6 @@ export default function Home() {
       <Integrations />
       <Testimonials />
       <Roadmap />
-      <TechStack />
       <FAQ />
       <Newsletter />
 

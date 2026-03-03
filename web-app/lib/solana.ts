@@ -7,8 +7,7 @@ import {
     PublicKey,
     LAMPORTS_PER_SOL,
     ParsedAccountData,
-    ConfirmedSignatureInfo,
-    ParsedTransactionWithMeta
+    ConfirmedSignatureInfo
 } from '@solana/web3.js';
 
 // RPC endpoints - fallback chain for reliability

@@ -90,14 +90,14 @@ export function Roadmap() {
                 return {
                     badge: 'bg-[#F59E0B]/10 text-[#F59E0B] border-[#F59E0B]/20',
                     dot: 'bg-[#F59E0B]',
-                    line: 'bg-[#E5E7EB]',
+                    line: 'bg-zinc-700',
                     card: 'border-white/10',
                 };
             default:
                 return {
                     badge: 'bg-[#6B7280]/10 text-zinc-400 border-[#6B7280]/20',
-                    dot: 'bg-[#9CA3AF]',
-                    line: 'bg-[#E5E7EB]',
+                    dot: 'bg-zinc-500',
+                    line: 'bg-zinc-700',
                     card: 'border-white/10',
                 };
         }
@@ -106,13 +106,13 @@ export function Roadmap() {
     return (
         <section ref={sectionRef} className="py-24 px-6 relative overflow-hidden bg-[#111111]">
             {/* Background decoration */}
-            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#FAFAF8] to-transparent" />
+            <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/50 to-transparent" />
 
             <div className="max-w-5xl mx-auto relative z-10">
                 {/* Header */}
                 <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#CCFBF1] rounded-full mb-6">
-                        What's Next
+                    <span className="inline-block px-4 py-1.5 text-sm font-medium text-[#14B8A6] bg-[#14B8A6]/10 border border-[#14B8A6]/20 rounded-full mb-6">
+                        What&apos;s Next
                     </span>
                     <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-4">
                         Product <span className="text-gradient">Roadmap</span>
@@ -125,7 +125,7 @@ export function Roadmap() {
                 {/* Timeline */}
                 <div className="grid md:grid-cols-4 gap-8 relative">
                     {/* Connecting line (desktop) */}
-                    <div className="hidden md:block absolute top-8 left-[12.5%] right-[12.5%] h-1 bg-[#E5E7EB] rounded-full" />
+                    <div className="hidden md:block absolute top-8 left-[12.5%] right-[12.5%] h-1 bg-zinc-700 rounded-full" />
                     <div
                         className={`hidden md:block absolute top-8 left-[12.5%] h-1 rounded-full bg-gradient-to-r from-[#14B8A6] to-[#8B5CF6] transition-all duration-1000 ${isVisible ? 'w-[37.5%]' : 'w-0'}`}
                         style={{ transitionDelay: '500ms' }}
@@ -141,7 +141,7 @@ export function Roadmap() {
                             >
                                 {/* Timeline dot */}
                                 <div className="hidden md:flex justify-center mb-6">
-                                    <div className={`w-4 h-4 rounded-full ${styles.dot} ring-4 ring-white`} />
+                                    <div className={`w-4 h-4 rounded-full ${styles.dot} ring-4 ring-[#111111]`} />
                                 </div>
 
                                 {/* Card */}
@@ -166,7 +166,7 @@ export function Roadmap() {
                                     <ul className="space-y-2">
                                         {item.items.map((feature, featureIndex) => (
                                             <li key={featureIndex} className="flex items-start gap-2 text-sm text-zinc-400">
-                                                <svg className={`w-4 h-4 mt-0.5 flex-shrink-0 ${item.status === 'completed' ? 'text-[#14B8A6]' : 'text-[#D1D5DB]'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg className={`w-4 h-4 mt-0.5 flex-shrink-0 ${item.status === 'completed' ? 'text-[#14B8A6]' : 'text-zinc-600'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
                                                 <span className={item.status === 'completed' ? 'line-through text-zinc-500' : ''}>

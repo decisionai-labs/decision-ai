@@ -2,27 +2,28 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '../lib/utils';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function ResendHero() {
     return (
         <div className="relative z-20 pt-[60px] md:h-screen md:max-h-[950px] md:pt-0 overflow-hidden bg-black text-white selection:bg-[#111111]/20">
 
             {/* Background Lights */}
-            <img
-                alt="Floor background"
-                loading="lazy"
-                decoding="async"
-                className="pointer-events-none absolute top-0 left-0 right-0 mx-auto hidden h-screen w-full select-none md:block opacity-80 transition-opacity duration-500"
-                style={{
-                    color: 'transparent',
-                    maskImage: 'linear-gradient(to top, transparent 15%, black 25%)',
-                    WebkitMaskImage: 'linear-gradient(to top, transparent 15%, black 25%)',
-                }}
-                srcSet="/static/landing-page/bg-hero-1.jpg 1x, /static/landing-page/bg-hero-1.jpg 2x"
-                src="/static/landing-page/bg-hero-1.jpg"
-            />
+            <div className="pointer-events-none absolute top-0 left-0 right-0 mx-auto hidden h-screen w-full select-none md:block opacity-80 transition-opacity duration-500">
+                <Image
+                    alt="Floor background"
+                    fill
+                    className="object-cover"
+                    style={{
+                        maskImage: 'linear-gradient(to top, transparent 15%, black 25%)',
+                        WebkitMaskImage: 'linear-gradient(to top, transparent 15%, black 25%)',
+                    }}
+                    src="/static/landing-page/bg-hero-1.jpg"
+                    sizes="100vw"
+                    priority
+                />
+            </div>
 
             <section className="mx-auto max-w-5xl px-6 pb-8 md:h-screen md:max-h-[950px] md:max-w-7xl">
                 <div className="flex h-full flex-col items-center justify-between md:flex-row md:pb-12">
@@ -44,7 +45,7 @@ export function ResendHero() {
                         <div className="flex flex-col justify-center gap-4 md:flex-row md:justify-start">
                             <Link
                                 href="/signup"
-                                className="relative inline-flex items-center justify-center select-none rounded-2xl transition-all duration-200 text-black bg-[#111111] hover:bg-[#111111]/90 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] text-base h-12 gap-0 px-5 font-semibold"
+                                className="relative inline-flex items-center justify-center select-none rounded-2xl transition-all duration-200 text-white bg-[#111111] hover:bg-[#111111]/90 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] text-base h-12 gap-0 px-5 font-semibold"
                             >
                                 Get Started
                                 {/* Button texture overlay - exact match to Resend */}
@@ -63,19 +64,19 @@ export function ResendHero() {
                     </motion.div>
 
                     {/* Top Light Ray */}
-                    <img
-                        alt="Light ray background"
-                        loading="lazy"
-                        decoding="async"
-                        className="pointer-events-none absolute -top-20 left-0 right-0 mx-auto hidden h-screen w-full select-none md:block transition-all duration-500 z-10"
-                        style={{
-                            color: 'transparent',
-                            maskImage: 'linear-gradient(to top, transparent 15%, black 25%)',
-                            WebkitMaskImage: 'linear-gradient(to top, transparent 15%, black 25%)',
-                        }}
-                        srcSet="/static/landing-page/bg-light.png 1x, /static/landing-page/bg-light.png 2x"
-                        src="/static/landing-page/bg-light.png"
-                    />
+                    <div className="pointer-events-none absolute -top-20 left-0 right-0 mx-auto hidden h-screen w-full select-none md:block transition-all duration-500 z-10">
+                        <Image
+                            alt="Light ray background"
+                            fill
+                            className="object-cover"
+                            style={{
+                                maskImage: 'linear-gradient(to top, transparent 15%, black 25%)',
+                                WebkitMaskImage: 'linear-gradient(to top, transparent 15%, black 25%)',
+                            }}
+                            src="/static/landing-page/bg-light.png"
+                            sizes="100vw"
+                        />
+                    </div>
 
                     {/* 3D Cube Video - The core of the floating effect */}
                     <motion.div

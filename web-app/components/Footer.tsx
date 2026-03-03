@@ -7,7 +7,7 @@ export function Footer() {
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#14B8A6] to-transparent" />
 
             {/* Subtle background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white to-[#FAFAF8] -z-10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent -z-10" />
 
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-col gap-8">
@@ -61,13 +61,13 @@ export function Footer() {
                     </div>
 
                     {/* Divider */}
-                    <div className="w-full h-px bg-gradient-to-r from-transparent via-[#E5E7EB] to-transparent" />
+                    <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
                     {/* Bottom Row - Copyright and social */}
                     <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                         {/* Copyright */}
                         <div className="flex items-center gap-2 text-sm text-zinc-500">
-                            <span>© 2025</span>
+                            <span>© 2026</span>
                             <Link
                                 href="https://github.com/NeuroSolanaAgents"
                                 target="_blank"
@@ -87,7 +87,7 @@ export function Footer() {
                             >
                                 cognizant-ai-lab
                             </Link>
-                            <span className="text-[#E5E7EB]">•</span>
+                            <span className="text-zinc-600">•</span>
                             <Link
                                 href="https://twitter.com/decision__ai"
                                 target="_blank"

@@ -2,37 +2,26 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Card } from './ui/Card';
+import { LuWallet, LuMessageSquare, LuZap } from 'react-icons/lu';
 
 const steps = [
     {
         number: '01',
         title: 'Connect Wallet',
         description: 'Your wallet address is captured securely and stored in sly_data—never exposed to the AI.',
-        icon: (
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
-        ),
+        icon: <LuWallet className="w-6 h-6" />,
     },
     {
         number: '02',
         title: 'Ask Anything',
         description: 'Query your balances, tokens, transactions, or NFTs using natural language.',
-        icon: (
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-        ),
+        icon: <LuMessageSquare className="w-6 h-6" />,
     },
     {
         number: '03',
         title: 'Get Answers',
         description: 'The AI fetches blockchain data using your sly_data—without ever seeing your address.',
-        icon: (
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-        ),
+        icon: <LuZap className="w-6 h-6" />,
     },
 ];
 
@@ -96,7 +85,7 @@ export function HowItWorks() {
                                 </div>
 
                                 {/* Icon */}
-                                <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-[#CCFBF1] to-[#F0FDFA] text-[#0D9488] mb-4 transition-transform group-hover:scale-110">
+                                <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-[#14B8A6]/10 text-[#14B8A6] mb-4 transition-transform group-hover:scale-110">
                                     {step.icon}
                                 </div>
 
